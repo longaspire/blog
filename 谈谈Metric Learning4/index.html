@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/谈谈Metric Learning4/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        谈谈Metric Learning (IV): ITML进阶｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '13438f8a61802b465894989427ee4725';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb">
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/firenze.png');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>谈谈Metric Learning (IV): ITML进阶</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Jun 10, 2015</span>
+                               
+                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#谈谈Metric Learning" title="谈谈Metric Learning">谈谈Metric Learning</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#Metric Learning" title="Metric Learning">Metric Learning</a>
+                              
+                              <a class="tag" href="/blog/tags/#优化" title="优化">优化</a>
+                              
+                              <a class="tag" href="/blog/tags/#Kernelization" title="Kernelization">Kernelization</a>
+                              
+                              <a class="tag" href="/blog/tags/#在线学习" title="在线学习">在线学习</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">1,944 words in total, 8 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="1-Kernel-Learning问题"><a href="#1-Kernel-Learning问题" class="headerlink" title="1. Kernel Learning问题"></a>1. Kernel Learning问题</h3><p>对于Kernel Learning这个问题，我们可以这样认为：</p>
+<p>给定一个kernel $ K$, 我们在一些点集上同样有constraints，这个时候，为了使得这些点之间的pairwise distance服从constraints的情况，我们需要优化这个kernel，这就是kernel learning问题的基本定义。</p>
+<p>相信你可以看到，这个定义已经和我们讨论的ITML有一定的相似性，我们先从<a href="http://dl.acm.org/citation.cfm?id=1143908" target="_blank" rel="noopener">Kulis2006</a>的这篇 low-rank kernel learning的文章来讲起：</p>
+<p>对于low-rank kernel learning的输入，是一个specified kernel $ K_0$, 我们的目标是使得我们需要的kernel $ K$ 无限接近 $ K_0$ ,而这种“接近”自然是由我们的LogDet divergence来衡量的，好了，那么对于这个问题。</p>
+<p>首先，我们知道给定的$ A_0$是如下形式的， $ K_0 = X^{T}A_0X$，它是一个$ n \times n$的方阵，优化问题如下：</p>
+<blockquote>
+<p><strong>Equation.1</strong></p>
+<p>$\min\limits<em>K D</em>{ld}(K, K<em>0)$<br>$\text{s.t.}$<br>$K</em>{ii} + K<em>{jj} - 2K</em>{ij} \leq v, (i,j) \in S$<br>$K<em>{ii} + K</em>{jj} - 2K_{ij} \geq l, (i,j) \in D$<br>$K \succeq 0$</p>
+</blockquote>
+<h3 id="2-Kernel-Learning和ITML的联系"><a href="#2-Kernel-Learning和ITML的联系" class="headerlink" title="2. Kernel Learning和ITML的联系"></a>2. Kernel Learning和ITML的联系</h3><p>现在已经看出一点端倪了，实际上这两个问题的关联在于如何证明$ K$和$ A$存在着“强关联”。回想下我们在<a href="/blog/谈谈Metric Learning3">上一篇</a>中介绍的关于$A$和$A_0$的LogDet优化：</p>
+<blockquote>
+<p><strong>Equation.2</strong></p>
+<p>$\min\limits<em>{A \succeq 0} D</em>{ld}(A, A_0)$<br>$\text{s.t.}$<br>$tr(A(x_i - x_j)(x_i - x_j)^{T}) \leq v, (i,j) \in S$<br>$tr(A(x_i - x_j)(x_i - x_j)^{T}) \geq l, (i,j) \in D$</p>
+</blockquote>
+<p>为了证明它们之间的关联，我们给出一个引理及其证明，如下：</p>
+<blockquote>
+<p><strong>Lemma.1</strong></p>
+<p>给定$K = X^{T}AX$，当且仅当$K$是Equation.1的可行解的情况下，$A$是Equation.2的可行解。</p>
+<p><strong>证明:</strong> $K<em>{ii} + K</em>{jj} - 2K<em>{ij}$可写成$(e_i - e_j)^{T}K(e_i - e_j) = (x_i - x_j)^{T}A(x_i - x_j)$。因此，对于similar constraint，$K</em>{ii} + K<em>{jj} - 2K</em>{ij} \leq v$等价于$tr(A(x_i - x_j)(x_i-x_j)^{T}) \leq v$。同理，适用于dissimilar constraint。得证。</p>
+</blockquote>
+<p>由上，我们可以给出一个定理及其证明：</p>
+<blockquote>
+<p><strong>Theorem.1</strong></p>
+<p>给定Equation.1的最优解$K^{\star}$及Equation.2的最优解$A^{\star}$，必有$K^{\star} = X^{T}A^{\star}X$。</p>
+<p><strong>证明:</strong> 对于Equation.1的Bregman projection update可写为：</p>
+<p>$A<em>{t+1} = A</em>{t} + \beta A<em>{t}(x_i - x_j)(x_i - x_j)^{T}A</em>{t}$</p>
+<p>对于Equation.2的Bregman projection update 则可写为：</p>
+<p>$K<em>{t+1} = K</em>{t} + \beta K<em>{t}(e_i - e_j)(e_i - e_j)^{T}K</em>{t}$</p>
+<p>优化的算法可以得出，两者当中使用的$\beta$是一致的，接下来可以归纳证明，在每一次迭代的过程中，都满足关系$K<em>t = X^{T}A</em>{t}X$（给定初始条件：$K<em>0 = X^{T}A</em>{0}X$）</p>
+<p>假设$ K<em>t = X^{T}A</em>{t}X$则:</p>
+<p>$K<em>{t+1}$<br>$= K</em>{t} + \beta K<em>{t}(e_i - e_j)(e_i - e_j)^{T}K</em>{t}$<br>$= X^{T}A<em>{t}X + \beta X^{T}A</em>{t}X(e<em>i - e_j)(e_i - e_j)^{T}X^{T}A</em>{t}X$<br>$= X^{T}A<em>{t}X + \beta X^{T}A</em>{t}(x<em>i - x_j)(x_i - x_j)^{T}A</em>{t}X$<br>$= X^{T}(A<em>{t} + A</em>{t}(x<em>i - x_j)(x_i - x_j)^{T}A</em>{t})X$<br>$= X^{T}A_{t+1}X$</p>
+<p>如果$K$能收敛到$K^{\star}$，那么$A$也能收敛到$A^{\star}$。则两个问题等价，定理得证。</p>
+</blockquote>
+<p>那么，通过这么多的推论和证明，我们终于可以认为ITML算法实际上与low-rank kernel learning的问题是一致的，因此，我们可以将ITML算法的输入由一个初始矩阵$A<em>0$置换成$K_0$，将限制条件更改为$K</em>{ii} + K<em>{jj} - 2K</em>{ij}$，而相应的输出也变成了一个$K^{\star}$。</p>
+<h3 id="3-ITML算法的核化"><a href="#3-ITML算法的核化" class="headerlink" title="3. ITML算法的核化"></a>3. ITML算法的核化</h3><p>我们在<a href="/blog/谈谈Metric Learning3">上一篇</a>提及ITML的思想是希望优化的$A$在满足constraints的情况下尽可能地逼近$A_0$，而$A_0$的选择就体现出了你想要求解一个怎样的问题。</p>
+<p>假设，我希望这个度量是满足欧氏距离特性的，那么就应该选择单位矩阵$I$来作为初始化的$A_0$。由此，假设$A_0 = I$，则$K_0 = X^{T}A_0X = X^{T}X$，实际上就是一个<a href="http://en.wikipedia.org/wiki/Gramian_matrix" target="_blank" rel="noopener">Gram矩阵</a>。</p>
+<p>这里我们定义一个kernel function来替代上述这种直观的表达，即</p>
+<blockquote>
+<p>$k(x,y) = \phi(x)^{T}\phi(y)$</p>
+</blockquote>
+<p>其中$\phi()$理解为对于变量的非线性转换函数。转换到核空间后，我们是否还能通过估量来学习到一个合适的metric呢？</p>
+<p>实际上，我们的metric定义变成了：</p>
+<blockquote>
+<p>$d_A(\phi(x), \phi(y)) = (\phi(x) - \phi(y))^{T}A(\phi(x) - \phi(y))$<br>$=\phi(x)^{T}A\phi(x) - 2\phi(x)^{T}A\phi(y) + \phi(y)^{T}A\phi(y)$</p>
+</blockquote>
+<p>随后，我们定义一个新的核公式：</p>
+<blockquote>
+<p>$\widetilde{k}(x,y) = \phi(x)^{T}A\phi(y)$</p>
+</blockquote>
+<p>虽然我们没有办法直接去计算$A$（可以理解为hilbert space下的一个operator），但是我们依然可以计算$\widetilde{k}(x,y)$，由于$A_0 = I$，我们可以考虑递归地展开学习到的matrix $A$：</p>
+<blockquote>
+<p>$A = I + \sum\limits<em>{i,j}\sigma</em>{ij}\phi(x_i)\phi(x_j)^{T}$</p>
+</blockquote>
+<p>这是核化之后的$A$，它依然希望能够尽量逼近$I$，这里我们引入了一些系数coefficient $\sigma_{ij}$。这样，就可以写出新的核公式的表达形式：</p>
+<blockquote>
+<p>$\widetilde{k}(x,y) = \phi(x)^{T}A\phi(y) = \phi(x)^{T}(I + \sum\limits<em>{i,j}\sigma</em>{ij}\phi(x<em>i)\phi(x_j)^{T})\phi(y)$<br>$= \phi(x)^{T}\phi(y) + \sum\limits</em>{i,j}\sigma<em>{ij}\phi(x)^{T}\phi(x_i)\phi(x_j)^{T}\phi(y)$<br>$= k(x,y) + \sum\limits</em>{i,j}\sigma_{ij}k(x,x_i)k(x_i,y)$</p>
+</blockquote>
+<p>到这里，我们看到，新的核公式是老的核公式和一系列系数的组合，通过优化Equation.2当中的问题，我们可以得到一系列系数$\sigma_{ij} $来估量新的核函数$\widetilde{k}()$。</p>
+<h3 id="4-在线算法"><a href="#4-在线算法" class="headerlink" title="4. 在线算法"></a>4. 在线算法</h3><p>在一般的metric learning甚至于优化问题当中，通常程序是接收一堆数据并进行最小化的工作。我们接下介绍一个online算法，能够在线增量地对metric进行优化和学习。</p>
+<p>在online算法里，假设算法接收一个实例$(x<em>t, y_t, d_t)$，其中$t$是一个time step，并且使用当前的model $A_t$预测一个distance $\widetilde{d</em>{A<em>t}} = d</em>{A_t}(x_t,y_t)$。</p>
+<p>那么这个prediction的loss可以表达为$l_t(A_t) = (d_t - \widetilde{d_t})^2$。其中，$d_t$我们称之为$x_t$和$y_t$之间的”true/target” distance。</p>
+<p>那么通过一次prediction，算法将$A<em>t$修改为$A</em>{t+1}$，并且用新的model进行接下来的预测，我们于是得到predicitons的total loss 为$\sum_{tl_t}(A_t)$。</p>
+<p>对于这样一个total loss，由于输入数据和他们的target distance是没有关联的，我们找不到它的bound，一个可行的方案就是将其和离线阶段中的最佳可能（best possible）方案进行对比。</p>
+<p>对于最佳可能方案，可以这样得到，假设给出一个T-trail sequence $S = {(x_1,y_1,d_1),\ldots,(x_T,y_T,d_T)}$, best possible方案满足：</p>
+<blockquote>
+<p>$A^{\star} = \arg\min\limits<em>{A \succeq 0} \sum\limits</em>{t = 1}^{T}l_t(A)$</p>
+</blockquote>
+<p>理解起来非常简单易懂，就是对于离线给定的测试序列，total loss最小化的。</p>
+<p>这样，对于online算法而言，就是将得到的total loss和最佳可能方案进行对比。</p>
+<p>一个解决在线学习的通用方法是在每一个time step解决下列正规化优化问题：</p>
+<blockquote>
+<p>$\min\limits_{A \succeq 0} f(A) = \overbrace{D(A,A_t)}^{Regularization~Term} + \eta_t \cdot \overbrace{l_t(A)}^{Loss~Term}$</p>
+</blockquote>
+<p>这个公式中：</p>
+<ul>
+<li>$\eta_t$是$t$时刻的learning rate，$ D$是用来测量新计算的matrix $A$和当前的$A_t$的散度。</li>
+<li>Regulartization Term: 最小化两者散度是为了使得两者尽量靠近而保证最小化趋于平稳。</li>
+<li>Loss Term: 是为了使得计算的model $A$和特定时刻的$A_t$保持一致。使得学习到的distance尽量与target distance保持一致。</li>
+<li>而learning rate则跟具体问题相关，需要进行调节。</li>
+</ul>
+<p>这个问题中，我们同样用LogDet来表示散度$D$，于是可以得到：</p>
+<blockquote>
+<p>$A<em>{t+1} = \arg\min\limits</em>{A} D<em>{ld}(A,A_t) + \eta_t (d_t - \widetilde{d</em>{t}})^2$</p>
+</blockquote>
+
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/OpenWRT学习随录1/" data-toggle="tooltip" data-placement="left" title="OpenWRT学习随录 (I): OpenWRT介绍">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/谈谈Metric Learning3/" data-toggle="tooltip" data-placement="top" title="谈谈Metric Learning (III): ITML">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Kernel-Learning问题"><span class="toc-text">1. Kernel Learning问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Kernel-Learning和ITML的联系"><span class="toc-text">2. Kernel Learning和ITML的联系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ITML算法的核化"><span class="toc-text">3. ITML算法的核化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-在线算法"><span class="toc-text">4. 在线算法</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:lihuancs@zju.edu.cn" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                89.7k <b>Words</b>
+        </p></div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search...">
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

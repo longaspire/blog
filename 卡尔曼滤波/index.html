@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/卡尔曼滤波/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        卡尔曼滤波器｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '13438f8a61802b465894989427ee4725';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb">
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/kalman.png');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>卡尔曼滤波器</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Apr 27, 2017</span>
+                               
+                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#概率图模型" title="概率图模型">概率图模型</a>
+                              
+                              <a class="tag" href="/blog/categories/#滤波技术笔记" title="滤波技术笔记">滤波技术笔记</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#卡尔曼滤波" title="卡尔曼滤波">卡尔曼滤波</a>
+                              
+                              <a class="tag" href="/blog/tags/#马尔科夫链" title="马尔科夫链">马尔科夫链</a>
+                              
+                              <a class="tag" href="/blog/tags/#动态系统" title="动态系统">动态系统</a>
+                              
+                              <a class="tag" href="/blog/tags/#高斯白噪声" title="高斯白噪声">高斯白噪声</a>
+                              
+                              <a class="tag" href="/blog/tags/#概率图模型" title="概率图模型">概率图模型</a>
+                              
+                              <a class="tag" href="/blog/tags/#滤波技术" title="滤波技术">滤波技术</a>
+                              
+                              <a class="tag" href="/blog/tags/#卡尔曼增益" title="卡尔曼增益">卡尔曼增益</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">5,680 words in total, 23 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>Kalman Filter (KF) 是一个高效的递归滤波器，它可以实现从一系列的噪声观测中，估计动态系统的状态。</p>
+</blockquote>
+<h3 id="1-命名和发展历史"><a href="#1-命名和发展历史" class="headerlink" title="1. 命名和发展历史"></a>1. 命名和发展历史</h3><p>卡尔曼滤波器以它的发明者Rudolf. Emil. Kalman先生（2016年去世，向这位传奇的科学家致敬）而命名。</p>
+<p>在控制领域，Kalman滤波被称为<strong>线性二次型估计</strong>。其也可以认为是一个最优化自回归数据处理算法（optimal recursive data processing algorithm）。</p>
+<p>目前，卡尔曼滤波已经有很多不同的实现，有施密特扩展滤波器、信息滤波器以及一系列的Bierman和Thornton发明的平方根滤波器等，而卡尔曼最初提出的形式现在称为简单卡尔曼滤波器。也许最常见的卡尔曼滤波器应用是锁相环，它在收音机、计算机和几乎全部视频或通讯设备中广泛存在。</p>
+<p>一个简单的应用是估计物体的位置和速度。简要描述如下：假设我们可以获取一个物体的包含噪声的一系列位置观测数据，我们可以获得此物体的精确速度和位置连续更新信息。例如，对于雷达来说，我们关心的是跟踪目标，而目标的位置、速度、加速度的观测值是时刻含有误差的，卡尔曼滤波器利用目标的动态信息，去掉噪声影响，获取目标此刻好的位置估计（即<strong>滤波</strong>过程），将来的位置估计（即<strong>预测</strong>过程），也可以是过去位置估计的（即<strong>插值</strong>或<strong>平滑</strong>过程）。</p>
+<h3 id="2-应用举例"><a href="#2-应用举例" class="headerlink" title="2. 应用举例"></a>2. 应用举例</h3><p>假设我们要研究的对象是一个房间的温度。根据你的经验判断，这个房间的温度是恒定的，也就是下一分钟的温度等于现在这一分钟的温度（假设我们用一分钟来做时间单位）。</p>
+<p>假设你对你的经验不是绝对相信，可能会有上下偏差几度。我们把这些偏差看成是高斯白噪声（White Gaussian Noise，理想情况下我们以高斯噪声来进行假设估计），也就是这些偏差跟前后时间是没有关系的而且符合高斯分布（Gaussian Distribution）。</p>
+<p>另外，我们在房间里放一个温度计，但是这个温度计也不准确的，观测值会比实际值偏差。我们也把这些偏差看成是高斯白噪声。好了，现在对于某一分钟我们有两个有关于该房间的温度值：你根据经验的预测值（系统的预测值）和温度计的值（观测值）。下面我们要用这两个值结合它们各自的噪声来估算出房间的实际温度值。</p>
+<p>假如我们要估算$k$时刻的实际温度值。首先你要根据$k-1$时刻的温度值，来预测$k$时刻的温度。因为你相信温度是恒定的，所以你会得到$k$时刻的温度预测值是跟$k-1$时刻一样的，假设是23度，同时该值的高斯噪声的偏差是5度（5是这样得到的：如果$k-1$时刻估算出的最优温度值的偏差是3，你对自己预测的不确定度是4度，它们平方相加再开方就是5）。</p>
+<p>然后，你从温度计那里得到了$k$时刻的温度值，假设是25度，同时该值的偏差是4度。由于我们用于估算$k$时刻的实际温度有两个温度值，分别是23度和25度。究竟实际温度是多少呢？相信自己还是相信温度计呢？究竟相信谁多一点，我们可以用它们的协方差（covariance）来判断。</p>
+<p>因为$\mathit{Kg}^2= 5^2 / (5^2 + 4^2)$，所以$\mathit{Kg} = 0.78$，我们可以估算出$k$时刻的实际温度值是：$23 + 0.78 * (25-23) = 24.56$度。</p>
+<p>可以看出，因为温度计的协方差比较小（比较相信温度计），所以估算出的最优温度值偏向温度计的值。</p>
+<p>现在我们已经得到$k$时刻的最优温度值了，下一步就是要进入$k+1$时刻，进行新的最优估算。在进入$k+1$时刻之前，我们还要算出$k$时刻那个最优值（24.56度）的偏差。算法如下：$((1-\mathit{Kg})*5^2)^{0.5} = 2.35$。</p>
+<p>这里的5就是上面的$k$时刻你预测的那个23度温度值的偏差，得出的2.35就是进入$k+1$时刻以后$k$时刻估算出的最优温度值的偏差（对应于上面的3）。就是这样，卡尔曼滤波器就不断的把协方差递归，从而估算出最优的温度值。它运行的很快，而且它只保留了上一时刻的协方差。</p>
+<p>上面的$\mathit{Kg}$，就是卡尔曼增益（Kalman Gain），可以随不同的时刻而改变自己的值，后续会进一步说明其计算方法和数学意义。</p>
+<h3 id="3-卡尔曼滤波器算法"><a href="#3-卡尔曼滤波器算法" class="headerlink" title="3. 卡尔曼滤波器算法"></a>3. 卡尔曼滤波器算法</h3><p>卡尔曼滤波基于时域描述的线性动态系统，它的模型是马尔科夫链（Markov Chain），而马尔科夫链建立在一个被高斯噪声干扰的<strong>线性算子</strong>之上。</p>
+<p>系统的状态可以用一个元素为实数的向量表示。随着离散时间的增加，这个线性算子就会作用到当前状态之上，产生一个新的状态，并且会带入一定的噪声，同时一些已知的控制信息也会加入。同时，另外一个受噪声干扰的线性算子将产生这些隐含状态的<strong>可见输出</strong>。</p>
+<p>卡尔曼滤波器可以被看作为类隐马尔科夫模型，它们的显著不同点在于：</p>
+<ul>
+<li>隐状态变量的取值空间是一个连续的空间，而不是离散的状态空间；</li>
+<li>另外，隐马尔科夫模型可以描述下一个状态的一个任意分布，这也与应用于卡尔曼滤波器中的高斯噪声模型相反。</li>
+</ul>
+<p>先看一下动态系统的基本模型。</p>
+<p><img src="kalman_filter_model.png" alt="动态模型"><span class="image-caption-center">动态模型</span></p>
+<p>首先，我们先要引入一个离散控制过程的系统。该系统的过程模型可用一个线性随机微分方程（Linear Stochastic Difference Equation）来描述：</p>
+<blockquote>
+<p>$x(k) = \mathbf{F} \cdot x(k-1) + \mathbf{B} \cdot u(k) + w(k)$</p>
+</blockquote>
+<p>再加上系统观测模型：</p>
+<blockquote>
+<p>$z(k) = \mathbf{H} \cdot x(k) + v(k)$</p>
+</blockquote>
+<p>上两式子中，$x(k)$是$k$时刻的系统状态，$u(k)$是$k$时刻对系统的控制量。</p>
+<p>$\mathbf{F}$和$\mathbf{B}$是系统参数，对于多模型系统，它们为转移矩阵。</p>
+<p>$z(k)$是$k$时刻的观测值，$\mathbf{H}$是观测系统的参数，对于多观测系统，$\mathbf{H}$为矩阵。$w(k)$和$v(k)$分别表示过程和观测的噪声。它们被假设成高斯白噪声（White Gaussian Noise），它们的协方差分别是$\mathbf{Q}$，$\mathbf{R}$（这里我们假设它们不随系统状态变化而变化）。</p>
+<p>卡尔曼滤波是一种递归的估计，即只要获知<em>上一时刻状态的估计值</em>以及<em>当前状态的观测值</em>就可以计算出当前状态的估计值，因此不需要记录观测或者估计的历史信息。</p>
+<p>卡尔曼滤波器与大多数滤波器不同之处在于：它是一种纯粹的时域滤波器，它不需要像低通滤波器等频域滤波器那样，需要在频域设计再转换到时域实现。</p>
+<p>卡尔曼滤波器的操作包括两个阶段：<strong>预测</strong>与<strong>更新</strong>：</p>
+<ul>
+<li>在预测阶段，滤波器使用上一状态的估计，做出对当前状态的估计。</li>
+<li>在更新阶段，滤波器利用对当前状态的观测值优化在预测阶段获得的预测值，以获得一个更精确的新估计值。</li>
+</ul>
+<h4 id="3-1-预测阶段"><a href="#3-1-预测阶段" class="headerlink" title="3.1 预测阶段"></a>3.1 预测阶段</h4><p>对于满足上面的条件（线性随机微分系统，过程和观测都是高斯白噪声），卡尔曼滤波器是最优的信息处理器。</p>
+<p>下面我们来用它们结合它们的协方差来估算系统的最优化输出（类似上一节那个温度的例子）。首先，我们要利用系统的过程模型，来预测下一状态的系统。假设现在的系统状态是$k$，根据系统的模型，可以基于系统的上一状态而预测出现在状态：</p>
+<blockquote>
+<p>$x(k \mid k-1) = \mathbf{F} \cdot x(k-1 \mid k-1) + \mathbf{B} \cdot u(k)$</p>
+</blockquote>
+<p>上述公式称为<strong>预测的状态估计方程</strong>，其中，$x(k \mid k-1)$是利用上一状态预测的结果，$x(k-1 \mid k-1)$是上一状态最优的结果，$u(k)$为现在状态的控制量，如果没有控制量，它可以为0。</p>
+<p>到现在为止，我们的系统结果已经更新了，可是，对应于$x(k \mid k-1)$的协方差（covariance）还没更新。我们用$P$表示协方差，它实际上描述了预测值的准确程度：</p>
+<blockquote>
+<p>$P(k \mid k-1) = \mathbf{F} \cdot P(k-1 \mid k-1) \cdot \mathbf{F}^T + \mathbf{Q}_k$</p>
+</blockquote>
+<p>上述公式称为<strong>预测的协方差矩阵估计方程</strong>，其中，$P(k \mid k-1)$是$x(k \mid k-1)$对应的协方差，$P(k-1 \mid k-1)$是$x(k-1 \mid k-1)$对应的协方差，$\mathbf{F}^T$表示$\mathbf{F}$的转置矩阵，$\mathbf{Q}$是系统过程的协方差。</p>
+<p>上述两个公式就是对系统的预测。</p>
+<h4 id="3-2-更新阶段"><a href="#3-2-更新阶段" class="headerlink" title="3.2 更新阶段"></a>3.2 更新阶段</h4><p>在进行更新之前，我们先计算三个值：</p>
+<p>首先是观测余量（measurement residual）：</p>
+<blockquote>
+<p>$y(k) = z(k) - \mathbf{H} \cdot x(k \mid k-1)$</p>
+</blockquote>
+<p>因为观测过程中存在一个观测误差的协方差矩阵，我们可以给出一个观测余量的协方差：</p>
+<blockquote>
+<p>$S(k) = \mathbf{H}_k \cdot P(k \mid k-1) \cdot \mathbf{H}_k^T + \mathbf{R}_k$</p>
+</blockquote>
+<p>接下来给出一个卡尔曼增益（Kalman Gain）：</p>
+<blockquote>
+<p>$\mathit{Kg}(k) = P(k \mid k-1) \cdot \mathbf{H}^T \cdot S(k)^{-1} = P(k \mid k-1) \cdot \mathbf{H}^T \cdot (\mathbf{H} \cdot P(k \mid k-1) \cdot \mathbf{H}^T + \mathbf{R}_k)^{-1}$</p>
+</blockquote>
+<p>现在我们有了现在状态的预测结果，然后我们再收集现在状态的观测值。结合预测值和观测值，我们可以得到现在状态$k$的最优化估算值$x(k \mid k)$：</p>
+<blockquote>
+<p>$x(k \mid k) = x(k \mid k-1) + \mathit{Kg}(k) \cdot y(k)$</p>
+</blockquote>
+<p>上述方程为<strong>更新的状态估计方程</strong>。</p>
+<p>到现在为止，我们已经得到了$k$状态下最优的估算值$x(k \mid k)$。但是为了要使得卡尔曼滤波器不断的运行下去直到系统过程结束，我们还要更新$k$状态下$x(k \mid k)$的covariance：</p>
+<blockquote>
+<p>$P(k \mid k) = ( \mathbf{I} - \mathit{Kg}(k) \cdot \mathbf{H}) \cdot P(k \mid k-1)$</p>
+</blockquote>
+<p>上述方程成为<strong>更新的协方差矩阵估计方程</strong>，其中$\mathbf{I}$为单位矩阵，对于单模型单观测，$\mathbf{I} = 1$。当系统进入$k+1$状态时，$P(k \mid k)$就是预测方程中的$P(k-1 \mid k-1)$。这样，算法就可以自回归的运算下去。</p>
+<h3 id="4-卡尔曼增益的意义"><a href="#4-卡尔曼增益的意义" class="headerlink" title="4. 卡尔曼增益的意义"></a>4. 卡尔曼增益的意义</h3><p>以上一直提到卡尔曼增益，那么其实际意义如何理解呢？我们结合一些数学知识来对其进行解释。</p>
+<p>我们知道，卡尔曼滤波器对于随机变量的噪声，加入了高斯分布的假设，而这，也是能够对连续动态信息进行滤波的基础。</p>
+<p>那么先从高斯分布开始：符合高斯分布的一个随机变量$X$具有一个平均值$\mu$和一个方差$D$。平均值$\mu$即数学期望$E[X]$，而方差$D = \sigma^2 = E[(x - E[x])^2]$，衡量随机变量或一组数据时离散程度的度量。$\sigma$即标准差或者均方差。正态分布的公式：</p>
+<blockquote>
+<p>$\mathcal{N}(x, \mu, \sigma) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$</p>
+</blockquote>
+<p>而两个随机变量$X$和$Y$的协方差可以写为：</p>
+<blockquote>
+<p>$\text{cov}(X, Y) = E[(X - E[X])(Y - E[Y])]$<br>$= E[XY] - 2E[X]E[Y] + E[X]E[Y]$<br>$= E[XY] - E[X]E[Y]$</p>
+</blockquote>
+<p>协方差衡量了随机变量间的相关程度。</p>
+<p>高斯分布的一个重要性质是：<strong>互不相关的两个高斯分布相乘（相互叠加）后，仍然是一个正态分布！</strong></p>
+<p><img src="normal_distribution.png" alt></p>
+<p>并且新的正态分布的均值和方差满足：</p>
+<blockquote>
+<p>$\mu’ = \mu_0 + k(\mu_1 - \mu_0)$<br>$\sigma’^2 = k\sigma_1^2 = \sigma_0^2(1-k)$<br>$k = \frac{\sigma_0^2}{\sigma_0^2 + \sigma_1^2}$</p>
+</blockquote>
+<p>以上是单变量概率密度函数的计算结果，如果是多变量的，那么，就变成了协方差矩阵$\Sigma$的形式：</p>
+<blockquote>
+<p>$\vec{\mu}’ = \vec{\mu}_0 + K(\vec{\mu}_1 - \vec{\mu}_0)$<br>$\Sigma’ = K\Sigma_1 = \Sigma_0(I-K)$<br>$K = \Sigma_0 + (\Sigma_0 + \Sigma_1)^{-1}$</p>
+</blockquote>
+<p>再结合第三部分我们结合的卡尔曼滤波器算法，可以知道，此处卡尔曼增益正是此处的$K$。它正是用来计算当前两个高斯噪声叠加后的系统情况的。而为什么要进行叠加呢？</p>
+<p>我们知道，两个事件的发生都是概率性的，不能完全相信其中的任何一个。如果具有两个事件，都发生的话，从直觉或者是理性思维上讲，两个事件同时发生的可能性越大，我们越相信它！要想考察它们同时发生的可能性，就是将两个事件单独发生的概率相乘。但是究竟是相信自己预测还是相信观测呢？我们可以用卡尔曼的方法来<strong>加权</strong>，即利用他们的方差$\sigma^2$来判断——求出绿色分布均值位置在红蓝均值间的比例，即<strong>卡尔曼增益</strong>。</p>
+<p><img src="kalman_gain.png" alt="红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘"><span class="image-caption-center">红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘</span></p>
+<blockquote>
+<p>卡尔曼滤波器的理论基础，正是假定观测值和预测值的噪声都符合正态分布，且两个正态分布的融合仍是正态分布这一特性进行迭代的。</p>
+</blockquote>
+<h3 id="5-结合算法模型的举例"><a href="#5-结合算法模型的举例" class="headerlink" title="5. 结合算法模型的举例"></a>5. 结合算法模型的举例</h3><h4 id="5-1-物体运动状态估计"><a href="#5-1-物体运动状态估计" class="headerlink" title="5.1 物体运动状态估计"></a>5.1 物体运动状态估计</h4><p>在算法模型的基础上，我们再进一步给出一个帮助理解的例子，是从<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[http://en.wikipedia.org/wiki/Kalman_filtering](http://en.wikipedia.org/wiki/Kalman_filtering).
+">[3]</span></a></sup>的页面上直接搬过来的：</p>
+<p>考虑在无摩擦、无限长的直轨道上的一辆车。该车最初停在位置$0$处，但时不时受到随机的冲击。注意这里我们考虑没有外力的影响，因此忽略掉$\mathbf{B}_k$和$\mathbf{u}_k$。同时考虑$\mathbf{F}, \mathbf{H}, \mathbf{R}, \mathbf{Q}$为常数（此处不用下标）。</p>
+<p>我们每$\Delta t$秒即测量车的位置，但是这个测量是非精确的；我们想建立一个关于其位置以及速度的模型。车的位置以及速度（或者更加一般的，一个粒子的运动状态）可以被线性状态空间描述如下：</p>
+<blockquote>
+<p>$\mathbf{x_k} = \begin{bmatrix} x \\ \dot{x} \end{bmatrix}$</p>
+</blockquote>
+<p>这其中，$\dot{x}$是速度，即位置对时间的导数。</p>
+<p>假设在$k-1$时刻和$k$时刻之间，车受到$a_k$的加速度，且符合均值为$0$，标准差为$\sigma_a$的正态分布。根据牛顿第一定理，我们推出：</p>
+<blockquote>
+<p>$\mathbf{x}<em>k = \mathbf{F} \cdot \mathbf{x}</em>{k-1} + \mathbf{G} \cdot a_k$</p>
+</blockquote>
+<p>其中，两个转移矩阵</p>
+<blockquote>
+<p>$\mathbf{F} = \begin{bmatrix} 1 &amp; \Delta t \\ 0 &amp; 1 \end{bmatrix}$, $\mathbf{G} = \begin{bmatrix} \Delta t^2/2 \\ {\Delta t} \end{bmatrix}$</p>
+</blockquote>
+<p>可知</p>
+<blockquote>
+<p>$\mathbf{Q} = \text{cov}(\mathbf{G} \cdot a) = E[(\mathbf{G} \cdot a) \cdot (\mathbf{G} \cdot a)^{T}] = \mathbf{G} \cdot E[a^2] \cdot \mathbf{G}^T = \mathbf{G} \cdot \sigma_a^{2} \cdot \mathbf{G}^T$</p>
+</blockquote>
+<p>每一个时刻我们都会对其进行一个测量过程，测量受到噪声干扰，我们依然假设噪声服从正态分布，均值为$0$，标准差为$\sigma_z$。</p>
+<blockquote>
+<p>$z_k = \mathbf{H} \cdot x_k + v_k$</p>
+</blockquote>
+<p>其中，我们有</p>
+<blockquote>
+<p>$\mathbf{H} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix}$, $\mathbf{R} = E[v_k \cdot v_k^T] = \sigma_z^2$</p>
+</blockquote>
+<p>我们先要提出一个假设初始值，假设车最初的位置和速度是足够准确的：</p>
+<blockquote>
+<p>$x_{0 \mid 0} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$</p>
+</blockquote>
+<p>并且，告诉滤波器初始的测量是准确的，给出一个协方差矩阵：</p>
+<blockquote>
+<p>$P_{0 \mid 0} = \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 0  \end{bmatrix}$</p>
+</blockquote>
+<p>如果我们不确切知道最初的位置与速度，协方差矩阵可以初始化为一个对角线元素为$B$的矩阵，$B$取一个比较大的数</p>
+<blockquote>
+<p>$P_{0 \mid 0} = \begin{bmatrix} B &amp; 0 \\ 0 &amp; B  \end{bmatrix}$</p>
+</blockquote>
+<p>接下来我们就可以给出$0 + \Delta_t$时刻对于车的状态的估计：</p>
+<blockquote>
+<p>$x_{1 \mid 0}$ = $\begin{bmatrix} 1 &amp; \Delta t \\ 0 &amp; 1 \end{bmatrix} \cdot \begin{bmatrix} 0 \\ 0  \end{bmatrix}$ + $\begin{bmatrix} \Delta t^2/2 \\ \Delta t \end{bmatrix} \cdot a_0$ = $\begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix}$</p>
+</blockquote>
+<p>上个公式中的$\begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix}$也就是$0 + \Delta_t$时刻的位移和速度的估计。</p>
+<p>接下来，我们还可以得到预测的估计协方差矩阵：</p>
+<blockquote>
+<p>$P_{1 \mid 0}$ = $\begin{bmatrix} 1 &amp; \Delta t \\ 0 &amp; 1 \end{bmatrix} \cdot \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 0 \end{bmatrix} \cdot \begin{bmatrix} 1 &amp; 0 \\ \Delta t &amp; 1 \end{bmatrix} + \begin{bmatrix} \Delta t^2/2 \\ \Delta t \end{bmatrix} \cdot \sigma_a^2 \cdot \begin{bmatrix} \Delta t^2/2 &amp; \Delta t \end{bmatrix}$ = $\sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 &amp; \Delta t^3/2 \\ \Delta t^3/2 &amp; {\Delta t}^2 \end{bmatrix}$</p>
+</blockquote>
+<p>注意这个时候预测的估计协方差矩阵$P<em>{1 \mid 0}$相比$P</em>{0 \mid 0}$就大一些，这主要是由于预测过程带来的误差。</p>
+<p>有了上述的两个预测值，假设我们得到了$0 + \Delta_t$时刻的估计值，因为假设$\mathbf{H} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix}$，我们在观测值上有：</p>
+<blockquote>
+<p>$z_{1 \mid 1} = x_1$</p>
+</blockquote>
+<p>也就是说只能观测到车的位置，不能观测到车的速度$\dot{x_1}$。</p>
+<p>我们可以计算得到测量余量：</p>
+<blockquote>
+<p>$y_{1 \mid 1} = x_1  - \begin{bmatrix} 1 &amp; 0 \end{bmatrix} \cdot \begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix} = x_1 - a_0 \cdot \Delta t^2/2$</p>
+</blockquote>
+<p>有了测量余量，可以得到测量余量的协方差：</p>
+<blockquote>
+<p>$S<em>{1 \mid 1} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix} \cdot P</em>{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} + {\sigma_z}^2 = {\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2$</p>
+</blockquote>
+<p>接下来，可以计算出卡尔曼增益：</p>
+<blockquote>
+<p>$K<em>{1 \mid 1}$ = $P</em>{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$ =<br>$\sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$</p>
+</blockquote>
+<p>有了卡尔曼增益，我们可以更新$x<em>{1 \mid 1}$和$P</em>{1 \mid 1}$：</p>
+<blockquote>
+<p>$x<em>{1 \mid 1}$ = $x</em>{1 \mid 0} + K<em>{1 \mid 1} \cdot y</em>{1 \mid 1}$ = $\begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix} + \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot (x_1 - a_0 \cdot \Delta t^2/2)$</p>
+</blockquote>
+<p>上述我们就做出了一个更新阶段的状态的估计，看到上述方程中只涉及到预测的变量和当前阶段的观测值，接下来是更新阶段的协方差矩阵估计：</p>
+<blockquote>
+<p>$P<em>{1 \mid 1}$ = $(1 - K</em>{1 \mid 1} \cdot \begin{bmatrix} 1 &amp; 0 \end{bmatrix} ) \cdot P_{1 \mid 0}$<br>= $\sigma_a^2 \cdot \begin{bmatrix} 1 - \Delta t^4/4 &amp; 0 \\ 1 - \Delta t^3/2  &amp; 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 &amp; \Delta t^3/2 \\ \Delta t^3/2 &amp; {\Delta t}^2 \end{bmatrix}$<br>= ${\sigma_a}^4 / (16 \cdot ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)) \begin{bmatrix} 4{\Delta t}^4 - {\Delta t}^8 &amp; 8{\Delta t}^3 - 2{\Delta t}^7 \\ 4{\Delta t}^4 - 2{\Delta t}^7 &amp; 8{\Delta t}^3 - 4{\Delta t}^6 \end{bmatrix}$</p>
+</blockquote>
+<h4 id="5-2-算法流程抽象"><a href="#5-2-算法流程抽象" class="headerlink" title="5.2 算法流程抽象"></a>5.2 算法流程抽象</h4><p>公式是不是很复杂，但是只要你跟着流程来一趟，应该能够明白KF的整个过程。跑完这个例子之后，我们把整个流程抽象出来：</p>
+<ul>
+<li>先决定当前系统的初始状态，并根据预测方程（<strong>过程模型</strong>）得到一个<strong>下一个时刻预测的状态</strong>；</li>
+<li>根据预测方程中过程的误差，得到当前预测的协方差估计；</li>
+<li>进入更新阶段，我们根据目前系统的观测值和上一个时刻预测的状态，从转换方程（<strong>观测模型</strong>）入手，得到一个测量余量；</li>
+<li>根据转换方程和上个时刻预测的协方差估计，也可以得到一个测量余量的协方差估计；</li>
+<li>根据1)测量余量的协方差$S<em>{k \mid k}$、2)转换方程$\mathbf{H}$和3)上个时刻的预测协方差估计$P</em>{k \mid k-1}$，我们得到卡尔曼增益$K_{k \mid k}$；</li>
+<li>根据卡尔曼增益和测量余量，我们从预测的状态中<strong>更新优化当前的状态的值</strong>，而这个值可以用来预测下一个时刻的状态；</li>
+<li>同样，我们根据1)卡尔曼增益$K<em>{k \mid k}$和2)上个时刻的预测协方差估计$P</em>{k \mid k-1}$，我们把当前更新阶段的协方差$P_{k \mid k}$估计也得到，帮助下一时刻的卡尔曼增益计算。</li>
+</ul>
+<p><img src="kalman_algorithm.png" alt></p>
+<p>最后我们应该回过头来看看以上讲的房间温度的例子，来对比下这个过程。</p>
+<h3 id="6-示例代码"><a href="#6-示例代码" class="headerlink" title="6. 示例代码"></a>6. 示例代码</h3><p>给出一个matlab版本的小程序。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">N=<span class="number">200</span>;</span><br><span class="line">w(<span class="number">1</span>)=<span class="number">0</span>;</span><br><span class="line">w=<span class="built_in">randn</span>(<span class="number">1</span>,N)  <span class="comment">% White Gaussian Noise of Prediction</span></span><br><span class="line"></span><br><span class="line">x(<span class="number">1</span>)=<span class="number">25</span>;</span><br><span class="line">a=<span class="number">1</span>;  <span class="comment">% prediction parameter</span></span><br><span class="line"><span class="keyword">for</span> k=<span class="number">2</span>:N;</span><br><span class="line">  x(k)=a*x(k<span class="number">-1</span>)+w(k<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">V=<span class="built_in">randn</span>(<span class="number">1</span>,N); <span class="comment">% White Gaussian Noise of Measurement</span></span><br><span class="line">q1=std(V);</span><br><span class="line">Rvv=q1.^<span class="number">2</span>; <span class="comment">% covariance of Measurement</span></span><br><span class="line">q2=std(x);</span><br><span class="line">Rxx=q2.^<span class="number">2</span>;</span><br><span class="line">q3=std(w);</span><br><span class="line">Rww=q3.^<span class="number">2</span>; <span class="comment">% covariance of prediction</span></span><br><span class="line">c=<span class="number">0.2</span>;   <span class="comment">% measurement parameter</span></span><br><span class="line">Y=c*x+V;</span><br><span class="line"></span><br><span class="line">p(<span class="number">1</span>)=<span class="number">10</span>;  <span class="comment">% initial prediction result</span></span><br><span class="line">s(<span class="number">1</span>)=<span class="number">26</span>;  <span class="comment">% initial optimal result</span></span><br><span class="line"><span class="keyword">for</span> t=<span class="number">2</span>:N;</span><br><span class="line">  p1(t)=a.^<span class="number">2</span>*p(t<span class="number">-1</span>)+Rww;  <span class="comment">% covariance of t-1</span></span><br><span class="line">  b(t)=c*p1(t)/(c.^<span class="number">2</span>*p1(t)+Rvv); <span class="comment">% kalman gain</span></span><br><span class="line">  s(t)=a*s(t<span class="number">-1</span>)+b(t)*(Y(t)-a*c*s(t<span class="number">-1</span>)); <span class="comment">% optimal result</span></span><br><span class="line">  p(t)=p1(t)-c*b(t)*p1(t); <span class="comment">% covariance of t</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">t=<span class="number">1</span>:N;</span><br><span class="line">plot(t,s,<span class="string">'r'</span>,t,Y,<span class="string">'g'</span>,t,x,<span class="string">'b'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="7-扩展阅读资料"><a href="#7-扩展阅读资料" class="headerlink" title="7. 扩展阅读资料"></a>7. 扩展阅读资料</h3><p>可以查看<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Understanding the Basis of the Kalman Filter Via a Simple and Intuitive Derivation](http://www.cl.cam.ac.uk/~rmf25/papers/Understanding%20the%20Basis%20of%20the%20Kalman%20Filter.pdf).
+">[4]</span></a></sup>查看一个关于卡尔曼滤波器的教程，它对应的一个中文版本可见<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[理解卡尔曼滤波器 (Understanding Kalman Filter)](https://segmentfault.com/a/1190000000514987).
+">[5]</span></a></sup>。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://carpa.bokee.com/4725695.html" target="_blank" rel="noopener">http://carpa.bokee.com/4725695.html</a>.<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://internetbuff.blog.163.com/blog/static/9425110720091501413932/" target="_blank" rel="noopener">http://internetbuff.blog.163.com/blog/static/9425110720091501413932/</a>.<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://en.wikipedia.org/wiki/Kalman_filtering" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Kalman_filtering</a>.<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://www.cl.cam.ac.uk/~rmf25/papers/Understanding%20the%20Basis%20of%20the%20Kalman%20Filter.pdf" target="_blank" rel="noopener">Understanding the Basis of the Kalman Filter Via a Simple and Intuitive Derivation</a>.<a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://segmentfault.com/a/1190000000514987" target="_blank" rel="noopener">理解卡尔曼滤波器 (Understanding Kalman Filter)</a>.<a href="#fnref:5" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/trips/" data-toggle="tooltip" data-placement="left" title="TRIPS: Translating Raw Indoor Positioning Data into Visual Mobility Semantics">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/vita/" data-toggle="tooltip" data-placement="top" title="Vita: A Versatile Toolkit for Generating Indoor Mobility Data for Real-World Buildings">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-命名和发展历史"><span class="toc-text">1. 命名和发展历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-应用举例"><span class="toc-text">2. 应用举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-卡尔曼滤波器算法"><span class="toc-text">3. 卡尔曼滤波器算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-预测阶段"><span class="toc-text">3.1 预测阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-更新阶段"><span class="toc-text">3.2 更新阶段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-卡尔曼增益的意义"><span class="toc-text">4. 卡尔曼增益的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-结合算法模型的举例"><span class="toc-text">5. 结合算法模型的举例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-物体运动状态估计"><span class="toc-text">5.1 物体运动状态估计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-算法流程抽象"><span class="toc-text">5.2 算法流程抽象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-示例代码"><span class="toc-text">6. 示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-扩展阅读资料"><span class="toc-text">7. 扩展阅读资料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用"><span class="toc-text">引用</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:lihuancs@zju.edu.cn" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                89.7k <b>Words</b>
+        </p></div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search...">
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

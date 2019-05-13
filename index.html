@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '13438f8a61802b465894989427ee4725';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="false" data-istags="false" data-ishome="true">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb">
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- index.ejs -->
+<!--<article class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">-->
+    <!---->
+<!--</article>-->
+
+<div class="container homepage">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
+    <a href="/blog/动态贝叶斯网络进阶/">
+        <h2 class="post-title">
+            动态贝叶斯网络进阶：推断和学习
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 25, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本文主要内容学习整理自引用[1]。
+
+1. 引言在上一篇中，我们对动态贝叶斯网络的基本形式、概念和模型问题进行了一定的解释。其中，大部分内容都还停留在对单独的子模型（sub-model）的问题求解（例如，两大主要问题：推断和学习）。在这篇文章中，我们将从时序模型的角度出发，考虑在时间上结点具有..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
+    <a href="/blog/动态贝叶斯网络/">
+        <h2 class="post-title">
+            动态贝叶斯网络
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 17, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                1. 引言动态贝叶斯网络（Dynamic Bayesian Network, DBN）是一种暂态模型（transient state model），能够学习变量间的概率依存关系及其随时间变化的规律。其主要用于时序数据建模（如语音识别、自然语言处理、轨迹数据挖掘等）。隐马尔可夫模型（hidden ..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
+    <a href="/blog/变分推断介绍/">
+        <h2 class="post-title">
+            变分推断介绍
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 16, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本文部分内容总结自引用[1]。
+
+变分推断，是一种在概率图模型中进行概率推断的近似方法。相比于基于采样的随机化方法，变分推断是一种确定性逼近方法。更多关于概率图推断的介绍，可以参见概率图模型总览。
+1. 理论知识变分推断的思想的要点可以概括如下：
+
+使用已知的简单分布来逼近需推断的复杂分布；
+..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/firenze.png')">
+    <a href="/blog/终极算法读书笔记/">
+        <h2 class="post-title">
+            终极算法读书笔记
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 14, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                机器学习的五个学派和其主算法
+符号学派（symbolists）
+将学习看作逆向演绎（inverse of deduction），并从哲学、心理学、逻辑学中寻求洞见；
+主算法：逆向演绎
+
+
+联结学派（connectionists）
+对大脑进行逆向分析，灵感来源于神经科学和物理学；
+主算法：反向传播..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/drops.jpg')">
+    <a href="/blog/Latex书写误区/">
+        <h2 class="post-title">
+            Latex书写误区
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 14, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+在Latex的书写过程中，往往想当然地输入一些代码，咋看起来似乎没有错，不影响大局。事实上，在不同的样式下可能存在潜在的隐患。为了保持严谨科学的态度，在这里仅对一些Latex书写上的误区进行列举，以防犯下类似的错误。
+
+部分内容引用自[1]。
+1. 引号正确：1``yes&apos;&apos..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/moon.jpg')">
+    <a href="/blog/诗/">
+        <h2 class="post-title">
+            律诗 · 五首
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 12, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                时年十六七，未感彷徨，但有俯仰天地之想。
+■自嘲日日年年学堂内，未晓鸟雀声何啾。入云高殿何所似？阻隔青山如困囚。作诗且需诗境好，填词更得词源幽。先人常绘奇异风，我靠冬秋叹烦忧。
+■峨眉夜宿有感半轮峨眉影入流，默倚冷杉不知秋。拂叶焉作飘然客，难言此楼胜彼楼。
+■园春寻园流水润花开，春柳新雨心无载。..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/moon.jpg')">
+    <a href="/blog/词/">
+        <h2 class="post-title">
+            词 · 七首
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 12, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                词七阙，皆为少年听歌雨楼之作，至今十年已逾。
+■蝶恋花·醉繁花点照红霞映，塘泛涟漪，雁落碧波静。相间欢喜把金樽，共醉举杯将月敬。
+残花举琼浆来请，月光清柔，弦断生乱絮。魂绕手中蟠龙剑，几多牵挂几多怨。
+■卜算子横歌望霜晚，凛风迟暮晨。问天外有甚风景，迷泪亦伤神。
+只唤燕归去，莫让短箫成。马嵬坡前..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview " style="background-image: url('/blog/post_cover_images/moon.jpg')">
+    <a href="/blog/博士论文致谢/">
+        <h2 class="post-title">
+            博士论文 | 致谢
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 8, 2018</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                初，余于蜀修计算之术学，习毕，始觉学之浩渺，而复拜于浙滨求是园。窗间过马，历之六载，恳恳悱悱，略有体悟，故表一文，以概所学。忆之昔时，余虽不器，然受教于师长，蒙益于同学，踉之跄之，至今时而小立。余非矫作之徒，惟感怀此恩，喻情造文，以是铭谢。
+吾师陈刚教授，博知鸿才，德识兼具。虽务重少暇，亦常拨冗..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+          <ul class="pager no-print">
+    
+    
+        <li class="next"><a href="/blog/page/2/">Previous Posts  &rarr;</a></li>
+    
+</ul>
+
+        </div>
+        <!-- partial('_partial/sidebar-profile') -->
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:lihuancs@zju.edu.cn" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2019
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                89.7k <b>Words</b>
+        </p></div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search...">
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
