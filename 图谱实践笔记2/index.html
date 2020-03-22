@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/图谱实践笔记2/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        图谱实践笔记2 - SPARQL｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '13438f8a61802b465894989427ee4725';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost="true" data-istags="false" data-ishome="false">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false" data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb">
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </div></nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/graphs.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>图谱实践笔记2 - SPARQL</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Mar 20, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: Mar 22, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#KG" title="KG">KG</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#RDF" title="RDF">RDF</a>
+                              
+                              <a class="tag" href="/blog/tags/#RDFS" title="RDFS">RDFS</a>
+                              
+                              <a class="tag" href="/blog/tags/#SPARQL" title="SPARQL">SPARQL</a>
+                              
+                              <a class="tag" href="/blog/tags/#Graph Database" title="Graph Database">Graph Database</a>
+                              
+                              <a class="tag" href="/blog/tags/#Jena" title="Jena">Jena</a>
+                              
+                              <a class="tag" href="/blog/tags/#Fuseki" title="Fuseki">Fuseki</a>
+                              
+                              <a class="tag" href="/blog/tags/#TDB" title="TDB">TDB</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">3,012 words in total, 14 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>图谱实践笔记第二篇：SPARQL；重要摘抄来源<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://zhuanlan.zhihu.com/p/57202859](https://zhuanlan.zhihu.com/p/57202859)
+">[6]</span></a></sup>。</p>
+</blockquote>
+<h3 id="RDBMS-to-RDF"><a href="#RDBMS-to-RDF" class="headerlink" title="RDBMS to RDF"></a>RDBMS to RDF</h3><p>direct mapping</p>
+<ol>
+<li>数据库的表作为本体中的类（Class）。比如我们在mysql中保存的数据，一共有5张表。那么通过映射后，我们的本体就有5个类了，而不是我们自己定义的三个类。</li>
+<li>表的列作为属性（Property）。</li>
+<li>表的行作为实例/资源。</li>
+<li>表的单元格值为字面量（Literal）</li>
+<li>如果单元格所在的列是外键，那么其值为IRI，或者说实体/资源。<br>更多参照文献<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[rdb-direct-mapping](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/)
+">[1]</span></a></sup>。</li>
+</ol>
+<p>R2RML:更灵活的编辑和设置映射规则，参见文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[R2RML](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/)
+">[2]</span></a></sup>。R2RML也支持SQL语句来对查询结果进行映射。</p>
+<h3 id="图数据库"><a href="#图数据库" class="headerlink" title="图数据库"></a>图数据库</h3><p>图数据库很多，其中开源的如RDF4j、gStore等。商业数据库如Virtuoso、AllegroGraph、Stardog等。原生图数据库如Neo4j、OrientDB、Titan等。</p>
+<ul>
+<li>RDF4j是处理RDF数据的Java框架，使用简单可用的API来实现RDF存储。支持SPARQL 查询和两种RDF存储机制，支持所有主流的RDF格式。</li>
+<li>gStore从图数据库角度存储和检索RDF知识图谱数据， gStore支持W3C定义的SPARQL 1.1标准，包括含有Union, OPTIONAL, FILTER和聚集函数的查询；gStore支持有效的增删改操作。gStore单机可以支持1 Billion 三元组规模的RDF知识图谱的数据管理任务。</li>
+<li>Virtuoso 智能数据，可视化与整合。可扩展和高性能数据管理，支持Web扩展和安全</li>
+<li>AllegroGraph是一个现代的高性能的，支持永久存储的图数据库。它基于Restful接入支持多语言编程。具有强大的加载速度、查询速度和高性能。</li>
+<li>Neo4j是一个高性能的,NOSQL图形数据库，它将结构化数据存储在网络上而不是表中。它是一个嵌入式的、基于磁盘的、具备完全的事务特性的Java持久化引擎，但是它将结构化数据存储在网络上而不是表中。Neo4j也可以被看作是一个高性能的图引擎，该引擎具有成熟数据库的所有特性。内置Cypher查询语言。<ol>
+<li>图数据库 + Lucene索引</li>
+<li>支持图属性</li>
+<li>支持ACID</li>
+<li>高可用性</li>
+</ol>
+</li>
+</ul>
+<h3 id="SPARQL"><a href="#SPARQL" class="headerlink" title="SPARQL"></a>SPARQL</h3><p>SPARQL即SPARQL Protocol and RDF Query Language的递归缩写，专门用于访问和操作RDF数据，是语义网的核心技术之一（另外两大为RDFS和OWL），其由两个部分组成：协议和查询语言。</p>
+<ol>
+<li>查询语言很好理解，就像SQL用于查询关系数据库中的数据，XQuery用于查询XML数据，SPARQL用于查询RDF数据。</li>
+<li>协议是指我们可以通过HTTP协议在客户端和SPARQL服务器（SPARQL endpoint）之间传输查询和结果，这也是和其他查询语言最大的区别。</li>
+</ol>
+<p>SPARQL查询是基于图匹配的思想，SPARQL查询分为三个步骤：</p>
+<ol>
+<li>构建查询图模式（图模式中，每个RDF用英文句号进行分割），表现形式就是带有变量的RDF。</li>
+<li>匹配，匹配到符合指定图模式的子图。</li>
+<li>绑定，将结果绑定到查询图模式对应的变量上。</li>
+</ol>
+<p>SPARQL的部分关键词：</p>
+<ul>
+<li>SELECT，指定我们要查询的变量。在这里我们查询所有的变量，用*代替。</li>
+<li>WHERE，指定我们要查询的图模式。含义上和SQL的WHERE没有区别。</li>
+<li>FROM，指定查询的RDF数据集。我们这里只有一个图，因此省去了FROM关键词。</li>
+<li>PREFIX，用于IRI的缩写。</li>
+</ul>
+<blockquote>
+<p>关于知识图谱，有一个非常重要的概念，即开放世界假定（Open-world assumption，OWA）。这个假定的意思是当前没有陈述的事情是未知的，或者说知识图谱没有包含的信息是未知的。即，我们要承认知识图谱的信息本身就是残缺的。人和知识图谱类似，我们都存在于OWA的世界中。</p>
+</blockquote>
+<h4 id="SPARQL-Endpoint"><a href="#SPARQL-Endpoint" class="headerlink" title="SPARQL Endpoint"></a>SPARQL Endpoint</h4><p>SPARQL endpoint是SPARQL协议的一部分，用于处理客户端的请求，可以类比web server提供用户浏览网页的服务。通过endpoint，我们可以把数据发布在网上，供用户查询。</p>
+<h4 id="SPARQL-Wrapper"><a href="#SPARQL-Wrapper" class="headerlink" title="SPARQL Wrapper"></a>SPARQL Wrapper</h4><p>我们希望将SPARQL查询集成在代码当中，对其进行包装便于后续开发。例如Python第三方库：<a href="https://link.zhihu.com/?target=https%3A//github.com/RDFLib/sparqlwrapper" target="_blank" rel="noopener">SPARQLWrapper</a>。</p>
+<h4 id="SPARQL语法"><a href="#SPARQL语法" class="headerlink" title="SPARQL语法"></a>SPARQL语法</h4><p>查询某一歌手所唱的所有歌曲<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> ?trackID</span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?trackID track_artist artistID</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>查询某一位歌手所有歌曲的歌曲名<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ?<span class="keyword">name</span></span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?trackID track_artist artistID .</span><br><span class="line">    ?trackID track_name ?<span class="keyword">name</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用CONCAT关键字进行连接<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ?歌曲<span class="keyword">id</span> ?专辑<span class="keyword">id</span> (<span class="keyword">CONCAT</span>(<span class="string">"专辑</span></span><br><span class="line"><span class="string">                                   名"</span>,<span class="string">":"</span>,?专辑名) <span class="keyword">AS</span> ?专辑信息)</span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?歌曲<span class="keyword">id</span> track_name track_name .</span><br><span class="line">    ?歌曲<span class="keyword">id</span> track_album ?专辑<span class="keyword">id</span> .</span><br><span class="line">    ?专辑<span class="keyword">id</span> album_name ?专辑名</span><br><span class="line"></span><br><span class="line">&#125;<span class="string">"))</span></span><br></pre></td></tr></table></figure></p>
+<p>LIMIT 关键字限制查询结果的条数<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ?trackID</span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?albumID</span><br><span class="line">    album_name album_name .</span><br><span class="line">    ?trackID</span><br><span class="line">    track_album ?albumID</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">LIMIT</span> <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>使用COUNT进行计数<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (<span class="keyword">COUNT</span>(?trackID) <span class="keyword">AS</span> ?<span class="keyword">num</span>)</span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?albumID album_name album_name .</span><br><span class="line">    ?trackID track_album ?albumID</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用DISTINCT去重<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DISTINCT ?<span class="keyword">tag_name</span></span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?trackID track_artist artistID .</span><br><span class="line">    ?trackID track_tag ?<span class="keyword">tag_name</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ORDER BY排序<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DISTINCT ?<span class="keyword">tag_name</span></span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    ?trackID track_artist artistID .</span><br><span class="line">    ?trackID track_tag ?<span class="keyword">tag_name</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> DESC(?<span class="keyword">tag_name</span>)</span><br></pre></td></tr></table></figure></p>
+<p>UNION进行联合查询<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (<span class="keyword">COUNT</span>(?trackID ) <span class="keyword">AS</span> ?<span class="keyword">num</span>)</span><br><span class="line"><span class="keyword">WHERE</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        ?trackID track_tag tag_name .</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">UNION</span></span><br><span class="line">    &#123;</span><br><span class="line">        ?trackID track_tag tag_name2 .</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用FILTER对结果进行过滤<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT (count(?trackID ) as ?num)</span><br><span class="line">WHERE &#123;</span><br><span class="line">    ?trackID track_tag ?trag_name</span><br><span class="line">   <span class="built_in"> FILTER </span>(?tag_name = tag_name1 ||</span><br><span class="line">           ?tag_name = tag_name2)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ASK来询问是否存在,回答结果只有True或False<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ASK</span><br><span class="line">&#123;</span><br><span class="line">    ?trackID track_name ?track_name .</span><br><span class="line">   <span class="built_in"> FILTER </span>regex(?track_name,‖xx‖)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用INSERT DATA操作，对数据的属性和事例进行添加<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">INSERT</span> DATA</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">artistID</span> artist_name artist_name .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用WHERE定位，DELETE删除事例<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELETE</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">artistID</span> artist_name ?x .</span><br><span class="line">&#125;</span><br><span class="line">WHERE</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">artistID</span> artist_name ?x .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Apache-Jena"><a href="#Apache-Jena" class="headerlink" title="Apache Jena"></a>Apache Jena</h3><p>Jena是一个开源的Java语义网框架（open source Semantic Web Framework for Java），用于构建语义网和链接数据应用。</p>
+<p><img src="jena-architecture.png" alt="Jena 架构图"><span class="image-caption-center">Jena 架构图</span></p>
+<p>TDB是Jena用于存储RDF的组件（Native Tuple Store），是属于存储层面的技术。在单机情况下，它能够提供非常高的RDF存储性能。目前TDB的最新版本是TDB2，且与TDB1不兼容。</p>
+<p>Jena提供了RDFS、OWL和通用规则推理机。其实Jena的RDFS和OWL推理机也是通过Jena自身的通用规则推理机实现的。</p>
+<p>Fuseki是Jena提供的SPARQL服务器，也就是SPARQL Endpoint。其提供了四种运行模式：单机运行、作为系统的一个服务运行、作为web应用运行或者作为一个嵌入式服务器运行。</p>
+<p>RDF triples and graphs, and their various components, are accessed through Jena’s RDF API. Typical abstractions here are <code>Resource</code> representing an RDF resource (whether named with a URI or anonymous), <code>Literal</code> for data values (numbers, strings, dates, etc), <code>Statement</code> representing an RDF triple and Model representing the whole graph. The RDF API has basic facilities for adding and removing triples to graphs and finding triples that match particular patterns.<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena Architecture](https://jena.apache.org/about_jena/architecture.html)
+">[3]</span></a></sup></p>
+<p>在下载完apache-jena后，进入 Jena 文件夹的 bin/，运行：</p>
+<blockquote>
+<p>./tdbloader —loc=”../tdb/“ “path/to/NTriples”</p>
+</blockquote>
+<p>将 NTriples 加载到TDB中。其中 –loc 指定 tdb的存储位置。第二个参数是我们通过d2rq等工具生成的nt文件。</p>
+<p>常用API参见以下，更多参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena APIs](https://jena.apache.org/tutorials/rdf_api.html)
+">[4]</span></a></sup>。</p>
+<h4 id="Creating-RDFs"><a href="#Creating-RDFs" class="headerlink" title="Creating RDFs"></a>Creating RDFs</h4><p><img src="example_jena_resource.png" alt="Jena创建RDF示例"><span class="image-caption-center">Jena创建RDF示例</span></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// some definitions</span></span><br><span class="line">String personURI    = <span class="string">"http://somewhere/JohnSmith"</span>;</span><br><span class="line">String givenName    = <span class="string">"John"</span>;</span><br><span class="line">String familyName   = <span class="string">"Smith"</span>;</span><br><span class="line">String fullName     = givenName + <span class="string">" "</span> + familyName;</span><br><span class="line"></span><br><span class="line"><span class="comment">// create an empty Model</span></span><br><span class="line">Model model = ModelFactory.createDefaultModel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// create the resource</span></span><br><span class="line"><span class="comment">//   and add the properties cascading style</span></span><br><span class="line">Resource johnSmith</span><br><span class="line">  = model.createResource(personURI)</span><br><span class="line">         .addProperty(VCARD.FN, fullName)</span><br><span class="line">         .addProperty(VCARD.N,</span><br><span class="line">                      model.createResource()</span><br><span class="line">                           .addProperty(VCARD.Given, givenName)</span><br><span class="line">                           .addProperty(VCARD.Family, familyName));</span><br></pre></td></tr></table></figure>
+<h4 id="Statements"><a href="#Statements" class="headerlink" title="Statements"></a>Statements</h4><p>An RDF Model is represented as a set of statements. Because a Model is set of statements, adding a duplicate of a statement has no effect.<br>The Jena model interface defines a <code>listStatements()</code> method which returns an <code>StmtIterator</code>, a subtype of Java’s Iterator over all the statements in a Model.<code>StmtIterator</code> has a method <code>nextStatement()</code> which returns the next statement from the iterator (the same one that next() would deliver, already cast to Statement).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// list the statements in the Model</span></span><br><span class="line">StmtIterator iter = model.listStatements();</span><br><span class="line"></span><br><span class="line"><span class="comment">// print out the predicate, subject and object of each statement</span></span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;</span><br><span class="line">    Statement stmt      = iter.nextStatement();  <span class="comment">// get next statement</span></span><br><span class="line">    Resource  subject   = stmt.getSubject();     <span class="comment">// get the subject</span></span><br><span class="line">    Property  predicate = stmt.getPredicate();   <span class="comment">// get the predicate</span></span><br><span class="line">    RDFNode   object    = stmt.getObject();      <span class="comment">// get the object</span></span><br><span class="line"></span><br><span class="line">    System.out.print(subject.toString());</span><br><span class="line">    System.out.print(<span class="string">" "</span> + predicate.toString() + <span class="string">" "</span>);</span><br><span class="line">    <span class="keyword">if</span> (object <span class="keyword">instanceof</span> Resource) &#123;</span><br><span class="line">       System.out.print(object.toString());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// object is a literal</span></span><br><span class="line">        System.out.print(<span class="string">" \""</span> + object.toString() + <span class="string">"\""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">" ."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Write-and-Read"><a href="#Write-and-Read" class="headerlink" title="Write and Read"></a>Write and Read</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// now write the model in XML form to a file</span></span><br><span class="line">model.write(System.out);</span><br><span class="line"></span><br><span class="line"><span class="comment">// now write the model in XML form to a file</span></span><br><span class="line">model.write(System.out, <span class="string">"RDF/XML-ABBREV"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// now write the model in N-TRIPLES form to a file</span></span><br><span class="line">model.write(System.out, <span class="string">"N-TRIPLES"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create an empty model</span></span><br><span class="line">Model model = ModelFactory.createDefaultModel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// use the FileManager to find the input file</span></span><br><span class="line">InputStream in = FileManager.get().open( inputFileName );</span><br><span class="line"><span class="keyword">if</span> (in == <span class="keyword">null</span>) &#123;</span><br><span class="line">   <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</span><br><span class="line">                                <span class="string">"File: "</span> + inputFileName + <span class="string">" not found"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// read the RDF/XML file The second argument to the read() method call is the URI which will be used for resolving relative URI's.</span></span><br><span class="line">model.read(in, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// write it to standard out</span></span><br><span class="line">model.write(System.out);</span><br></pre></td></tr></table></figure>
+<h4 id="Navigating-a-Model"><a href="#Navigating-a-Model" class="headerlink" title="Navigating a Model"></a>Navigating a Model</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// retrieve the John Smith vcard resource from the model</span></span><br><span class="line">Resource vcard = model.getResource(johnSmithURI);</span><br><span class="line"></span><br><span class="line"><span class="comment">// retrieve the value of the N property</span></span><br><span class="line">Resource name = (Resource) vcard.getProperty(VCARD.N)</span><br><span class="line">                                .getObject();</span><br><span class="line"></span><br><span class="line"><span class="comment">// retrieve the value of the N property</span></span><br><span class="line">Resource name = vcard.getProperty(VCARD.N)</span><br><span class="line">                                .getResource();</span><br><span class="line"></span><br><span class="line"><span class="comment">// retrieve the given name property</span></span><br><span class="line">String fullName = vcard.getProperty(VCARD.FN)</span><br><span class="line">                                .getString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// add two nickname properties to vcard</span></span><br><span class="line">vcard.addProperty(VCARD.NICKNAME, <span class="string">"Smithy"</span>)</span><br><span class="line">     .addProperty(VCARD.NICKNAME, <span class="string">"Adman"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// list the nicknames</span></span><br><span class="line">StmtIterator iter = vcard.listProperties(VCARD.NICKNAME);</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;</span><br><span class="line">      System.out.println(<span class="string">"    "</span> + iter.nextStatement()</span><br><span class="line">                                .getObject()</span><br><span class="line">                                .toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Querying-a-Model"><a href="#Querying-a-Model" class="headerlink" title="Querying a Model"></a>Querying a Model</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//select all statements with a subject that matches subject, a predicate that matches predicate and an object that matches object</span></span><br><span class="line">Selector selector = <span class="keyword">new</span> SimpleSelector(subject, predicate, object);</span><br><span class="line"></span><br><span class="line"><span class="comment">// only predicate takes effect</span></span><br><span class="line">Selector selector = <span class="keyword">new</span> SimpleSelector(<span class="keyword">null</span>, VCARD.FN, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p><code>listStatements( S, P, O )</code> is equivalent to <code>listStatements( new SimpleSelector( S, P, O ) )</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// select all the resources with a VCARD.FN property</span></span><br><span class="line"><span class="comment">// whose value ends with "Smith"</span></span><br><span class="line">StmtIterator iter = model.listStatements(</span><br><span class="line">    <span class="keyword">new</span> SimpleSelector(<span class="keyword">null</span>, VCARD.FN, (RDFNode) <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">selects</span><span class="params">(Statement s)</span></span></span><br><span class="line"><span class="function">            </span>&#123;<span class="keyword">return</span> s.getString().endsWith(<span class="string">"Smith"</span>);&#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="Model-Operations"><a href="#Model-Operations" class="headerlink" title="Model Operations"></a>Model Operations</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// read the RDF/XML files</span></span><br><span class="line">model1.read(<span class="keyword">new</span> InputStreamReader(in1), <span class="string">""</span>);</span><br><span class="line">model2.read(<span class="keyword">new</span> InputStreamReader(in2), <span class="string">""</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge the Models</span></span><br><span class="line">Model model = model1.union(model2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// print the Model as RDF/XML</span></span><br><span class="line">model.write(system.out, <span class="string">"RDF/XML-ABBREV"</span>);</span><br></pre></td></tr></table></figure>
+<p>The intersection and difference of the Models can be computed in a similar manner, using the methods <code>.intersection(Model)</code> and <code>.difference(Model)</code>.</p>
+<h4 id="Containers"><a href="#Containers" class="headerlink" title="Containers"></a>Containers</h4><p>RDF defines a special kind of resources for representing collections of things. These resources are called containers. The members of a container can be either literals or resources. There are three kinds of container:</p>
+<ul>
+<li>a BAG is an unordered collection</li>
+<li>an ALT is an unordered collection intended to represent alternatives</li>
+<li>a SEQ is an ordered collection</li>
+</ul>
+<h4 id="Literal-and-Datatypes"><a href="#Literal-and-Datatypes" class="headerlink" title="Literal and Datatypes"></a>Literal and Datatypes</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create the resource</span></span><br><span class="line">Resource r = model.createResource();</span><br><span class="line"></span><br><span class="line"><span class="comment">// add the property</span></span><br><span class="line">r.addProperty(RDFS.label, model.createLiteral(<span class="string">"chat"</span>, <span class="string">"en"</span>))</span><br><span class="line"> .addProperty(RDFS.label, model.createLiteral(<span class="string">"chat"</span>, <span class="string">"fr"</span>))</span><br><span class="line"> .addProperty(RDFS.label, model.createLiteral(<span class="string">"&lt;em&gt;chat&lt;/em&gt;"</span>, <span class="keyword">true</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// write out the Model</span></span><br><span class="line">model.write(system.out);</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rdf:RDF</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:rdf</span>=<span class="string">'http://www.w3.org/1999/02/22-rdf-syntax-ns#'</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:rdfs</span>=<span class="string">'http://www.w3.org/2000/01/rdf-schema#'</span></span></span><br><span class="line"><span class="tag"> &gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rdf:Description</span> <span class="attr">rdf:nodeID</span>=<span class="string">"A0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rdfs:label</span> <span class="attr">xml:lang</span>=<span class="string">'en'</span>&gt;</span>chat<span class="tag">&lt;/<span class="name">rdfs:label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rdfs:label</span> <span class="attr">xml:lang</span>=<span class="string">'fr'</span>&gt;</span>chat<span class="tag">&lt;/<span class="name">rdfs:label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rdfs:label</span> <span class="attr">rdf:parseType</span>=<span class="string">'Literal'</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>chat<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;/<span class="name">rdfs:label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">rdf:Description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">rdf:RDF</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Apache-Jena-Fuseki"><a href="#Apache-Jena-Fuseki" class="headerlink" title="Apache Jena Fuseki"></a>Apache Jena Fuseki</h3><p>Fuseki是一个SPARQL服务器。它通过HTTP提供使用SPARQL协议的REST式SPARQL HTTP更新，SPARQL查询和SPARQL更新。</p>
+<p>Fuseki通过Apache Shiro保证安全性，并且提供了一个用户接口用以服务监控和管理。</p>
+<p>Fuseki是基于SPARQL 1.1版本的协议，以及SPARQL图存储协议，进行查询和修改操作。Fuseki是与TDB高度集成的服务，不仅集成了Jena文本查询和Jena空间查询，还提供了一个稳健的业务持久化存储层。对于其他RDF查询和存储系统来说，Fuseki可被用来提供协议引擎。</p>
+<h4 id="数据导入"><a href="#数据导入" class="headerlink" title="数据导入"></a>数据导入</h4><p>数据导入分为两种方式，第一种是通过Fuseki的手动导入，第二种是通过TDB进行导入,对应的命令如下:</p>
+<blockquote>
+<p>/jena-fuseki/tdbloader —loc=/jena-fuseki/data filename</p>
+</blockquote>
+<p>数据导入后就可以启动Fuseki了，对应的命令如下:</p>
+<blockquote>
+<p>/jena-fuseki/fuseki-server —loc=/jena-fuseki/data —update /alias_name</p>
+</blockquote>
+<p>对于大规模的批量数据，在linux/OSX下可以使用jena带的tdbloader2这个bash脚本来执行bluk load</p>
+<blockquote>
+<p>tdbloader2 —loc=/jena-fuseki/data file1 files2 …</p>
+</blockquote>
+<h4 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h4><p>在apache-jena-fuseki文件夹下，用命令行输入命令<code>java -jar fuseki-server.jar</code>，启动Fuseki服务。</p>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/" target="_blank" rel="noopener">rdb-direct-mapping</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/" target="_blank" rel="noopener">R2RML</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/about_jena/architecture.html" target="_blank" rel="noopener">Jena Architecture</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/tutorials/rdf_api.html" target="_blank" rel="noopener">Jena APIs</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.jianshu.com/p/147209ffb49b" target="_blank" rel="noopener">Fuseki安装</a><a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://zhuanlan.zhihu.com/p/57202859" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/57202859</a><a href="#fnref:6" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/图谱实践笔记3/" data-toggle="tooltip" data-placement="left" title="图谱实践笔记3 - GeoSPARQL">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/图谱实践笔记1/" data-toggle="tooltip" data-placement="top" title="图谱实践笔记1 - 基本概念">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RDBMS-to-RDF"><span class="toc-text">RDBMS to RDF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图数据库"><span class="toc-text">图数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPARQL"><span class="toc-text">SPARQL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SPARQL-Endpoint"><span class="toc-text">SPARQL Endpoint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPARQL-Wrapper"><span class="toc-text">SPARQL Wrapper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPARQL语法"><span class="toc-text">SPARQL语法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache-Jena"><span class="toc-text">Apache Jena</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Creating-RDFs"><span class="toc-text">Creating RDFs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Statements"><span class="toc-text">Statements</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Write-and-Read"><span class="toc-text">Write and Read</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Navigating-a-Model"><span class="toc-text">Navigating a Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Querying-a-Model"><span class="toc-text">Querying a Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Model-Operations"><span class="toc-text">Model Operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Containers"><span class="toc-text">Containers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Literal-and-Datatypes"><span class="toc-text">Literal and Datatypes</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache-Jena-Fuseki"><span class="toc-text">Apache Jena Fuseki</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据导入"><span class="toc-text">数据导入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务启动"><span class="toc-text">服务启动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展阅读"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:lihuancs@zju.edu.cn" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2020
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                97.1k <b>Words</b>
+        </p></div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search...">
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
