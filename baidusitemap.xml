@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B04/</loc>
+    <lastmod>2020-03-22T21:01:46.009Z</lastmod>
+    <data>
+        <display>
+        <title>图谱实践笔记4 - OpenKE</title>
+        <pubTime>2020-03-22T06:27:09.000Z</pubTime>
+        
+        <tag>KG Embedding</tag>
+         
+        <tag>OpenKE</tag>
+         
+         
+           
+             
+              <breadCrumb title="KG" url="https://longaspire.github.io/blog/blog/categories/KG/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02/</loc>
     <lastmod>2020-03-22T20:29:13.809Z</lastmod>
     <data>
@@ -13,9 +35,9 @@
         
         <tag>RDF</tag>
          
-        <tag>RDFS</tag>
-         
         <tag>SPARQL</tag>
+         
+        <tag>RDFS</tag>
          
         <tag>Graph Database</tag>
          
@@ -130,15 +152,15 @@
         <title>图谱实践笔记1 - 基本概念</title>
         <pubTime>2020-03-20T02:27:09.000Z</pubTime>
         
+        <tag>RDF</tag>
+         
+        <tag>RDFS</tag>
+         
         <tag>Semantic Web</tag>
          
         <tag>Linked Data</tag>
          
         <tag>Knowledge Graph</tag>
-         
-        <tag>RDF</tag>
-         
-        <tag>RDFS</tag>
          
         <tag>OWL</tag>
          
@@ -234,6 +256,30 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning1/</loc>
+    <lastmod>2019-05-13T19:12:12.823Z</lastmod>
+    <data>
+        <display>
+        <title>谈谈Metric Learning (I)</title>
+        <pubTime>2015-06-03T02:41:01.000Z</pubTime>
+        
+        <tag>距离度量</tag>
+         
+        <tag>Metric Learning</tag>
+         
+        <tag>KL散度</tag>
+         
+         
+           
+             
+              <breadCrumb title="谈谈Metric Learning" url="https://longaspire.github.io/blog/blog/categories/%E8%B0%88%E8%B0%88Metric-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning3/</loc>
     <lastmod>2019-05-13T19:12:12.823Z</lastmod>
     <data>
@@ -252,30 +298,6 @@
         <tag>ITML</tag>
          
         <tag>LogDet</tag>
-         
-         
-           
-             
-              <breadCrumb title="谈谈Metric Learning" url="https://longaspire.github.io/blog/blog/categories/%E8%B0%88%E8%B0%88Metric-Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning1/</loc>
-    <lastmod>2019-05-13T19:12:12.823Z</lastmod>
-    <data>
-        <display>
-        <title>谈谈Metric Learning (I)</title>
-        <pubTime>2015-06-03T02:41:01.000Z</pubTime>
-        
-        <tag>距离度量</tag>
-         
-        <tag>Metric Learning</tag>
-         
-        <tag>KL散度</tag>
          
          
            
@@ -312,19 +334,19 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://longaspire.github.io/blog/blog/%E8%AF%97/</loc>
     <lastmod>2019-05-13T19:12:12.822Z</lastmod>
     <data>
         <display>
-        <title>终极算法读书笔记</title>
-        <pubTime>2018-05-14T12:21:02.000Z</pubTime>
+        <title>律诗 · 五首</title>
+        <pubTime>2018-05-12T07:26:07.000Z</pubTime>
         
-        <tag>机器学习</tag>
+        <tag>诗作</tag>
          
          
            
              
-              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
+              <breadCrumb title="文字" url="https://longaspire.github.io/blog/blog/categories/%E6%96%87%E5%AD%97/"/>
           
         </display>
     </data>
@@ -352,19 +374,19 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E8%AF%97/</loc>
+    <loc>https://longaspire.github.io/blog/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2019-05-13T19:12:12.822Z</lastmod>
     <data>
         <display>
-        <title>律诗 · 五首</title>
-        <pubTime>2018-05-12T07:26:07.000Z</pubTime>
+        <title>终极算法读书笔记</title>
+        <pubTime>2018-05-14T12:21:02.000Z</pubTime>
         
-        <tag>诗作</tag>
+        <tag>机器学习</tag>
          
          
            
              
-              <breadCrumb title="文字" url="https://longaspire.github.io/blog/blog/categories/%E6%96%87%E5%AD%97/"/>
+              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
           
         </display>
     </data>
@@ -427,9 +449,9 @@
         
         <tag>概率推断</tag>
          
-        <tag>无向图</tag>
-         
         <tag>变分推断</tag>
+         
+        <tag>无向图</tag>
          
         <tag>有向无环图</tag>
          
@@ -705,28 +727,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/introduction-to-latex/</loc>
-    <lastmod>2019-05-13T19:12:12.654Z</lastmod>
-    <data>
-        <display>
-        <title>Introduction to Latex</title>
-        <pubTime>2013-04-18T02:37:00.000Z</pubTime>
-        
-        <tag>Latex</tag>
-         
-        <tag>教程</tag>
-         
-         
-           
-             
-              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/%E5%8A%A8%E6%80%81%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
@@ -755,21 +755,21 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/vita/</loc>
+    <loc>https://longaspire.github.io/blog/blog/introduction-to-latex/</loc>
     <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
         <display>
-        <title>Vita: A Versatile Toolkit for Generating Indoor Mobility Data for Real-World Buildings</title>
-        <pubTime>2016-05-18T05:10:16.000Z</pubTime>
+        <title>Introduction to Latex</title>
+        <pubTime>2013-04-18T02:37:00.000Z</pubTime>
         
-        <tag>Demo</tag>
+        <tag>Latex</tag>
          
-        <tag>VLDB</tag>
+        <tag>教程</tag>
          
          
            
              
-              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
+              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
           
         </display>
     </data>
@@ -799,25 +799,21 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/</loc>
-    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
+    <loc>https://longaspire.github.io/blog/blog/vita/</loc>
+    <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
         <display>
-        <title>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</title>
-        <pubTime>2013-05-30T11:26:41.000Z</pubTime>
+        <title>Vita: A Versatile Toolkit for Generating Indoor Mobility Data for Real-World Buildings</title>
+        <pubTime>2016-05-18T05:10:16.000Z</pubTime>
         
-        <tag>工具</tag>
+        <tag>Demo</tag>
          
-        <tag>Mac OS</tag>
-         
-        <tag>Matplotlib</tag>
-         
-        <tag>Python</tag>
+        <tag>VLDB</tag>
          
          
            
              
-              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
+              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
           
         </display>
     </data>
@@ -873,6 +869,32 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/</loc>
+    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
+    <data>
+        <display>
+        <title>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</title>
+        <pubTime>2013-05-30T11:26:41.000Z</pubTime>
+        
+        <tag>工具</tag>
+         
+        <tag>Mac OS</tag>
+         
+        <tag>Matplotlib</tag>
+         
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/</loc>
     <lastmod>2019-05-13T19:12:12.652Z</lastmod>
     <data>
@@ -899,6 +921,26 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/Latex%E4%B9%A6%E5%86%99%E8%AF%AF%E5%8C%BA/</loc>
+    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <data>
+        <display>
+        <title>Latex书写误区</title>
+        <pubTime>2018-05-14T11:29:49.000Z</pubTime>
+        
+        <tag>Latex</tag>
+         
+         
+           
+             
+              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%951/</loc>
     <lastmod>2019-05-13T19:12:12.652Z</lastmod>
     <data>
@@ -918,26 +960,6 @@
            
              
               <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/Latex%E4%B9%A6%E5%86%99%E8%AF%AF%E5%8C%BA/</loc>
-    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
-    <data>
-        <display>
-        <title>Latex书写误区</title>
-        <pubTime>2018-05-14T11:29:49.000Z</pubTime>
-        
-        <tag>Latex</tag>
-         
-         
-           
-             
-              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
           
         </display>
     </data>
