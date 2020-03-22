@@ -23,8 +23,8 @@
       </categories>
       <tags>
         <tag>RDF</tag>
-        <tag>RDFS</tag>
         <tag>SPARQL</tag>
+        <tag>RDFS</tag>
         <tag>Graph Database</tag>
         <tag>Jena</tag>
         <tag>Fuseki</tag>
@@ -39,11 +39,11 @@
         <category>KG</category>
       </categories>
       <tags>
+        <tag>RDF</tag>
+        <tag>RDFS</tag>
         <tag>Semantic Web</tag>
         <tag>Linked Data</tag>
         <tag>Knowledge Graph</tag>
-        <tag>RDF</tag>
-        <tag>RDFS</tag>
         <tag>OWL</tag>
       </tags>
   </entry>
@@ -69,10 +69,10 @@
       </categories>
       <tags>
         <tag>概率推断</tag>
+        <tag>动态系统</tag>
+        <tag>马尔科夫链</tag>
         <tag>贝叶斯定理</tag>
         <tag>有向无环图</tag>
-        <tag>马尔科夫链</tag>
-        <tag>动态系统</tag>
       </tags>
   </entry>
   <entry>
@@ -166,8 +166,8 @@
       </categories>
       <tags>
         <tag>卡尔曼滤波</tag>
-        <tag>马尔科夫链</tag>
         <tag>动态系统</tag>
+        <tag>马尔科夫链</tag>
         <tag>高斯白噪声</tag>
         <tag>概率图模型</tag>
         <tag>滤波技术</tag>
@@ -195,9 +195,9 @@
       </categories>
       <tags>
         <tag>概率推断</tag>
-        <tag>无向图</tag>
         <tag>变分推断</tag>
         <tag>有向无环图</tag>
+        <tag>无向图</tag>
         <tag>概率参数估计</tag>
         <tag>MCMC采样</tag>
       </tags>
@@ -210,8 +210,8 @@
         <category>概率图模型</category>
       </categories>
       <tags>
-        <tag>因子图</tag>
         <tag>无向图</tag>
+        <tag>因子图</tag>
         <tag>贝叶斯网络</tag>
         <tag>条件随机场</tag>
         <tag>马尔科夫随机场</tag>

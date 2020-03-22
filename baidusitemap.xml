@@ -4,6 +4,66 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%BA%A6%E9%87%8F%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-03-22T19:13:42.361Z</lastmod>
+    <data>
+        <display>
+        <title>相似性度量笔记</title>
+        <pubTime>2013-04-18T08:12:10.000Z</pubTime>
+        
+        <tag>Hash</tag>
+         
+        <tag>Index</tag>
+         
+        <tag>距离度量</tag>
+         
+        <tag>simhash</tag>
+         
+        <tag>minhash</tag>
+         
+         
+           
+             
+              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://longaspire.github.io/blog/blog/%E5%9B%A0%E5%AD%90%E5%9B%BE%E4%BB%8B%E7%BB%8D/</loc>
+    <lastmod>2020-03-22T19:13:39.170Z</lastmod>
+    <data>
+        <display>
+        <title>因子图介绍</title>
+        <pubTime>2016-05-11T06:11:56.000Z</pubTime>
+        
+        <tag>无向图</tag>
+         
+        <tag>因子图</tag>
+         
+        <tag>贝叶斯网络</tag>
+         
+        <tag>条件随机场</tag>
+         
+        <tag>马尔科夫随机场</tag>
+         
+        <tag>边缘化</tag>
+         
+        <tag>Sum-product</tag>
+         
+         
+           
+             
+              <breadCrumb title="概率图模型" url="https://longaspire.github.io/blog/blog/categories/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B03/</loc>
     <lastmod>2020-03-22T16:03:39.457Z</lastmod>
     <data>
@@ -38,15 +98,15 @@
         <title>图谱实践笔记1 - 基本概念</title>
         <pubTime>2020-03-20T02:27:09.000Z</pubTime>
         
+        <tag>RDF</tag>
+         
+        <tag>RDFS</tag>
+         
         <tag>Semantic Web</tag>
          
         <tag>Linked Data</tag>
          
         <tag>Knowledge Graph</tag>
-         
-        <tag>RDF</tag>
-         
-        <tag>RDFS</tag>
          
         <tag>OWL</tag>
          
@@ -70,9 +130,9 @@
         
         <tag>RDF</tag>
          
-        <tag>RDFS</tag>
-         
         <tag>SPARQL</tag>
+         
+        <tag>RDFS</tag>
          
         <tag>Graph Database</tag>
          
@@ -126,32 +186,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning4/</loc>
-    <lastmod>2019-05-13T19:12:12.824Z</lastmod>
-    <data>
-        <display>
-        <title>谈谈Metric Learning (IV): ITML进阶</title>
-        <pubTime>2015-06-10T11:00:23.000Z</pubTime>
-        
-        <tag>Metric Learning</tag>
-         
-        <tag>优化</tag>
-         
-        <tag>Kernelization</tag>
-         
-        <tag>在线学习</tag>
-         
-         
-           
-             
-              <breadCrumb title="谈谈Metric Learning" url="https://longaspire.github.io/blog/blog/categories/%E8%B0%88%E8%B0%88Metric-Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1IPC/</loc>
     <lastmod>2019-05-13T19:12:12.824Z</lastmod>
     <data>
@@ -174,18 +208,20 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning2/</loc>
-    <lastmod>2019-05-13T19:12:12.823Z</lastmod>
+    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning4/</loc>
+    <lastmod>2019-05-13T19:12:12.824Z</lastmod>
     <data>
         <display>
-        <title>谈谈Metric Learning (II)</title>
-        <pubTime>2015-06-03T04:04:04.000Z</pubTime>
+        <title>谈谈Metric Learning (IV): ITML进阶</title>
+        <pubTime>2015-06-10T11:00:23.000Z</pubTime>
         
-        <tag>距离度量</tag>
-         
         <tag>Metric Learning</tag>
          
         <tag>优化</tag>
+         
+        <tag>Kernelization</tag>
+         
+        <tag>在线学习</tag>
          
          
            
@@ -222,6 +258,30 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning2/</loc>
+    <lastmod>2019-05-13T19:12:12.823Z</lastmod>
+    <data>
+        <display>
+        <title>谈谈Metric Learning (II)</title>
+        <pubTime>2015-06-03T04:04:04.000Z</pubTime>
+        
+        <tag>距离度量</tag>
+         
+        <tag>Metric Learning</tag>
+         
+        <tag>优化</tag>
+         
+         
+           
+             
+              <breadCrumb title="谈谈Metric Learning" url="https://longaspire.github.io/blog/blog/categories/%E8%B0%88%E8%B0%88Metric-Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E8%B0%88%E8%B0%88Metric%20Learning3/</loc>
     <lastmod>2019-05-13T19:12:12.823Z</lastmod>
     <data>
@@ -245,26 +305,6 @@
            
              
               <breadCrumb title="谈谈Metric Learning" url="https://longaspire.github.io/blog/blog/categories/%E8%B0%88%E8%B0%88Metric-Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2019-05-13T19:12:12.822Z</lastmod>
-    <data>
-        <display>
-        <title>终极算法读书笔记</title>
-        <pubTime>2018-05-14T12:21:02.000Z</pubTime>
-        
-        <tag>机器学习</tag>
-         
-         
-           
-             
-              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
           
         </display>
     </data>
@@ -312,6 +352,26 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2019-05-13T19:12:12.822Z</lastmod>
+    <data>
+        <display>
+        <title>终极算法读书笔记</title>
+        <pubTime>2018-05-14T12:21:02.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E7%90%86%E8%A7%A3%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</loc>
     <lastmod>2019-05-13T19:12:12.820Z</lastmod>
     <data>
@@ -329,34 +389,6 @@
            
              
               <breadCrumb title="OS" url="https://longaspire.github.io/blog/blog/categories/OS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%BA%A6%E9%87%8F%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2019-05-13T19:12:12.820Z</lastmod>
-    <data>
-        <display>
-        <title>相似性度量笔记</title>
-        <pubTime>2013-04-18T08:12:10.000Z</pubTime>
-        
-        <tag>Hash</tag>
-         
-        <tag>Index</tag>
-         
-        <tag>距离度量</tag>
-         
-        <tag>simhash</tag>
-         
-        <tag>minhash</tag>
-         
-         
-           
-             
-              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
           
         </display>
     </data>
@@ -395,11 +427,11 @@
         
         <tag>概率推断</tag>
          
-        <tag>无向图</tag>
-         
         <tag>变分推断</tag>
          
         <tag>有向无环图</tag>
+         
+        <tag>无向图</tag>
          
         <tag>概率参数估计</tag>
          
@@ -568,38 +600,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E5%9B%A0%E5%AD%90%E5%9B%BE%E4%BB%8B%E7%BB%8D/</loc>
-    <lastmod>2019-05-13T19:12:12.673Z</lastmod>
-    <data>
-        <display>
-        <title>因子图介绍</title>
-        <pubTime>2016-05-11T06:11:56.000Z</pubTime>
-        
-        <tag>因子图</tag>
-         
-        <tag>无向图</tag>
-         
-        <tag>贝叶斯网络</tag>
-         
-        <tag>条件随机场</tag>
-         
-        <tag>马尔科夫随机场</tag>
-         
-        <tag>边缘化</tag>
-         
-        <tag>Sum-product</tag>
-         
-         
-           
-             
-              <breadCrumb title="概率图模型" url="https://longaspire.github.io/blog/blog/categories/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2019-05-13T19:12:12.672Z</lastmod>
     <data>
@@ -635,9 +635,9 @@
         
         <tag>卡尔曼滤波</tag>
          
-        <tag>马尔科夫链</tag>
-         
         <tag>动态系统</tag>
+         
+        <tag>马尔科夫链</tag>
          
         <tag>高斯白噪声</tag>
          
@@ -705,21 +705,27 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/trips/</loc>
+    <loc>https://longaspire.github.io/blog/blog/%E5%8A%A8%E6%80%81%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
         <display>
-        <title>TRIPS: Translating Raw Indoor Positioning Data into Visual Mobility Semantics</title>
-        <pubTime>2018-03-02T03:16:57.000Z</pubTime>
+        <title>动态贝叶斯网络</title>
+        <pubTime>2018-05-17T01:04:51.000Z</pubTime>
         
-        <tag>Demo</tag>
+        <tag>概率推断</tag>
          
-        <tag>VLDB</tag>
+        <tag>动态系统</tag>
+         
+        <tag>马尔科夫链</tag>
+         
+        <tag>贝叶斯定理</tag>
+         
+        <tag>有向无环图</tag>
          
          
            
              
-              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
+              <breadCrumb title="概率图模型" url="https://longaspire.github.io/blog/blog/categories/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/"/>
           
         </display>
     </data>
@@ -749,27 +755,21 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E5%8A%A8%E6%80%81%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://longaspire.github.io/blog/blog/trips/</loc>
     <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
         <display>
-        <title>动态贝叶斯网络</title>
-        <pubTime>2018-05-17T01:04:51.000Z</pubTime>
+        <title>TRIPS: Translating Raw Indoor Positioning Data into Visual Mobility Semantics</title>
+        <pubTime>2018-03-02T03:16:57.000Z</pubTime>
         
-        <tag>概率推断</tag>
+        <tag>Demo</tag>
          
-        <tag>贝叶斯定理</tag>
-         
-        <tag>有向无环图</tag>
-         
-        <tag>马尔科夫链</tag>
-         
-        <tag>动态系统</tag>
+        <tag>VLDB</tag>
          
          
            
              
-              <breadCrumb title="概率图模型" url="https://longaspire.github.io/blog/blog/categories/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/"/>
+              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
           
         </display>
     </data>
@@ -792,32 +792,6 @@
            
              
               <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%954/</loc>
-    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
-    <data>
-        <display>
-        <title>OpenWRT学习随录 (IV): iw</title>
-        <pubTime>2015-07-24T01:43:00.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>无线</tag>
-         
-        <tag>802.11</tag>
-         
-        <tag>iw</tag>
-         
-         
-           
-             
-              <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
           
         </display>
     </data>
@@ -851,16 +825,20 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%953/</loc>
+    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%954/</loc>
     <lastmod>2019-05-13T19:12:12.653Z</lastmod>
     <data>
         <display>
-        <title>OpenWRT学习随录 (III): OpenWRT运行C</title>
-        <pubTime>2015-07-22T05:00:36.000Z</pubTime>
+        <title>OpenWRT学习随录 (IV): iw</title>
+        <pubTime>2015-07-24T01:43:00.000Z</pubTime>
         
         <tag>Linux</tag>
          
         <tag>无线</tag>
+         
+        <tag>802.11</tag>
+         
+        <tag>iw</tag>
          
          
            
@@ -873,42 +851,14 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/</loc>
-    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%953/</loc>
+    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
     <data>
         <display>
-        <title>LSH那些事儿 (IV): p-stable LSH</title>
-        <pubTime>2013-05-06T03:41:46.000Z</pubTime>
-        
-        <tag>Hash</tag>
-         
-        <tag>Index</tag>
-         
-        <tag>LSH</tag>
-         
-        <tag>距离度量</tag>
-         
-         
-           
-             
-              <breadCrumb title="LSH那些事儿" url="https://longaspire.github.io/blog/blog/categories/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%952/</loc>
-    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
-    <data>
-        <display>
-        <title>OpenWRT学习随录 (II): OpenWRT Buildroot</title>
-        <pubTime>2015-07-22T04:13:07.000Z</pubTime>
+        <title>OpenWRT学习随录 (III): OpenWRT运行C</title>
+        <pubTime>2015-07-22T05:00:36.000Z</pubTime>
         
         <tag>Linux</tag>
-         
-        <tag>嵌入式</tag>
          
         <tag>无线</tag>
          
@@ -949,6 +899,32 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/</loc>
+    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <data>
+        <display>
+        <title>LSH那些事儿 (IV): p-stable LSH</title>
+        <pubTime>2013-05-06T03:41:46.000Z</pubTime>
+        
+        <tag>Hash</tag>
+         
+        <tag>Index</tag>
+         
+        <tag>LSH</tag>
+         
+        <tag>距离度量</tag>
+         
+         
+           
+             
+              <breadCrumb title="LSH那些事儿" url="https://longaspire.github.io/blog/blog/categories/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/Latex%E4%B9%A6%E5%86%99%E8%AF%AF%E5%8C%BA/</loc>
     <lastmod>2019-05-13T19:12:12.652Z</lastmod>
     <data>
@@ -962,6 +938,30 @@
            
              
               <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%952/</loc>
+    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <data>
+        <display>
+        <title>OpenWRT学习随录 (II): OpenWRT Buildroot</title>
+        <pubTime>2015-07-22T04:13:07.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>嵌入式</tag>
+         
+        <tag>无线</tag>
+         
+         
+           
+             
+              <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
           
         </display>
     </data>
@@ -1019,28 +1019,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/HistCite%E4%BB%8B%E7%BB%8D/</loc>
-    <lastmod>2019-05-13T19:12:12.648Z</lastmod>
-    <data>
-        <display>
-        <title>HistCite介绍</title>
-        <pubTime>2013-09-16T02:53:16.000Z</pubTime>
-        
-        <tag>工具</tag>
-         
-        <tag>文献管理</tag>
-         
-         
-           
-             
-              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF1/</loc>
     <lastmod>2019-05-13T19:12:12.648Z</lastmod>
     <data>
@@ -1060,6 +1038,28 @@
            
              
               <breadCrumb title="LSH那些事儿" url="https://longaspire.github.io/blog/blog/categories/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://longaspire.github.io/blog/blog/HistCite%E4%BB%8B%E7%BB%8D/</loc>
+    <lastmod>2019-05-13T19:12:12.648Z</lastmod>
+    <data>
+        <display>
+        <title>HistCite介绍</title>
+        <pubTime>2013-09-16T02:53:16.000Z</pubTime>
+        
+        <tag>工具</tag>
+         
+        <tag>文献管理</tag>
+         
+         
+           
+             
+              <breadCrumb title="科研笔记" url="https://longaspire.github.io/blog/blog/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/"/>
           
         </display>
     </data>
