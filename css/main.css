@@ -136,6 +136,11 @@ legend {
     border: none;
 }
 
+#body_container {
+  width: 100%;
+  overflow: hidden;
+}
+
 /*****************************/
 /* navigation */
 /*****************************/
@@ -940,19 +945,25 @@ footer .copyright {
     font-family: -apple-system, BlinkMacSystemFont, "lucida grande", "lucida sans unicode", lucida, helvetica, "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
 }
 
+.archive-year-container {
+   margin-top: 40px;
+}
+
 .archive-year {
     margin: 20px 10px;
     font-size: 24px;
 }
 
 .archive-month {
-    margin-left: 80px;
+    /* margin-left: 80px; */
+    margin-left: 0px;
     font-size: 20px;
     color: #aaa;
 }
 
 .archive-post-time {
-    margin-left: 120px;
+    /* margin-left: 120px; */
+    margin-left: 0px;
     color: #aaa;
     font-size: 14px;
     line-height: 25px;
@@ -962,7 +973,7 @@ footer .copyright {
 
 .archive-post-title {
     font-size: 16px;
-    margin-left: 60px;
+    margin-left: 20px;
     line-height: 1.6;
     font-weight: normal;
     color: grey;
