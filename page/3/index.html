@@ -160,6 +160,31 @@
 
 
   
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
 </header>
 
 
@@ -172,6 +197,29 @@
 <div class="container homepage">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
+    <a href="/blog/概率图模型总览/">
+        <h2 class="post-title">
+            概率图模型总览
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 15, 2016</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                1. 引言机器学习中最重要的任务，可以看做根据已观测的数据证据（如训练样本）来对感兴趣的未知变量（如分类标签）进行估计和推测。概率图模型（probabilistic graphical model, PGM），是一种学习任务的框架描述，它将学习任务归结为计算变量的概率分布[1]。
+
+推断（inf..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
           
             <div class="post-preview "
      style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
@@ -335,28 +383,6 @@ OpenWRT Buildroot是一个autotools，或者叫buildsystem，用于构建OpenWRT
 <hr>
 
           
-            <div class="post-preview "
-     style="background-image: url('/blog/post_cover_images/firenze.png')">
-    <a href="/blog/谈谈Metric Learning4/">
-        <h2 class="post-title">
-            谈谈Metric Learning (IV): ITML进阶
-        </h2>
-        
-        <div class="post-meta">
-          <span>Jun 10, 2015</span>
-          <span class="meta-item">Updated On May 13, 2019</span>
-        </div>
-        <div class="post-content-preview">
-            <p>
-                1. Kernel Learning问题对于Kernel Learning这个问题，我们可以这样认为：
-给定一个kernel $ K$, 我们在一些点集上同样有constraints，这个时候，为了使得这些点之间的pairwise distance服从constraints的情况，我们需要优化这..
-            </p>
-        </div>
-    </a>
-</div>
-<hr>
-
-          
           <ul class="pager no-print">
     
         <li class="previous"><a href="/blog/page/2/">&larr;  Newer Posts</a></li>
@@ -455,7 +481,7 @@ OpenWRT Buildroot是一个autotools，或者叫buildsystem，用于构建OpenWRT
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                97.8k <b>Words</b>
+                100.3k <b>Words</b>
         </div>
 
         <div class="search-container">

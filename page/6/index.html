@@ -160,6 +160,31 @@
 
 
   
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
 </header>
 
 
@@ -172,6 +197,29 @@
 <div class="container homepage">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')">
+    <a href="/blog/LSH那些事儿2/">
+        <h2 class="post-title">
+            LSH那些事儿 (II): 图说
+        </h2>
+        
+        <div class="post-meta">
+          <span>Apr 18, 2013</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                1. Locality Sensitive Hashing的定义Locality Sensitive Hashing (LSH) 是构造一种Hash函数集 $ { D | R^d \rightarrow U}$，其中$ d $是点的维数，使得对任意的点$ p$，$ q$有
+
+如果$ || p -..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
           
             <div class="post-preview "
      style="background-image: url('/blog/post_cover_images/firenze.png')">
@@ -384,7 +432,7 @@ Excellent for ..
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                97.8k <b>Words</b>
+                100.3k <b>Words</b>
         </div>
 
         <div class="search-container">

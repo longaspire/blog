@@ -141,13 +141,20 @@ legend {
 /*****************************/
 @media only screen and (max-width: 767px) {
     .navbar-default .navbar-collapse {
-        border: none;
+        /* border: none;
         background: white;
         box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px;
         border-radius: 2px;
         width: 170px;
         float: right;
-        margin: 0;
+        margin: 0; */
+        position: absolute;
+        top: 40px;
+        right: 30px;
+        background-color: #fdfdfd;
+        border: 1px solid #e8e8e8;
+        border-radius: 5px;
+        text-align: right;
     }
 
     #website_navbar a {

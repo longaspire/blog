@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/图谱实践笔记2_1/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        图谱实践笔记2番外篇 - SPARQL by Example｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/graphs.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>图谱实践笔记2番外篇 - SPARQL by Example</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Mar 23, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: Mar 24, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#KG"
+                                 title="KG">KG</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#RDF"
+                                 title="RDF">RDF</a>
+                              
+                              <a class="tag" href="/blog/tags/#RDFS"
+                                 title="RDFS">RDFS</a>
+                              
+                              <a class="tag" href="/blog/tags/#SPARQL"
+                                 title="SPARQL">SPARQL</a>
+                              
+                              <a class="tag" href="/blog/tags/#Graph Database"
+                                 title="Graph Database">Graph Database</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2,483 words in total, 13 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本篇是对SPARQL的番外补充；是对于cambridgesemantics教程<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[sparql-nuts-bolts](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/)
+">[1]</span></a></sup>的学习笔记内容。</p>
+</blockquote>
+<h3 id="SPARQL1-0语法"><a href="#SPARQL1-0语法" class="headerlink" title="SPARQL1.0语法"></a>SPARQL1.0语法</h3><p>SPARQL1.0 是一个read-only language，不具有update等进阶功能。</p>
+<h4 id="Graph-Pattern"><a href="#Graph-Pattern" class="headerlink" title="Graph Pattern"></a>Graph Pattern</h4><p>SPARQL可以看做是对Graph Pattern进行匹配，如下为最简单的一个三元组Pattern</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回类型为DBPedia域下WikicatCitiesInTexas的所有subject。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; .</span><br><span class="line">?city dbp:populationTotal ?popTotal .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个query加入了更复杂的限定条件，在复杂化pattern的同时使得搜索结果变少。</p>
+<p>Query也可以使用Turtle的语法，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">      dbp:populationTotal ?popTotal .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意的是第一个语句使用了一个分号分割，而不是句号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal .</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro . &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当对一个属性的过滤是可选时，我们使用OPTINAL语句。</p>
+<blockquote>
+<p>和SQL相比，RDF中没有显式的NULL，因此应对可能缺失的信息时要用OPTINAL来避免过于严苛的过滤。</p>
+</blockquote>
+<h4 id="Solution-Modifiers"><a href="#Solution-Modifiers" class="headerlink" title="Solution Modifiers"></a>Solution Modifiers</h4><p>接下来，介绍一组Solution Modifiers: ORDER BY, LIMIT, OFFSET</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal .</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro . &#125;</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>注意，对某个字段升序或降序要使用desc或者asc关键字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal .</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br><span class="line">LIMIT 10</span><br><span class="line">OFFSET 5</span><br><span class="line"># At most 10 results will be returned, starting with the 5th result.</span><br></pre></td></tr></table></figure>
+<p>LIMIT和OFFSET可以配合使用。</p>
+<h4 id="Remove-Results"><a href="#Remove-Results" class="headerlink" title="Remove Results"></a>Remove Results</h4><p>介绍Filter命令，以下类型的操作是允许的</p>
+<ul>
+<li>Logical: &amp;&amp;, ||, !</li>
+<li>Mathematical: +, -, *, /</li>
+<li>Comparison: =, !=, &lt;, &gt;, &lt;=, &gt;=</li>
+<li>SPARQL tests: isURI, isBlank, isLiteral, bound</li>
+<li>SPARQL accessors: str, lang, datatype</li>
+<li>Other: sameTerm, langMatches, regex</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal .</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro . &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000)</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>一般写在Graph Pattern的后面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro . &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000)</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>与上面的query相比，这个查询多了一个语句，即 rdfs:label ?name。注意，在这个条件加入后，会把不同label name的city放到不同的组里，如果用FILTER条件则筛选变得相对更为严苛。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000 &amp;&amp; langmatches(lang(?name), “EN”))</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>这个语句对两个逻辑申明进行了与操作。FILTER条件也可以等价写为<code>FILTER (?popTotal &gt; 50000 &amp;&amp; lang(?name) = “en”)</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">    OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000 &amp;&amp; langmatches(lang(?name), “EN”) )</span><br><span class="line">FILTER(!bound(?popMetro))</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>这个查询中<code>bound()</code>验证了?popTotal这个变量是否不为空或匹配到了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000)</span><br><span class="line">FILTER (langmatches(lang(?name), “EN”) )</span><br><span class="line">FILTER(!bound(?popMetro))</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>FILTER条件可以并排写成多个。</p>
+<h4 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">&#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000 &amp;&amp; langmatches(lang(?name), “EN”))</span><br><span class="line">&#125;</span><br><span class="line">UNION</span><br><span class="line">    &#123;</span><br><span class="line">        ?city rdf:type &lt;http://dbpedia.org/class/yago/CitiesInCalifornia&gt;;</span><br><span class="line">        dbp:populationTotal ?popTotal ;</span><br><span class="line">        rdfs:label ?name</span><br><span class="line">        OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">        FILTER (?popTotal &gt; 50000 &amp;&amp; langmatches(lang(?name), “EN”))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure>
+<p>以下是上述query的一个简写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">?city dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name</span><br><span class="line">OPTIONAL &#123;?city dbp:populationMetro ?popMetro. &#125;</span><br><span class="line">FILTER (?popTotal &gt; 50000 &amp;&amp; langmatches(lang(?name), “EN”))</span><br><span class="line">&#123; ?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; . &#125;</span><br><span class="line">    UNION</span><br><span class="line">    &#123; ?city rdf:type &lt;http://dbpedia.org/class/yago/CitiesInCalifornia&gt;. &#125;</span><br><span class="line">&#125;</span><br><span class="line">ORDER BY desc(?popTotal)</span><br></pre></td></tr></table></figure></p>
+<h4 id="Named-Graphs-and-the-GRAPH-Clause"><a href="#Named-Graphs-and-the-GRAPH-Clause" class="headerlink" title="Named Graphs and the GRAPH Clause"></a>Named Graphs and the GRAPH Clause</h4><p>定义一个自己的graph，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">SELECT * WHERE &#123;</span><br><span class="line">GRAPH ?g &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; .</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里把匹配的结构放入了一个named graph中。</p>
+<h4 id="ASK"><a href="#ASK" class="headerlink" title="ASK"></a>ASK</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">ASK WHERE &#123;</span><br><span class="line">&lt;http://dbpedia.org/resource/Austin,_Texas&gt;</span><br><span class="line">rdf:type</span><br><span class="line">&lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WHERE条件中是一个graph pattern。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">ASK WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">dbp:populationMetro ?popMetro.</span><br><span class="line">FILTER (?popTotal &gt; 600000 &amp;&amp; ?popMetro &lt; 1800000)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个query具有更为复杂的WHERE条件。</p>
+<h4 id="DESCRIBE"><a href="#DESCRIBE" class="headerlink" title="DESCRIBE"></a>DESCRIBE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESCRIBE &lt;http://dbpedia.org/resource/Austin,_Texas&gt;</span><br></pre></td></tr></table></figure>
+<p>返回描述这个实体的一个subgraph。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">DESCRIBE ?city WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">dbp:populationMetro ?popMetro.</span><br><span class="line">FILTER (?popTotal &gt; 600000 &amp;&amp; ?popMetro &lt; 1800000)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以加入更为复杂的条件。</p>
+<h4 id="CONSTRUCT"><a href="#CONSTRUCT" class="headerlink" title="CONSTRUCT"></a>CONSTRUCT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><br><span class="line">PREFIX dbp: &lt;http://dbpedia.org/ontology/&gt;</span><br><span class="line">CONSTRUCT &#123;</span><br><span class="line">?city rdf:type &lt;http://myvocabulary.com/LargeMetroCitiesInTexas&gt; ;</span><br><span class="line">&lt;http://myvocabulary.com/cityName&gt; ?name ;</span><br><span class="line">&lt;http://myvocabulary.com/totalPopulation&gt; ?popTotal ;</span><br><span class="line">&lt;http://myvocabulary.com/metroPopulation&gt; ?popMetro .</span><br><span class="line">&#125; WHERE &#123;</span><br><span class="line">?city rdf:type &lt;http://dbpedia.org/class/yago/WikicatCitiesInTexas&gt; ;</span><br><span class="line">dbp:populationTotal ?popTotal ;</span><br><span class="line">rdfs:label ?name ;</span><br><span class="line">dbp:populationMetro ?popMetro .</span><br><span class="line">FILTER (?popTotal &gt; 500000 &amp;&amp; langmatches(lang(?name), “EN”))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>允许定义新的vocabulary来构建一个新的图结构。一些新的词汇可以自定义在CONSTRUCT子句中。</p>
+<blockquote>
+<p>For SPARQL endpoints, SELECT and ASK queries return XML (application/sparql-results+xml) as the standard query result format for a SPARQL query. There is also a non-standard JSON syntax.</p>
+<p>Both DESCRIBE and CONSTRUCT return RDF graphs directly, and not in the standard SPARQL query results format. For example, DBpedia will return results in N3.</p>
+</blockquote>
+<h3 id="SPARQL1-1"><a href="#SPARQL1-1" class="headerlink" title="SPARQL1.1"></a>SPARQL1.1</h3><p>SPARQL 1.1包括：</p>
+<ol>
+<li>Aggregates: ability to group results and calculate aggregate values (e.g. count, min, max, avg, sum, …).</li>
+<li>Projected expressions: ability for query results to contain values derived from constants, function calls, or other expressions in the SELECT list.</li>
+<li>Sub-queries: allows a query to be embedded within another.</li>
+<li>Negation: includes two negation operators: NOT EXIST and MINUS</li>
+<li>Update: an update language for RDF</li>
+</ol>
+<p>还有以下高级功能：</p>
+<ol>
+<li>Property paths: query arbitrary length paths of a graph via a regular-expression-like syntax</li>
+<li>Query Federation: ability to split a single query and send parts of it to different SPARQL endpoints and then combining the results from each one</li>
+<li>Service Description: a vocabulary and discovery mechanism that describes the capabilities of a SPARQL endpoint.</li>
+<li>Entailment Regimes: defines conditions under which SPARQL queries can be used for inference under RDF, RDF Schema, OWL, or RIF entailment.</li>
+</ol>
+<p>更复杂参见<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://www.w3.org/TR/sparql11-query/](https://www.w3.org/TR/sparql11-query/)
+">[2]</span></a></sup>。</p>
+<h4 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># What are the top interests of LiveJournal users interested in Harry Potter?</span><br><span class="line">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;</span><br><span class="line">SELECT ?interest COUNT(*) AS ?count where</span><br><span class="line">  &#123;</span><br><span class="line">    ?p foaf:interest &lt;http://www.livejournal.com/interests.bml?int=harry+potter&gt; .</span><br><span class="line">    ?p foaf:interest ?interest</span><br><span class="line">  &#125;</span><br><span class="line">GROUP BY ?interest ORDER BY DESC(COUNT(*)) LIMIT 10</span><br></pre></td></tr></table></figure>
+<p>上述查询中COUNT函数不用逗号分隔，要配合GROUP BY关键字使用。其他类似函数还有MIN, MAX, SUM。</p>
+<h4 id="Subquery"><a href="#Subquery" class="headerlink" title="Subquery"></a>Subquery</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;</span><br><span class="line">SELECT ?name ?email</span><br><span class="line">FROM &lt;http://www.w3.org/People/Berners-Lee/card&gt;</span><br><span class="line">WHERE &#123;</span><br><span class="line">    &#123;</span><br><span class="line">      SELECT DISTINCT ?person ?name WHERE &#123;</span><br><span class="line">        ?person foaf:name ?name</span><br><span class="line">      &#125; ORDER BY ?name LIMIT 10 OFFSET 10</span><br><span class="line">    &#125;</span><br><span class="line">    OPTIONAL &#123; ?person foaf:mbox ?email &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="其他非标准化特性"><a href="#其他非标准化特性" class="headerlink" title="其他非标准化特性"></a>其他非标准化特性</h4><p>正在进行的SPARQL 1.1中下列特性是非标准化的：</p>
+<ul>
+<li>Full-text search. How is keyword/key-phrase search integrated with SPARQL queries?</li>
+<li>Parameters. How can initial bindings be supplied to a SPARQL endpoint along with the query itself?</li>
+<li>Querying “all” named graphs. Is there a standard way to ask that a SPARQL query be run against all the graphs that a SPARQL endpoint knows about?</li>
+<li>SPARQL in XML and RDF. Several toolsets make use of XML- or RDF-based serializations of SPARQL queries.</li>
+</ul>
+<p>例如，对于text search，OpenLink’s Virtuoso使用了一个扩展函数bif:contains。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;</span><br><span class="line">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;        </span><br><span class="line">PREFIX type: &lt;http://dbpedia.org/class/yago/&gt;</span><br><span class="line">PREFIX prop: &lt;http://dbpedia.org/property/&gt;</span><br><span class="line">SELECT ?lbl ?est</span><br><span class="line">WHERE &#123;</span><br><span class="line">  ?country rdfs:label ?lbl .</span><br><span class="line">  FILTER(bif:contains(?lbl, &quot;Republic&quot;)) .</span><br><span class="line">  ?country a type:Country108544813 ;</span><br><span class="line">      prop:establishedDate ?est .</span><br><span class="line">  FILTER(?est &lt; &quot;1920-01-01&quot;^^xsd:date) .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SQL和SPARQL的区别"><a href="#SQL和SPARQL的区别" class="headerlink" title="SQL和SPARQL的区别"></a>SQL和SPARQL的区别</h3><ul>
+<li>SQL Data是基于DDL来定义schema来组织数据；而SPARQL对应的RDF Data是通过三元组的statement形式来定义的。</li>
+<li>相比于relational dta，RDF Data是一种post-Web language，是非常方便纳入第三方publisher的数据进行融合的。</li>
+<li>SQL中通过LEFT OUTER JOIN来应对存在NULL值的问题，而SPARQL则通过OPTIONAL来避免出现无对应statement的情况。</li>
+<li>SPARQL可以在Web上进行检索，而SQL则需要对应的Database。</li>
+<li>对于某个entity对应的知识，SPARQL的检索更为容易，而SQL可能需要检索多张相关表。</li>
+<li>SPARQL支持定义named graph来进行联邦查询（federate queries）。</li>
+<li>RDF/RDFS/OWL对于SCHEMA的扩展是非常灵活方便的。</li>
+<li>A Direct Mapping of Relational Data to RDF，R2RML: RDB to RDF Mapping Language是两种完成来SQL和SPARQL之间转换的协议。</li>
+</ul>
+<p>更多举例参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[sparql vs. sql](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/)
+">[4]</span></a></sup>。</p>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/" target="_blank" rel="noopener">sparql-nuts-bolts</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">https://www.w3.org/TR/sparql11-query/</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/2009/Talks/0615-qbe/" target="_blank" rel="noopener">SPARQL by Example</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/" target="_blank" rel="noopener">sparql vs. sql</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              
+              <li class="next">
+                  <a href="/blog/图谱实践笔记4/" data-toggle="tooltip" data-placement="top"
+                     title="图谱实践笔记4 - OpenKE">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPARQL1-0语法"><span class="toc-text">SPARQL1.0语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Graph-Pattern"><span class="toc-text">Graph Pattern</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution-Modifiers"><span class="toc-text">Solution Modifiers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Remove-Results"><span class="toc-text">Remove Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UNION"><span class="toc-text">UNION</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Named-Graphs-and-the-GRAPH-Clause"><span class="toc-text">Named Graphs and the GRAPH Clause</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ASK"><span class="toc-text">ASK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DESCRIBE"><span class="toc-text">DESCRIBE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CONSTRUCT"><span class="toc-text">CONSTRUCT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPARQL1-1"><span class="toc-text">SPARQL1.1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Aggregate"><span class="toc-text">Aggregate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Subquery"><span class="toc-text">Subquery</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他非标准化特性"><span class="toc-text">其他非标准化特性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL和SPARQL的区别"><span class="toc-text">SQL和SPARQL的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展阅读"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2020
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                100.3k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

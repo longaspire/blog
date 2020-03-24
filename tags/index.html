@@ -182,6 +182,31 @@
         </div>
     </div>
   
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
 </header>
 
 
@@ -257,9 +282,9 @@
                 
                   <a href="#Metric Learning" title="Metric Learning" rel="4">Metric Learning</a>
                 
-                  <a href="#优化" title="优化" rel="2">优化</a>
-                
                   <a href="#KL散度" title="KL散度" rel="3">KL散度</a>
+                
+                  <a href="#优化" title="优化" rel="2">优化</a>
                 
                   <a href="#Augmented Reality" title="Augmented Reality" rel="1">Augmented Reality</a>
                 
@@ -291,27 +316,27 @@
                 
                   <a href="#Sum-product" title="Sum-product" rel="1">Sum-product</a>
                 
-                  <a href="#RDF" title="RDF" rel="2">RDF</a>
-                
-                  <a href="#SPARQL" title="SPARQL" rel="1">SPARQL</a>
-                
-                  <a href="#RDFS" title="RDFS" rel="2">RDFS</a>
-                
-                  <a href="#Graph Database" title="Graph Database" rel="1">Graph Database</a>
-                
-                  <a href="#Jena" title="Jena" rel="2">Jena</a>
-                
-                  <a href="#Fuseki" title="Fuseki" rel="1">Fuseki</a>
-                
-                  <a href="#TDB" title="TDB" rel="1">TDB</a>
-                
                   <a href="#Semantic Web" title="Semantic Web" rel="1">Semantic Web</a>
                 
                   <a href="#Linked Data" title="Linked Data" rel="1">Linked Data</a>
                 
                   <a href="#Knowledge Graph" title="Knowledge Graph" rel="1">Knowledge Graph</a>
                 
+                  <a href="#RDF" title="RDF" rel="3">RDF</a>
+                
+                  <a href="#RDFS" title="RDFS" rel="3">RDFS</a>
+                
                   <a href="#OWL" title="OWL" rel="1">OWL</a>
+                
+                  <a href="#SPARQL" title="SPARQL" rel="2">SPARQL</a>
+                
+                  <a href="#Graph Database" title="Graph Database" rel="2">Graph Database</a>
+                
+                  <a href="#Jena" title="Jena" rel="2">Jena</a>
+                
+                  <a href="#Fuseki" title="Fuseki" rel="1">Fuseki</a>
+                
+                  <a href="#TDB" title="TDB" rel="1">TDB</a>
                 
                   <a href="#GeoSPARQL" title="GeoSPARQL" rel="1">GeoSPARQL</a>
                 
@@ -565,16 +590,16 @@
                     <hr>
                 
                     <div class="post-preview">
-                        <a href="/blog/谈谈Metric Learning2/">
-                            <h2 class="tag-post-title">谈谈Metric Learning (II)</h2>
+                        <a href="/blog/谈谈Metric Learning1/">
+                            <h2 class="tag-post-title">谈谈Metric Learning (I)</h2>
                             
                         </a>
                     </div>
                     <hr>
                 
                     <div class="post-preview">
-                        <a href="/blog/谈谈Metric Learning1/">
-                            <h2 class="tag-post-title">谈谈Metric Learning (I)</h2>
+                        <a href="/blog/谈谈Metric Learning2/">
+                            <h2 class="tag-post-title">谈谈Metric Learning (II)</h2>
                             
                         </a>
                     </div>
@@ -1130,14 +1155,6 @@
                   </div>
                   
                     <div class="post-preview">
-                        <a href="/blog/谈谈Metric Learning2/">
-                            <h2 class="tag-post-title">谈谈Metric Learning (II)</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
                         <a href="/blog/谈谈Metric Learning1/">
                             <h2 class="tag-post-title">谈谈Metric Learning (I)</h2>
                             
@@ -1146,31 +1163,16 @@
                     <hr>
                 
                     <div class="post-preview">
-                        <a href="/blog/谈谈Metric Learning3/">
-                            <h2 class="tag-post-title">谈谈Metric Learning (III): ITML</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/blog/谈谈Metric Learning4/">
-                            <h2 class="tag-post-title">谈谈Metric Learning (IV): ITML进阶</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="优化">
-                      <span class="tag-text">优化</span>
-                  </div>
-                  
-                    <div class="post-preview">
                         <a href="/blog/谈谈Metric Learning2/">
                             <h2 class="tag-post-title">谈谈Metric Learning (II)</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+                    <div class="post-preview">
+                        <a href="/blog/谈谈Metric Learning3/">
+                            <h2 class="tag-post-title">谈谈Metric Learning (III): ITML</h2>
                             
                         </a>
                     </div>
@@ -1210,6 +1212,29 @@
                     <div class="post-preview">
                         <a href="/blog/谈谈Metric Learning3/">
                             <h2 class="tag-post-title">谈谈Metric Learning (III): ITML</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="优化">
+                      <span class="tag-text">优化</span>
+                  </div>
+                  
+                    <div class="post-preview">
+                        <a href="/blog/谈谈Metric Learning2/">
+                            <h2 class="tag-post-title">谈谈Metric Learning (II)</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+                    <div class="post-preview">
+                        <a href="/blog/谈谈Metric Learning4/">
+                            <h2 class="tag-post-title">谈谈Metric Learning (IV): ITML进阶</h2>
                             
                         </a>
                     </div>
@@ -1475,10 +1500,63 @@
               </div>
             
               <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="Semantic Web">
+                      <span class="tag-text">Semantic Web</span>
+                  </div>
+                  
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记1/">
+                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="Linked Data">
+                      <span class="tag-text">Linked Data</span>
+                  </div>
+                  
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记1/">
+                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="Knowledge Graph">
+                      <span class="tag-text">Knowledge Graph</span>
+                  </div>
+                  
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记1/">
+                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
                   <div class="fa fa-tag tag-icon" id="RDF">
                       <span class="tag-text">RDF</span>
                   </div>
                   
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记1/">
+                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
                     <div class="post-preview">
                         <a href="/blog/图谱实践笔记2/">
                             <h2 class="tag-post-title">图谱实践笔记2 - SPARQL</h2>
@@ -1487,6 +1565,52 @@
                     </div>
                     <hr>
                 
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记2_1/">
+                            <h2 class="tag-post-title">图谱实践笔记2番外篇 - SPARQL by Example</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="RDFS">
+                      <span class="tag-text">RDFS</span>
+                  </div>
+                  
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记1/">
+                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记2/">
+                            <h2 class="tag-post-title">图谱实践笔记2 - SPARQL</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记2_1/">
+                            <h2 class="tag-post-title">图谱实践笔记2番外篇 - SPARQL by Example</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+              </div>
+            
+              <div class="one-tag-list">
+                  <div class="fa fa-tag tag-icon" id="OWL">
+                      <span class="tag-text">OWL</span>
+                  </div>
+                  
                     <div class="post-preview">
                         <a href="/blog/图谱实践笔记1/">
                             <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
@@ -1510,24 +1634,9 @@
                     </div>
                     <hr>
                 
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="RDFS">
-                      <span class="tag-text">RDFS</span>
-                  </div>
-                  
                     <div class="post-preview">
-                        <a href="/blog/图谱实践笔记2/">
-                            <h2 class="tag-post-title">图谱实践笔记2 - SPARQL</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-                    <div class="post-preview">
-                        <a href="/blog/图谱实践笔记1/">
-                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
+                        <a href="/blog/图谱实践笔记2_1/">
+                            <h2 class="tag-post-title">图谱实践笔记2番外篇 - SPARQL by Example</h2>
                             
                         </a>
                     </div>
@@ -1543,6 +1652,14 @@
                     <div class="post-preview">
                         <a href="/blog/图谱实践笔记2/">
                             <h2 class="tag-post-title">图谱实践笔记2 - SPARQL</h2>
+                            
+                        </a>
+                    </div>
+                    <hr>
+                
+                    <div class="post-preview">
+                        <a href="/blog/图谱实践笔记2_1/">
+                            <h2 class="tag-post-title">图谱实践笔记2番外篇 - SPARQL by Example</h2>
                             
                         </a>
                     </div>
@@ -1596,66 +1713,6 @@
                     <div class="post-preview">
                         <a href="/blog/图谱实践笔记2/">
                             <h2 class="tag-post-title">图谱实践笔记2 - SPARQL</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="Semantic Web">
-                      <span class="tag-text">Semantic Web</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/blog/图谱实践笔记1/">
-                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="Linked Data">
-                      <span class="tag-text">Linked Data</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/blog/图谱实践笔记1/">
-                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="Knowledge Graph">
-                      <span class="tag-text">Knowledge Graph</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/blog/图谱实践笔记1/">
-                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
-                            
-                        </a>
-                    </div>
-                    <hr>
-                
-              </div>
-            
-              <div class="one-tag-list">
-                  <div class="fa fa-tag tag-icon" id="OWL">
-                      <span class="tag-text">OWL</span>
-                  </div>
-                  
-                    <div class="post-preview">
-                        <a href="/blog/图谱实践笔记1/">
-                            <h2 class="tag-post-title">图谱实践笔记1 - 基本概念</h2>
                             
                         </a>
                     </div>
@@ -2295,7 +2352,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                97.8k <b>Words</b>
+                100.3k <b>Words</b>
         </div>
 
         <div class="search-container">

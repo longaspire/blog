@@ -160,6 +160,31 @@
 
 
   
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
 </header>
 
 
@@ -172,6 +197,28 @@
 <div class="container homepage">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/Aalborg.jpg')">
+    <a href="/blog/大嘴李和童话镇4/">
+        <h2 class="post-title">
+            大嘴李和童话镇 (IV): 16-20
+        </h2>
+        
+        <div class="post-meta">
+          <span>Oct 12, 2014</span>
+          <span class="meta-item">Updated On May 13, 2019</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本集大嘴李的丹麦小札是由“爱上洋圈圈，生活美又鲜”的新浪著名美女编辑洋小圈给与独家支持为大家播报的。在我不在家的这段时间，洋小圈继续摇动着大旗，自强快乐地继续经营我们的幸福事业，她是欢乐的调味剂，也是我生命的必需品，我在异乡的这段生活也会学着和她一样，面朝大海，努力工作，不虚度不挥霍，胜利归还..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
           
             <div class="post-preview "
      style="background-image: url('/blog/post_cover_images/Aalborg.jpg')">
@@ -333,29 +380,6 @@ $ d(x,y) \leq d(x,z) + d(z,..
 <hr>
 
           
-            <div class="post-preview "
-     style="background-image: url('/blog/img/northernlights-sisimiut-lake.jpg')">
-    <a href="/blog/LSH那些事儿2/">
-        <h2 class="post-title">
-            LSH那些事儿 (II): 图说
-        </h2>
-        
-        <div class="post-meta">
-          <span>Apr 18, 2013</span>
-          <span class="meta-item">Updated On May 13, 2019</span>
-        </div>
-        <div class="post-content-preview">
-            <p>
-                1. Locality Sensitive Hashing的定义Locality Sensitive Hashing (LSH) 是构造一种Hash函数集 $ { D | R^d \rightarrow U}$，其中$ d $是点的维数，使得对任意的点$ p$，$ q$有
-
-如果$ || p -..
-            </p>
-        </div>
-    </a>
-</div>
-<hr>
-
-          
           <ul class="pager no-print">
     
         <li class="previous"><a href="/blog/page/4/">&larr;  Newer Posts</a></li>
@@ -454,7 +478,7 @@ $ d(x,y) \leq d(x,z) + d(z,..
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                97.8k <b>Words</b>
+                100.3k <b>Words</b>
         </div>
 
         <div class="search-container">
