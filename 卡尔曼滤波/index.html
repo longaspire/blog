@@ -69,7 +69,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 
 
@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Apr 27, 2017</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -258,7 +258,7 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">5,680 words in total, 23 minutes required.</span>
+          <span class="post-count">5,679 words in total, 23 minutes required.</span>
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -352,7 +352,7 @@
 </blockquote>
 <p>协方差衡量了随机变量间的相关程度。</p>
 <p>高斯分布的一个重要性质是：<strong>互不相关的两个高斯分布相乘（相互叠加）后，仍然是一个正态分布！</strong></p>
-<p><img src="normal_distribution.png" alt></p>
+<p><img src="normal_distribution.jpg" alt></p>
 <p>并且新的正态分布的均值和方差满足：</p>
 <blockquote>
 <p>$\mu’ = \mu_0 + k(\mu_1 - \mu_0)$<br>$\sigma’^2 = k\sigma_1^2 = \sigma_0^2(1-k)$<br>$k = \frac{\sigma_0^2}{\sigma_0^2 + \sigma_1^2}$</p>
@@ -363,7 +363,7 @@
 </blockquote>
 <p>再结合第三部分我们结合的卡尔曼滤波器算法，可以知道，此处卡尔曼增益正是此处的$K$。它正是用来计算当前两个高斯噪声叠加后的系统情况的。而为什么要进行叠加呢？</p>
 <p>我们知道，两个事件的发生都是概率性的，不能完全相信其中的任何一个。如果具有两个事件，都发生的话，从直觉或者是理性思维上讲，两个事件同时发生的可能性越大，我们越相信它！要想考察它们同时发生的可能性，就是将两个事件单独发生的概率相乘。但是究竟是相信自己预测还是相信观测呢？我们可以用卡尔曼的方法来<strong>加权</strong>，即利用他们的方差$\sigma^2$来判断——求出绿色分布均值位置在红蓝均值间的比例，即<strong>卡尔曼增益</strong>。</p>
-<p><img src="kalman_gain.png" alt="红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘"><span class="image-caption-center">红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘</span></p>
+<p><img src="kalman_gain.jpg" alt="红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘"><span class="image-caption-center">红色分布为预测，蓝色分布为观测，绿色分布为二者的相乘</span></p>
 <blockquote>
 <p>卡尔曼滤波器的理论基础，正是假定观测值和预测值的噪声都符合正态分布，且两个正态分布的融合仍是正态分布这一特性进行迭代的。</p>
 </blockquote>
@@ -375,9 +375,9 @@
 <p>$\mathbf{x_k} = \begin{bmatrix} x \\ \dot{x} \end{bmatrix}$</p>
 </blockquote>
 <p>这其中，$\dot{x}$是速度，即位置对时间的导数。</p>
-<p>假设在$k-1$时刻和$k$时刻之间，车受到$a_k$的加速度，且符合均值为$0$，标准差为$\sigma_a$的正态分布。根据牛顿第一定理，我们推出：</p>
+<p>假设在 $k-1$ 时刻和 $k$ 时刻之间，车受到 $a_k$ 的加速度，且符合均值为0，标准差为 $\sigma_a$ 的正态分布。根据牛顿第一定理，我们推出：</p>
 <blockquote>
-<p>$\mathbf{x}<em>k = \mathbf{F} \cdot \mathbf{x}</em>{k-1} + \mathbf{G} \cdot a_k$</p>
+<p>$\mathbf{x_k} = \mathbf{F} \cdot \mathbf{x_{k-1}} + \mathbf{G} \cdot {a_k}$</p>
 </blockquote>
 <p>其中，两个转移矩阵</p>
 <blockquote>
@@ -416,7 +416,7 @@
 <blockquote>
 <p>$P_{1 \mid 0}$ = $\begin{bmatrix} 1 &amp; \Delta t \\ 0 &amp; 1 \end{bmatrix} \cdot \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 0 \end{bmatrix} \cdot \begin{bmatrix} 1 &amp; 0 \\ \Delta t &amp; 1 \end{bmatrix} + \begin{bmatrix} \Delta t^2/2 \\ \Delta t \end{bmatrix} \cdot \sigma_a^2 \cdot \begin{bmatrix} \Delta t^2/2 &amp; \Delta t \end{bmatrix}$ = $\sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 &amp; \Delta t^3/2 \\ \Delta t^3/2 &amp; {\Delta t}^2 \end{bmatrix}$</p>
 </blockquote>
-<p>注意这个时候预测的估计协方差矩阵$P<em>{1 \mid 0}$相比$P</em>{0 \mid 0}$就大一些，这主要是由于预测过程带来的误差。</p>
+<p>注意这个时候预测的估计协方差矩阵$P_{1 \mid 0}$相比$P_{0 \mid 0}$就大一些，这主要是由于预测过程带来的误差。</p>
 <p>有了上述的两个预测值，假设我们得到了$0 + \Delta_t$时刻的估计值，因为假设$\mathbf{H} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix}$，我们在观测值上有：</p>
 <blockquote>
 <p>$z_{1 \mid 1} = x_1$</p>
@@ -428,19 +428,19 @@
 </blockquote>
 <p>有了测量余量，可以得到测量余量的协方差：</p>
 <blockquote>
-<p>$S<em>{1 \mid 1} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix} \cdot P</em>{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} + {\sigma_z}^2 = {\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2$</p>
+<p>$S_{1 \mid 1} = \begin{bmatrix} 1 &amp; 0 \end{bmatrix} \cdot P_{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} + {\sigma_z}^2 = {\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2$</p>
 </blockquote>
 <p>接下来，可以计算出卡尔曼增益：</p>
 <blockquote>
-<p>$K<em>{1 \mid 1}$ = $P</em>{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$ =<br>$\sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$</p>
+<p>$K_{1 \mid 1}$ = $P_{1 \mid 0} \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$ =<br>$\sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)$</p>
 </blockquote>
-<p>有了卡尔曼增益，我们可以更新$x<em>{1 \mid 1}$和$P</em>{1 \mid 1}$：</p>
+<p>有了卡尔曼增益，我们可以更新$x_{1 \mid 1}$和$P_{1 \mid 1}$：</p>
 <blockquote>
-<p>$x<em>{1 \mid 1}$ = $x</em>{1 \mid 0} + K<em>{1 \mid 1} \cdot y</em>{1 \mid 1}$ = $\begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix} + \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot (x_1 - a_0 \cdot \Delta t^2/2)$</p>
+<p>$x_{1 \mid 1}$ = $x_{1 \mid 0} + K_{1 \mid 1} \cdot y_{1 \mid 1}$ = $\begin{bmatrix} a_0 \cdot \Delta t^2/2 \\ \Delta t \cdot a_0 \end{bmatrix} + \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 \\ \Delta t^3/2 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot (x_1 - a_0 \cdot \Delta t^2/2)$</p>
 </blockquote>
 <p>上述我们就做出了一个更新阶段的状态的估计，看到上述方程中只涉及到预测的变量和当前阶段的观测值，接下来是更新阶段的协方差矩阵估计：</p>
 <blockquote>
-<p>$P<em>{1 \mid 1}$ = $(1 - K</em>{1 \mid 1} \cdot \begin{bmatrix} 1 &amp; 0 \end{bmatrix} ) \cdot P_{1 \mid 0}$<br>= $\sigma_a^2 \cdot \begin{bmatrix} 1 - \Delta t^4/4 &amp; 0 \\ 1 - \Delta t^3/2  &amp; 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 &amp; \Delta t^3/2 \\ \Delta t^3/2 &amp; {\Delta t}^2 \end{bmatrix}$<br>= ${\sigma_a}^4 / (16 \cdot ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)) \begin{bmatrix} 4{\Delta t}^4 - {\Delta t}^8 &amp; 8{\Delta t}^3 - 2{\Delta t}^7 \\ 4{\Delta t}^4 - 2{\Delta t}^7 &amp; 8{\Delta t}^3 - 4{\Delta t}^6 \end{bmatrix}$</p>
+<p>$P_{1 \mid 1}$ = $(1 - K_{1 \mid 1} \cdot \begin{bmatrix} 1 &amp; 0 \end{bmatrix} ) \cdot P_{1 \mid 0}$<br>= $\sigma_a^2 \cdot \begin{bmatrix} 1 - \Delta t^4/4 &amp; 0 \\ 1 - \Delta t^3/2  &amp; 0 \end{bmatrix} / ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2) \cdot \sigma_a^2 \cdot \begin{bmatrix} \Delta t^4/4 &amp; \Delta t^3/2 \\ \Delta t^3/2 &amp; {\Delta t}^2 \end{bmatrix}$<br>= ${\sigma_a}^4 / (16 \cdot ({\sigma_a}^2 \cdot \Delta t^4/4 + {\sigma_z}^2)) \begin{bmatrix} 4{\Delta t}^4 - {\Delta t}^8 &amp; 8{\Delta t}^3 - 2{\Delta t}^7 \\ 4{\Delta t}^4 - 2{\Delta t}^7 &amp; 8{\Delta t}^3 - 4{\Delta t}^6 \end{bmatrix}$</p>
 </blockquote>
 <h4 id="5-2-算法流程抽象"><a href="#5-2-算法流程抽象" class="headerlink" title="5.2 算法流程抽象"></a>5.2 算法流程抽象</h4><p>公式是不是很复杂，但是只要你跟着流程来一趟，应该能够明白KF的整个过程。跑完这个例子之后，我们把整个流程抽象出来：</p>
 <ul>
@@ -448,11 +448,11 @@
 <li>根据预测方程中过程的误差，得到当前预测的协方差估计；</li>
 <li>进入更新阶段，我们根据目前系统的观测值和上一个时刻预测的状态，从转换方程（<strong>观测模型</strong>）入手，得到一个测量余量；</li>
 <li>根据转换方程和上个时刻预测的协方差估计，也可以得到一个测量余量的协方差估计；</li>
-<li>根据1)测量余量的协方差$S<em>{k \mid k}$、2)转换方程$\mathbf{H}$和3)上个时刻的预测协方差估计$P</em>{k \mid k-1}$，我们得到卡尔曼增益$K_{k \mid k}$；</li>
+<li>根据1)测量余量的协方差$S_{k \mid k}$、2)转换方程$\mathbf{H}$和3)上个时刻的预测协方差估计$P_{k \mid k-1}$，我们得到卡尔曼增益$K_{k \mid k}$；</li>
 <li>根据卡尔曼增益和测量余量，我们从预测的状态中<strong>更新优化当前的状态的值</strong>，而这个值可以用来预测下一个时刻的状态；</li>
-<li>同样，我们根据1)卡尔曼增益$K<em>{k \mid k}$和2)上个时刻的预测协方差估计$P</em>{k \mid k-1}$，我们把当前更新阶段的协方差$P_{k \mid k}$估计也得到，帮助下一时刻的卡尔曼增益计算。</li>
+<li>同样，我们根据1)卡尔曼增益$K_{k \mid k}$和2)上个时刻的预测协方差估计$P_{k \mid k-1}$，我们把当前更新阶段的协方差$P_{k \mid k}$估计也得到，帮助下一时刻的卡尔曼增益计算。</li>
 </ul>
-<p><img src="kalman_algorithm.png" alt></p>
+<p><img src="kalman_algorithm.jpg" alt></p>
 <p>最后我们应该回过头来看看以上讲的房间温度的例子，来对比下这个过程。</p>
 <h3 id="6-示例代码"><a href="#6-示例代码" class="headerlink" title="6. 示例代码"></a>6. 示例代码</h3><p>给出一个matlab版本的小程序。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">N=<span class="number">200</span>;</span><br><span class="line">w(<span class="number">1</span>)=<span class="number">0</span>;</span><br><span class="line">w=<span class="built_in">randn</span>(<span class="number">1</span>,N)  <span class="comment">% White Gaussian Noise of Prediction</span></span><br><span class="line"></span><br><span class="line">x(<span class="number">1</span>)=<span class="number">25</span>;</span><br><span class="line">a=<span class="number">1</span>;  <span class="comment">% prediction parameter</span></span><br><span class="line"><span class="keyword">for</span> k=<span class="number">2</span>:N;</span><br><span class="line">  x(k)=a*x(k<span class="number">-1</span>)+w(k<span class="number">-1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">V=<span class="built_in">randn</span>(<span class="number">1</span>,N); <span class="comment">% White Gaussian Noise of Measurement</span></span><br><span class="line">q1=std(V);</span><br><span class="line">Rvv=q1.^<span class="number">2</span>; <span class="comment">% covariance of Measurement</span></span><br><span class="line">q2=std(x);</span><br><span class="line">Rxx=q2.^<span class="number">2</span>;</span><br><span class="line">q3=std(w);</span><br><span class="line">Rww=q3.^<span class="number">2</span>; <span class="comment">% covariance of prediction</span></span><br><span class="line">c=<span class="number">0.2</span>;   <span class="comment">% measurement parameter</span></span><br><span class="line">Y=c*x+V;</span><br><span class="line"></span><br><span class="line">p(<span class="number">1</span>)=<span class="number">10</span>;  <span class="comment">% initial prediction result</span></span><br><span class="line">s(<span class="number">1</span>)=<span class="number">26</span>;  <span class="comment">% initial optimal result</span></span><br><span class="line"><span class="keyword">for</span> t=<span class="number">2</span>:N;</span><br><span class="line">  p1(t)=a.^<span class="number">2</span>*p(t<span class="number">-1</span>)+Rww;  <span class="comment">% covariance of t-1</span></span><br><span class="line">  b(t)=c*p1(t)/(c.^<span class="number">2</span>*p1(t)+Rvv); <span class="comment">% kalman gain</span></span><br><span class="line">  s(t)=a*s(t<span class="number">-1</span>)+b(t)*(Y(t)-a*c*s(t<span class="number">-1</span>)); <span class="comment">% optimal result</span></span><br><span class="line">  p(t)=p1(t)-c*b(t)*p1(t); <span class="comment">% covariance of t</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">t=<span class="number">1</span>:N;</span><br><span class="line">plot(t,s,<span class="string">'r'</span>,t,Y,<span class="string">'g'</span>,t,x,<span class="string">'b'</span>);</span><br></pre></td></tr></table></figure>

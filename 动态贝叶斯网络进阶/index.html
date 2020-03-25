@@ -69,7 +69,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 
 
@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 25, 2018</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -310,7 +310,7 @@
 <p>特别需要注意的是，我们并不是总能在所有的time slice观测到数据。如果模型还存在隐状态，则需要借助EM算法。</p>
 <p>我们将$t$时刻的未观测变量写为$u_t$、观测变量写为$o_t$，那么整个DBN的所有变量的联合概率分布可以写为：</p>
 <blockquote>
-<p>$P(o<em>1, \ldots, o_T, u_1, \ldots, u_T) = P(u_1) P(o_1 \mid u_1) \prod</em>{t=2}^{T} P(u<em>{t} \mid u</em>{t-1}) P(o_t \mid u_t)$</p>
+<p>$P(o_1, \ldots, o_T, u_1, \ldots, u_T) = P(u_1) P(o_1 \mid u_1) \prod_{t=2}^{T} P(u_{t} \mid u_{t-1}) P(o_t \mid u_t)$</p>
 </blockquote>
 <p>其对应的EM算法可以表示如下：</p>
 <p><img src="em_dbn.png" alt></p>

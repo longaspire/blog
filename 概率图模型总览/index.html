@@ -69,7 +69,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 
 
@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 15, 2016</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -252,7 +252,7 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">6,213 words in total, 23 minutes required.</span>
+          <span class="post-count">6,217 words in total, 23 minutes required.</span>
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>机器学习中最重要的任务，可以看做根据已观测的数据证据（如训练样本）来对感兴趣的未知变量（如分类标签）进行估计和推测。概率图模型（probabilistic graphical model, PGM），是一种学习任务的框架描述，它将学习任务归结为计算变量的概率分布<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="《机器学习》，周志华著，清华大学出版社.
@@ -343,11 +343,11 @@
 ">[1]</span></a></sup>中的形式进行较为一般的形式化定义：</p>
 <p>假设图模型对应的变量集$\mathbf{x} = { x_1, \ldots, x_N }$能够分为$\mathbf{x}_E$和$\mathbf{x}_F$两个不相交的变量集。推断问题的目标就是计算边缘概率$P(\mathbf{x}_F)$或者条件概率$P(\mathbf{x}_F \mid \mathbf{x}_E)$。由条件概率有：</p>
 <blockquote>
-<p>$P(\mathbf{x}<em>F \mid \mathbf{x}_E) = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{P(\mathbf{x}_E)} = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{\sum</em>{\mathbf{x}_F}P(\mathbf{x}_E, \mathbf{x}_F)}$</p>
+<p>$P(\mathbf{x}_F \mid \mathbf{x}_E) = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{P(\mathbf{x}_E)} = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{\sum_{\mathbf{x}_F}P(\mathbf{x}_E, \mathbf{x}_F)}$</p>
 </blockquote>
 <p>由于联合概率$P(\mathbf{x}_E, \mathbf{x}_F)$可以基于概率图模型获得，因此，腿短问题的关键在于如何高效地计算边缘分布，即</p>
 <blockquote>
-<p>$P(\mathbf{x}<em>E) = \sum</em>{\mathbf{x}_F}P(\mathbf{x}_E, \mathbf{x}_F)$</p>
+<p>$P(\mathbf{x}_E) = \sum_{\mathbf{x}_F}P(\mathbf{x}_E, \mathbf{x}_F)$</p>
 </blockquote>
 <p>解答这些问题，既有精确推断算法，也有近似推断算法（推断在计算上很困难！在某些特定类型的图中我们可以相当高效地执行推断，但一般而言图的计算都很难。所以我们需要使用近似算法来在准确度和效率之间进行权衡）。</p>
 <ul>
@@ -372,10 +372,10 @@
 ">[1]</span></a></sup>。</li>
 </ul>
 <h4 id="4-2-2-信念传播（Belief-Propagation）"><a href="#4-2-2-信念传播（Belief-Propagation）" class="headerlink" title="4.2.2 信念传播（Belief Propagation）"></a>4.2.2 信念传播（Belief Propagation）</h4><p>信念传播算法也成为sum-product算法，其具体的介绍也可以参见<a href="/blog/因子图介绍">因子图介绍</a>。相比于变量消除算法，其将变量概率的求和操作看做一个消息传递（message passing）过程，较好地解决了求解多个边缘分布时存在的重复计算问题。</p>
-<p>形式化地，假定函数$m<em>{ij}(x_j)$表示变量概率求和的一部分中间结果，其$i$表示对于变量$x_i$求和，而$j$表示该项中剩下的变量为$x_j$。例如，$\sum</em>{x<em>1}P(x_1)P(x_2 \mid x_1)$可以表示为$m</em>{12}(x_2)$。</p>
+<p>形式化地，假定函数$m_{ij}(x_j)$表示变量概率求和的一部分中间结果，其$i$表示对于变量$x_i$求和，而$j$表示该项中剩下的变量为$x_j$。例如，$\sum_{x_1}P(x_1)P(x_2 \mid x_1)$可以表示为$m_{12}(x_2)$。</p>
 <p>那么，信念传播算法的求和操作可以通过公式</p>
 <blockquote>
-<p>$m<em>{ij}(x_j) = \sum</em>{x<em>i}\psi(x_i, x_j)\prod</em>{k \in {n(i) \setminus j}}m_{ki}(x_i)$<br>来消去变量$x_i$。</p>
+<p>$m_{ij}(x_j) = \sum_{x_i}\psi(x_i, x_j)\prod_{k \in {n(i) \setminus j}}m_{ki}(x_i)$<br>来消去变量$x_i$。</p>
 </blockquote>
 <p>在上述函数中，$\psi(x_i, x_j)$表示一个变量$x_i$和$x_j$的关联性的公式，可以是条件概率或者联合概率分布等；$n(i)$表示概率图中与$x_i$相邻的结点变量；这个公式实际意味着，我们对$x_j$的边缘概率的计算中，只考虑了$x_i$对其传送的一个消息，而$x_i$接收自其他变量间$n(i) \setminus j$的消息在后面一项中进行表示；这样，每次消息传递仅和$x_i$以及其邻接结点直接相关，计算可以在图的局部完成。</p>
 <blockquote>
@@ -383,7 +383,7 @@
 </blockquote>
 <ul>
 <li>在信念传播算法中，一个结点<strong>只有在接收来自其他所有结点的消息后</strong>才能向另一个结点发送消息，其结点的边缘分布正比于其接收的消息的乘积：<blockquote>
-<p>$P(x<em>i) = \prod</em>{k \in n(i)}m_{ki}(x_i)$</p>
+<p>$P(x_i) = \prod_{k \in n(i)}m_{ki}(x_i)$</p>
 </blockquote>
 </li>
 <li>若概率图中没有环，则信念传播算法经过两个步骤可以完成所有消息传递，进而<strong>计算所有变量的边缘分布</strong>：<ul>
@@ -445,11 +445,11 @@
 </blockquote>
 <p>假定隐变量$\mathbf{z}$直接和$N$个可观测的变量$\mathbf{x} = x_1, \ldots, x_N$相连，那么，所有可观测的变量的联合分布的概率密度函数可以表示为：</p>
 <blockquote>
-<p>$p(\mathbf{x} \mid \Theta) = \prod<em>{i=1}^{N}\sum</em>{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta)$</p>
+<p>$p(\mathbf{x} \mid \Theta) = \prod_{i=1}^{N}\sum_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta)$</p>
 </blockquote>
 <p>对数似然可以写为：</p>
 <blockquote>
-<p>$\ln p(\mathbf{x} \mid \Theta) = \sum<em>{i=1}^{N} \ln { \prod</em>{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) }$</p>
+<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln { \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) }$</p>
 </blockquote>
 <p>那么，上述例子中的推断和学习任务分别是在给定观测样本$\mathbf{x}$的情况下计算出概率分布$p(\mathbf{z} \mid \mathbf{x}, \Theta)$和分布的参数$\Theta$。</p>
 <p>在含有隐变量$\mathbf{z}$时，上述问题的求解可以使用EM算法：</p>
@@ -457,7 +457,7 @@
 <li>E步，根据$t$时刻参数$\Theta^{t}$对$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$进行推断，并对以上的<strong>联合似然函数</strong>$p(\mathbf{x}, \mathbf{z} \mid \Theta)$进行计算；</li>
 <li><p>M步，基于E步计算的结果进行最大化寻优，即在<strong>$\mathbf{z}$被当前参数和观测确定的情况下，对上述的对数似然求最大化</strong>：</p>
 <blockquote>
-<p>$\Theta^{t+1} = \arg\max\limits<em>{\Theta} \mathcal{Q}(\Theta; \Theta^{t}) = \arg\max\limits</em>{\Theta} \sum\limits_{\mathbf{z}} p(\mathbf{z} \mid \mathbf{x}, \Theta^{t}) \ln p(\mathbf{x}, \mathbf{z} \mid \Theta)$</p>
+<p>$\Theta^{t+1} = \arg\max\limits_{\Theta} \mathcal{Q}(\Theta; \Theta^{t}) = \arg\max\limits_{\Theta} \sum\limits_{\mathbf{z}} p(\mathbf{z} \mid \mathbf{x}, \Theta^{t}) \ln p(\mathbf{x}, \mathbf{z} \mid \Theta)$</p>
 </blockquote>
 <p>上式中，最大化的一项，实际上是对数联合似然函数$\ln p(\mathbf{x}, \mathbf{z} \mid \Theta)$在分布$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$下的期望。</p>
 <p>当分布$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$和变量$\mathbf{z}$的后验分布相等时，上式中最大化的期望值$\mathcal{Q}(\Theta; \Theta^{t})$可以近似于对数似然函数。</p>
@@ -475,14 +475,14 @@
 </blockquote>
 <p>即假设复杂的多变量$\mathbf{z}$可拆解为一系列相互独立的多变量$\mathbf{z}_i$。并且，还可以假设每个分布$q_i$相对简单或有很好的结构。<br>考虑到上述对数似然的形式，我们假设每个分布符合指数族分布（易于积分求解），那么对于每一个独立的变量子集$\mathbf{z}_j$，其最优的分量分布$q^{\star}_j$应该满足：</p>
 <blockquote>
-<p>$\ln q^{\star}<em>j(\mathbf{z}_j) = \mathbb{E}</em>{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] + \text{const}$<br>$\mathbb{E}<em>{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] = \displaystyle\int p(\mathbf{x}, \mathbf{z}) \prod</em>{i \neq j} q_i \rm{d}\mathbf{z}_i$<br>$\text{const}$为一个常数。</p>
+<p>$\ln q^{\star}_j(\mathbf{z}_j) = \mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] + \text{const}$<br>$\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] = \displaystyle\int p(\mathbf{x}, \mathbf{z}) \prod_{i \neq j} q_i \rm{d}\mathbf{z}_i$<br>$\text{const}$为一个常数。</p>
 </blockquote>
 <p>对上述公式进行转换，可以得到一个最优分量分布的表达式：</p>
 <blockquote>
-<p>$q^{\star}<em>j(\mathbf{z}_j) = \exp (\mathbb{E}</em>{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) / (\displaystyle\int \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) \rm{d}\mathbf{z}_j$</p>
+<p>$q^{\star}_j(\mathbf{z}_j) = \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) / (\displaystyle\int \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) \rm{d}\mathbf{z}_j$</p>
 </blockquote>
-<p>通过上式可以看出，在对变量$\mathbf{z}<em>j$的最优分布$q^{\star}_j$估计时，融合了除$\mathbf{z}_j$外其他变量$\mathbf{z}</em>{i \neq j}$的信息，这是通过联合似然函数$p(\mathbf{x}, \mathbf{z})$在$\mathbf{z}_j$之外的隐变量求期望得到的，因此变分推断也被成为平均场（mean field）逼近方法。</p>
-<!-- > $\mathcal{L}(q) = \displaystyle\int \prod_i q_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum_{i} \ln q_i \} \rm{d}\mathbf{z}$ -->
+<p>通过上式可以看出，在对变量$\mathbf{z}_j$的最优分布$q^{\star}_j$估计时，融合了除$\mathbf{z}_j$外其他变量$\mathbf{z}_{i \neq j}$的信息，这是通过联合似然函数$p(\mathbf{x}, \mathbf{z})$在$\mathbf{z}_j$之外的隐变量求期望得到的，因此变分推断也被成为平均场（mean field）逼近方法。</p>
+<!-- > $\mathcal{L}(q) = \displaystyle\int \prod\_i q\_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum\_{i} \ln q\_i \} \rm{d}\mathbf{z}$ -->
 <p>实践中对于变分推断的使用：</p>
 <ul>
 <li>首先，对隐变量进行拆解，假设各个分量服从何种分布</li>

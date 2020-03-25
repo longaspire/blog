@@ -69,7 +69,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 
 
@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 11, 2016</span>
                                
-                                 <span class="meta-item">Updated On: Mar 22, 2020</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -255,7 +255,7 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">2,105 words in total, 8 minutes required.</span>
+          <span class="post-count">2,112 words in total, 8 minutes required.</span>
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -266,7 +266,7 @@
 ">[1]</span></a></sup>，将一个具有多变量的全局函数因子分解，得到几个局部函数的乘积，以此为基础得到的一个双向图叫做因子图（Factor Graph）。</p>
 <p>对于函数$g(X_1, \ldots, X_n)$，有以下式子成立：</p>
 <blockquote>
-<p>$g(X<em>1, \ldots, X_n) = \prod</em>{j=1}^{m}f_{j}(S_j)$<br>其中，$S_j \subseteq { X_1, \ldots, X_n }$。</p>
+<p>$g(X_1, \ldots, X_n) = \prod_{j=1}^{m}f_{j}(S_j)$<br>其中，$S_j \subseteq { X_1, \ldots, X_n }$。</p>
 </blockquote>
 <p>由以上，我们可以将因子图表示为三元组 $G = (X, F, E)$：</p>
 <ul>
@@ -314,12 +314,12 @@
 <p><img src="markov-chain.png" alt></p>
 <p>其对应的全局函数可以表示为：</p>
 <blockquote>
-<p>$p<em>{XYZ}(X,Y,Z) = p</em>{X}(X)p<em>{XY}(Y \mid X)p</em>{YZ}(Z \mid Y)$</p>
+<p>$p_{XYZ}(X,Y,Z) = p_{X}(X)p_{XY}(Y \mid X)p_{YZ}(Z \mid Y)$</p>
 </blockquote>
 <h4 id="4-2-隐马尔可夫模型示例"><a href="#4-2-隐马尔可夫模型示例" class="headerlink" title="4.2 隐马尔可夫模型示例"></a>4.2 隐马尔可夫模型示例</h4><p><img src="hmm.png" alt></p>
 <p>其对应的全局函数可以表示为：</p>
 <blockquote>
-<p>$p(X<em>0, \ldots, X_n, Y_1, \ldots, Y_n) = p(X_0)\prod</em>{k=1}^{n}p(X<em>k \mid X</em>{k-1})p(Y<em>{k} \mid X</em>{k-1})$</p>
+<p>$p(X_0, \ldots, X_n, Y_1, \ldots, Y_n) = p(X_0)\prod_{k=1}^{n}p(X_k \mid X_{k-1})p(Y_{k} \mid X_{k-1})$</p>
 </blockquote>
 <h3 id="5-Sum-product算法"><a href="#5-Sum-product算法" class="headerlink" title="5. Sum-product算法"></a>5. Sum-product算法</h3><p>有了因子图，我们可以利用Sum-product算法，根据联合概率分布求出边缘概率分布（先验分布）。</p>
 <h4 id="5-1-边缘概率的求解"><a href="#5-1-边缘概率的求解" class="headerlink" title="5.1 边缘概率的求解"></a>5.1 边缘概率的求解</h4><ul>
@@ -331,11 +331,11 @@
 </ul>
 <p>某个随机变量$x_k$的边缘概率可由$x_1, \ldots, x_n$的联合概率求得：</p>
 <blockquote>
-<p>$\overline{f<em>k}(x_k) \overset{\triangle}{=} \sum\limits</em>{x_1, \ldots, x_n~\text{except}~x_k}f(x_1, \ldots, x_n)$</p>
+<p>$\overline{f_k}(x_k) \overset{\triangle}{=} \sum\limits_{x_1, \ldots, x_n~\text{except}~x_k}f(x_1, \ldots, x_n)$</p>
 </blockquote>
 <p>假定现在我们需要计算如下式子的结果：</p>
 <blockquote>
-<p>$\overline{f<em>3}(x_3) \overset{\triangle}{=} \sum\limits</em>{x_1, \ldots, x_7~\text{except}~x_3}f(x_1, \ldots, x_7)$</p>
+<p>$\overline{f_3}(x_3) \overset{\triangle}{=} \sum\limits_{x_1, \ldots, x_7~\text{except}~x_3}f(x_1, \ldots, x_7)$</p>
 </blockquote>
 <p>假设因子图如下：</p>
 <p><img src="sum_product_1.png" alt></p>
@@ -350,7 +350,7 @@
 <p><img src="sum_product_equation_2.png" alt></p>
 <p><strong>第二步</strong>，根据蓝色虚线框、红色虚线框围住的两个box<em>内面</em>的消息传递：</p>
 <p><img src="sum_product_4.png" alt></p>
-<p>根据$\overset{\rightarrow}{u}<em>{X_1}(x_1) \overset{\triangle}{=} f_1(x_1)$和$\overset{\leftarrow}{u}</em>{X<em>2}(x_2) \overset{\triangle}{=} f</em>{2}(x_2)$，计算得到：</p>
+<p>根据$\overset{\rightarrow}{u}_{X_1}(x_1) \overset{\triangle}{=} f_1(x_1)$和$\overset{\leftarrow}{u}_{X_2}(x_2) \overset{\triangle}{=} f_{2}(x_2)$，计算得到：</p>
 <p><img src="sum_product_equation_2.png" alt></p>
 <p>这样的话，上述计算过程将一个概率分布写成两个因子的乘积，而这两个因子可以继续分解或者通过已知得到。这种利用消息传递的观念计算概率的方法便是sum-product算法。前面说过，基于因子图可以用sum-product算法高效求解各个变量的边缘分布。</p>
 <h4 id="5-2-Sum-product算法的概念"><a href="#5-2-Sum-product算法的概念" class="headerlink" title="5.2 Sum-product算法的概念"></a>5.2 Sum-product算法的概念</h4><p>Sum-product算法，也叫belief propagation，有两种消息：</p>
@@ -365,12 +365,12 @@
 <ul>
 <li><p>Sum-product算法的消息计算规则为：</p>
 <blockquote>
-<p>$\overset{\rightarrow}{u}<em>{X}(x) = \sum\limits</em>{y<em>1, \ldots, y_n}g(x, y_1, \ldots, y_n) \overset{\rightarrow}{u}</em>{Y<em>1}(y_1) \cdot \ldots \cdot \overset{\rightarrow}{u}</em>{Y_n}(y_n)$</p>
+<p>$\overset{\rightarrow}{u}_{X}(x) = \sum\limits_{y_1, \ldots, y_n}g(x, y_1, \ldots, y_n) \overset{\rightarrow}{u}_{Y_1}(y_1) \cdot \ldots \cdot \overset{\rightarrow}{u}_{Y_n}(y_n)$</p>
 </blockquote>
 </li>
 <li><p>根据sum-product定理，如果因子图中的函数$f$没有周期，则有：</p>
 <blockquote>
-<p>$\overline{f}<em>{X}(x) = \overset{\rightarrow}{u}</em>{X}(x) \overset{\leftarrow}{u}_{X}(x)$</p>
+<p>$\overline{f}_{X}(x) = \overset{\rightarrow}{u}_{X}(x) \overset{\leftarrow}{u}_{X}(x)$</p>
 </blockquote>
 </li>
 </ul>
@@ -410,28 +410,6 @@
               
           </ul>
           
-  <br>
-
-  
-  <!-- livere begin-->
-  <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM1MC8xMjg4NQ">
-      <script type="text/javascript" defer>
-          (function(d, s) {
-              var j, e = d.getElementsByTagName(s)[0];
-
-              if (typeof LivereTower === 'function') { return; }
-
-              j = d.createElement(s);
-              j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-              j.async = true;
-              e.parentNode.insertBefore(j, e);
-          })(document, 'script');
-      </script>
-      <noscript> To show LiveRe comment, please use JavaScript</noscript>
-  </div>
-  <!-- livere end -->
-  
-
 
       </div>
       

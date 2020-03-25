@@ -69,7 +69,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 
 
@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 2, 2016</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -282,7 +282,7 @@
 <p>即表述为：后验概率 = (相似度 * 先验概率) / 标准化常量</p>
 <p>假设事件$A_i$是事件集合中的部分集合，则存在下列关系</p>
 <blockquote>
-<p>$P(A<em>i \mid B) = \frac{P(B \mid A_i)P(A_i)}{P(B)} = \frac{P(B \mid A_i)P(A_i)}{\sum</em>{j}P(B \mid A_j)P(A_j)}$</p>
+<p>$P(A_i \mid B) = \frac{P(B \mid A_i)P(A_i)}{P(B)} = \frac{P(B \mid A_i)P(A_i)}{\sum_{j}P(B \mid A_j)P(A_j)}$</p>
 </blockquote>
 <p><sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[从贝叶斯方法谈到贝叶斯网络](https://blog.csdn.net/v_july_v/article/details/40984699).
 ">[2]</span></a></sup>中还给出了一个利用贝叶斯原理，进行搜索拼写检查的实例。</p>
@@ -383,8 +383,8 @@
 <li>选择一组刻画问题的随机变量${ X_1, X_2, \ldots, X_n }$</li>
 <li>确定一个变量顺序$a = \langle X_1, X_2, \ldots, X_n \rangle$</li>
 <li>参数学习从一个空图出发，按照顺序$a$逐个将变量加入$\xi$中</li>
-<li>假设当前加入的变量是$X<em>i$，此时$\xi$中已经包含变量$X_1, \ldots, X</em>{i-1}$<ul>
-<li>在$X<em>1, \ldots, X</em>{i-1}$中选择一个尽可能小的子集$\pi(X_i)$，使得假设“给定$\pi(X_i)$，$X_i$与$\xi$中其他变量条件独立”合理</li>
+<li>假设当前加入的变量是$X_i$，此时$\xi$中已经包含变量$X_1, \ldots, X_{i-1}$<ul>
+<li>在$X_1, \ldots, X_{i-1}$中选择一个尽可能小的子集$\pi(X_i)$，使得假设“给定$\pi(X_i)$，$X_i$与$\xi$中其他变量条件独立”合理</li>
 <li>从$\pi(X_i)$中每一个结点添加一条到$X_i$的有向边</li>
 </ul>
 </li>
