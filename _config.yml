@@ -78,7 +78,7 @@ rss:
   enable: false
 #  url:                    # if empty, use default url, root_path/atom.xml
 
-email: lihuancs@zju.edu.cn
+email: longaspire@gmail.com
 # weibo_username:
 # zhihu_username:
 github_username: longaspire
@@ -120,7 +120,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: true
+  auto_detect: false
 #  tab_replace:
 
 # Category & Tag
@@ -147,9 +147,10 @@ theme: huan
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: https://github.com/longaspire/blog.git
   branch: master
+- type: baidu_url_submitter
 
 
 # ---------------------------------------------------------------
@@ -225,6 +226,7 @@ mathjax:
   enable: true
   # per_page: true
   cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  # cdn: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 # ---------------------------------------------------------------
 # Comment settings
@@ -240,7 +242,7 @@ livere_uid: MTAyMC8zNjM1MC8xMjg4NQ
 # Analytics settings
 # ---------------------------------------------------------------
 # Baidu Analytics
-baidu_analytics: 13438f8a61802b465894989427ee4725
+baidu_analytics: 1b4f92eae37686bebfce091cc112ca85
 # Google Analytics
 google_analytics: UA-118875263-1            # Format: UA-xxxxxx-xx
 # Google Webmaster tools verification setting
@@ -251,6 +253,16 @@ google_analytics: UA-118875263-1            # Format: UA-xxxxxx-xx
 google_site_verification: Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8
 #bing_site_verification:
 #yandex_site_verification:
+
+baidu_url_submit:
+  count: 50 ## new links to submit
+  host: longaspire.github.io ##
+  token: qKwBjmK0TtZPYEEv ##
+  path: baidu_urls.txt ##
+
+# addlink:
+#   before_text: 本站所有内容为作者原创或二次摘录，转载请注明以下出处 # text before the post link
+#   after_text: 欢迎分享，但拒绝有商业目的的转载 # text after the post link
 
 # ---------------------------------------------------------------
 # Share

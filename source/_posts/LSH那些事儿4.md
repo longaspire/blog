@@ -12,10 +12,10 @@ draft: false
 id: 172
 date: 2013-05-06 11:41:46
 toc_number_disable: true
+comments: false
 permalink:
 description:
 cover_img:
-comments:
 ---
 
 > LSH是用局部敏感的方法解决近似最近邻搜索的问题。在原始的LSH方法中，通过将原始空间嵌入到Hamming空间中，将$d$维空间转换成${d}' = Cd$维的Hamming空间（C是指原始空间中点的坐标的最大值)，使用$(r,(1+e)r,1-r/{d}',1-(1+e)r/{d}')$-sensetive 哈希函数来解决$(r,e)$-Neighbor问题。

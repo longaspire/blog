@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.7.1"
+    "version": "3.9.0"
   },
   "dependencies": {
-    "hexo": "^3.2.0",
+    "hexo": "^3.8.0",
+    "hexo-baidu-url-submit": "0.0.6",
     "hexo-deployer-git": "^0.3.1",
     "hexo-generator-archive": "^0.1.5",
     "hexo-generator-baidu-sitemap": "^0.1.2",
@@ -16,7 +17,7 @@
     "hexo-generator-sitemap": "^1.2.0",
     "hexo-image-caption": "^0.1.1",
     "hexo-migrator-wordpress": "^0.1.2",
-    "hexo-prism-plugin": "^2.2.0",
+    "hexo-prism-plugin": "^2.3.0",
     "hexo-reference": "^1.0.3",
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-kramed": "^0.1.4",

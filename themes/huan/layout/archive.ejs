@@ -37,7 +37,7 @@ layout: layout
                        <% lastMonth = null; %>
                     <% } %>
                     <% lastYear = year; %>
-                    <div data-date="<%= year %>">
+                    <div class= "archive-year-container" data-date="<%= year %>">
                       <span class="fa fa-chevron-circle-right" style="color: #aaa; font-size: 24px; "></span>
                       <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
                     </div>

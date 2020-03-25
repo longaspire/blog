@@ -12,10 +12,10 @@ draft: false
 id: 99
 date: 2013-04-18 15:35:47
 toc_number_disable: true
+comments: false
 permalink:
 description:
 cover_img:
-comments:
 ---
 
 ## 1. 一开始

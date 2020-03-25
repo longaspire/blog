@@ -36,6 +36,23 @@ project:
 		- "在线学习"
 	"description": "最近在学metric learning，主要解决在Indoor Sensor Network中对各类传感数据特征的提取和转换的问题，metric learning自从02年以来得到了很多关注，虽然有人诟病它是子空间学习换汤不换药的产物，但是也许，换个说法它的确会受到更多关注，从而在不断发展中显出价值。"
 -
+	"title": "概率图模型系列"
+	"subtitle": ""
+	"date": "2016.05"
+	"img_link": /blog/post_cover_images/bayes_avator.png
+	"project_link": /blog/categories/#概率图模型
+	"button-text": "View"
+	"use":
+		- "概率图"
+		- "贝叶斯定理"
+		- "马尔科夫链"
+		- "有向无环图"
+		- "结构学习"
+		- "动态贝叶斯网络"
+		- "马尔科夫模型"
+		- "概率推断"
+	"description": "概率图模型（probabilistic graphical model, PGM），是一种学习任务的框架描述，它将学习任务归结为计算变量的概率分布。"
+-
 	"title": "文字系列"
 	"subtitle": "辞赋作品集"
 	"date": "2007.01-2018.05"
@@ -57,7 +74,7 @@ project:
 	填词更得词源幽。
 	先人常绘奇异风，
 	我靠冬秋叹烦忧。
-	-- 沉风有居客，呓语号惊弦"
+	-- 沉风为居客，呓语号惊弦"
 -
 	"title": "OpenWRT学习随录"
 	"date": "2015.07"

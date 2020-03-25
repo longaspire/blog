@@ -1,5 +1,6 @@
 - [x] add Google analytics, among others.
 - [x] modify the posts, especially the latex problem.
 - [x] add the pages about some post series.
-- [ ] maybe CDN.
-- [ ] maybe the banner navigation problem.
+- [x] maybe CDN.
+- [x] maybe the banner navigation problem.
+- [ ] fix the mathjax problem in the posts.

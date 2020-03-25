@@ -5,13 +5,14 @@
     <meta name="description" content="<%= config.description %>">
     <meta name="author" content="<%= config.author %>">
     <meta name="keyword" content="<%= config.keyword %>">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <link rel="canonical" href="<%= config.url + config.root + (page.path || '').replace('index.html', '') %>">
     <link rel="shortcut icon" href="<%- config.favicon %>">
     <link rel="alternate" type="application/atom+xml" title="<%= config.title %>" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="<%- config.root %>js/search.js"></script>
@@ -29,16 +30,15 @@
     <%- css('css/main.css') %>
 
     <% if (config.highlight.enable){ %>
-      <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
       <%- css('css/highlight') %>
     <% } %>
 
     <% if (config.disqus_shortname) {%>
-      <script id="dsq-count-scr" src="//<%= config.disqus_shortname %>.disqus.com/count.js" async></script>
+      <script id="dsq-count-scr" src="https://<%= config.disqus_shortname %>.disqus.com/count.js" async></script>
     <% } %>
 
-    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <% if (config.google_site_verification) {%>
       <meta name="google-site-verification" content="<%= config.google_site_verification %>" />

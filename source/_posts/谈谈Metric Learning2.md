@@ -33,11 +33,11 @@ description:
 说了这么多，我们来对这个问题进行形式化的定义，首先我们来说一下数据提供的“先验知识”，即side information。分为两种：
 
 * Must-link / Cannot-link Constraints
-  > $S = \{ (x_i, x_j) : x_i\text{ and }x_j\text{ should be similar} \}$
-  > $D = \{ (x_i, x_j) : x_i\text{ and }x_j\text{ should be dissimilar} \}$
+  > $S = \{ (x\_i, x\_j) : x\_i\text{ and }x\_j\text{ should be similar} \}$
+  > $D = \{ (x\_i, x\_j) : x\_i\text{ and }x\_j\text{ should be dissimilar} \}$
 
 * Relative constraints
-  > $R = \{ (x_i, x_j, x_k) : x_i\text{ should be more similar to }x_j\text{ than to }x_k \}$
+  > $R = \{ (x\_i, x\_j, x\_k) : x\_i\text{ should be more similar to }x\_j\text{ than to }x\_k \}$
 
 给定$n$个$m$维的向量， 满足$X \in \mathbb{R}^{n \times m}$，metric learning的目标是找到一个$ m \times r$的矩阵$M$使得变换后的投影子空间能够更好地满足上述side information。具体而言，可以认为是一个参数优化的loss最小化问题。
 
@@ -45,7 +45,7 @@ description:
 
 给定一个metric，metric learning试图找到以下解
 
-> $ M^{*} = \arg\min\limits_{M}[l(M,S,D,R) + \lambda R(M)] $
+> $ M^{\*} = \arg\min\limits\_{M}[l(M,S,D,R) + \lambda R(M)] $
 
 其中，$l(M,S,D,R)$是一个loss function，用于惩罚那些不满足constraint的数据，$R(M)$是对于$M$的正则项，$\lambda$是一个正则化参数。以上是优化问题的基本形式。
 
