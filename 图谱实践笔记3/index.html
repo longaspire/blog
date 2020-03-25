@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Mar 20, 2020</span>
                                
-                                 <span class="meta-item">Updated On: Mar 22, 2020</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -311,13 +311,13 @@
 </ul>
 <p><img src="topological_relation_family.png" alt="不同拓扑关系家族的关系等同性"><span class="image-caption-center">不同拓扑关系家族的关系等同性</span></p>
 <p><img src="wktLiteral.png" alt="wktLiteral的示例"><span class="image-caption-center">wktLiteral的示例</span></p>
-<p>最后，推荐一个非常好的教程<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf](http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf)
+<p>最后，推荐一个非常好的教程<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf.](http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf)
 ">[2]</span></a></sup>。</p>
 <h4 id="SRS-CRS"><a href="#SRS-CRS" class="headerlink" title="SRS/CRS"></a>SRS/CRS</h4><p>A spatial reference system (SRS) or coordinate reference system (CRS) is a coordinate-based local, regional or global system used to locate geographical entities.</p>
 <p>Spatial reference systems can be referred to using a SRID integer, including EPSG codes defined by the International Association of Oil and Gas Producers.</p>
 <p>SRID是用于区分不同的坐标系系统的，例如UTM, Zone 17N, NAD27 — SRID 2029； WGS84 — SRID 4326。</p>
 <p>The GeoSPARQL standard specifies that WKT Geometry Literals without an SRS URI are defaulted to <strong>CRS84</strong> (WGS84) <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84" target="_blank" rel="noopener">http://www.opengis.net/def/crs/OGC/1.3/CRS84</a>.</p>
-<h4 id="DE-9IM"><a href="#DE-9IM" class="headerlink" title="DE-9IM"></a>DE-9IM</h4><p>The Dimensionally Extended nine-Intersection Model (DE-9IM) is a topological model and a standard used to describe the spatial relations of two regions<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://en.wikipedia.org/wiki/DE-9IM](https://en.wikipedia.org/wiki/DE-9IM)
+<h4 id="DE-9IM"><a href="#DE-9IM" class="headerlink" title="DE-9IM"></a>DE-9IM</h4><p>The Dimensionally Extended nine-Intersection Model (DE-9IM) is a topological model and a standard used to describe the spatial relations of two regions<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://en.wikipedia.org/wiki/DE-9IM.](https://en.wikipedia.org/wiki/DE-9IM)
 ">[1]</span></a></sup>。</p>
 <p><img src="DE-9IM.png" alt="DE-9IM"><span class="image-caption-center">DE-9IM</span></p>
 <p>为了表示spatial predicate，可以将dim的定义转换为TRUE和FALSE，用于描述两个Geometry的关系。</p>
@@ -395,7 +395,7 @@
 <p>geosparql-fuseki -t “TestTDB” -p 3030</p>
 </blockquote>
 <h4 id="Usage-1"><a href="#Usage-1" class="headerlink" title="Usage"></a>Usage</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String service = &quot;http://localhost:3030/ds&quot;;</span><br><span class="line">String query = ....;</span><br><span class="line">try (QueryExecution qe = QueryExecutionFactory.sparqlService(service, query)) &#123;</span><br><span class="line">    ResultSet rs = qe.execSelect();</span><br><span class="line">    ResultSetFormatter.outputAsTSV(rs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://en.wikipedia.org/wiki/DE-9IM" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/DE-9IM</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf" target="_blank" rel="noopener">http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li></ol></div></div>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://en.wikipedia.org/wiki/DE-9IM" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/DE-9IM.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf" target="_blank" rel="noopener">http://www.lirmm.fr/rod/slidesRoD04102018/RoD2018-tutorial.pdf.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
           <ul class="pager no-print">

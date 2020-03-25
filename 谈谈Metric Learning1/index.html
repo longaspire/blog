@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Jun 3, 2015</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -268,7 +268,7 @@
 <p>$\mathit{K}$ is symmetric if $\forall x,x’ \in \mathit{X}, \mathit{K}(x,x’) = \mathit{K}(x’,x)$.</p>
 </blockquote>
 <h4 id="2-3-Minkowski-Distance"><a href="#2-3-Minkowski-Distance" class="headerlink" title="2.3 Minkowski Distance"></a>2.3 Minkowski Distance</h4><blockquote>
-<p>$d<em>p(x,x’) = ||x - x’||_p = (\sum\limits</em>{i=1}^{d}|(x_i - x’_i)^{p}|)^{\frac{1}{p}}$</p>
+<p>$d_p(x,x’) = ||x - x’||_p = (\sum\limits_{i=1}^{d}|(x_i - x’_i)^{p}|)^{\frac{1}{p}}$</p>
 </blockquote>
 <p>$p=1$：Manhattan distance 曼哈顿距离<br>$p =2$：Euclidean distance 欧氏距离<br>$p \rightarrow \infty$：Chebyshev distance 切比雪夫距离，相当于取各维度差的最大值</p>
 <h4 id="2-4-Manhalanobis-Distance"><a href="#2-4-Manhalanobis-Distance" class="headerlink" title="2.4 Manhalanobis Distance"></a>2.4 Manhalanobis Distance</h4><blockquote>
@@ -293,7 +293,7 @@
 <p>如此，同样的字符集上，假设存在另一个概率分布$Q(X)$。如果用概率分布$P(X)$的最优编码（即字符x的编码长度等于$log(\frac{1}{P(x)})$，来为符合分布$Q(X)$的字符编码，那么表示这些字符就会比理想情况多用一些比特数。</p>
 <p>KL-divergence就是用来衡量这种情况下平均每个字符多用的比特数，因此可以用来衡量两个分布的距离。表达公式为：</p>
 <blockquote>
-<p>$D<em>{KL}(Q \parallel P) = \sum\limits</em>{x \in \mathit{X}} Q(x) {log}{\frac{1}{P(x)}} - \sum\limits<em>{x \in \mathit{X}} Q(x) {log}{\frac{1}{Q(x)}} = \sum\limits</em>{x \in \mathit{X}} Q(x) {log}{\frac{Q(x)}{P(x)}}$</p>
+<p>$D_{KL}(Q \parallel P) = \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{1}{P(x)}} - \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{1}{Q(x)}} = \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{Q(x)}{P(x)}}$</p>
 </blockquote>
 <p>KL散度是不对称的，且KL散度始终是大于零的， 简单的证明<a href="http://blog.csdn.net/caohao2008/article/details/6910794" target="_blank" rel="noopener">在此</a>。</p>
 <h3 id="3-凸优化"><a href="#3-凸优化" class="headerlink" title="3. 凸优化"></a>3. 凸优化</h3><p>凸优化（Convex Optimization）实在是太过于重要，这里应该有很多篇幅来讲，这里只讲对于后续有用的一些重要性质：</p>

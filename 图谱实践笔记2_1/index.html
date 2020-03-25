@@ -195,11 +195,11 @@
                               <a class="tag" href="/blog/tags/#RDF"
                                  title="RDF">RDF</a>
                               
-                              <a class="tag" href="/blog/tags/#RDFS"
-                                 title="RDFS">RDFS</a>
-                              
                               <a class="tag" href="/blog/tags/#SPARQL"
                                  title="SPARQL">SPARQL</a>
+                              
+                              <a class="tag" href="/blog/tags/#RDFS"
+                                 title="RDFS">RDFS</a>
                               
                               <a class="tag" href="/blog/tags/#Graph Database"
                                  title="Graph Database">Graph Database</a>
@@ -250,7 +250,7 @@
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本篇是对SPARQL的番外补充；是对于cambridgesemantics教程<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[sparql-nuts-bolts](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/)
+<p>本篇是对SPARQL的番外补充；是对于cambridgesemantics教程<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[sparql nuts bolts.](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/)
 ">[1]</span></a></sup>的学习笔记内容。</p>
 </blockquote>
 <h3 id="SPARQL1-0语法"><a href="#SPARQL1-0语法" class="headerlink" title="SPARQL1.0语法"></a>SPARQL1.0语法</h3><p>SPARQL1.0 是一个read-only language，不具有update等进阶功能。</p>
@@ -323,7 +323,7 @@
 <li>Service Description: a vocabulary and discovery mechanism that describes the capabilities of a SPARQL endpoint.</li>
 <li>Entailment Regimes: defines conditions under which SPARQL queries can be used for inference under RDF, RDF Schema, OWL, or RIF entailment.</li>
 </ol>
-<p>更复杂参见<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://www.w3.org/TR/sparql11-query/](https://www.w3.org/TR/sparql11-query/)
+<p>更复杂参见<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://www.w3.org/TR/sparql11-query/.](https://www.w3.org/TR/sparql11-query/)
 ">[2]</span></a></sup>。</p>
 <h4 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># What are the top interests of LiveJournal users interested in Harry Potter?</span><br><span class="line">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;</span><br><span class="line">SELECT ?interest COUNT(*) AS ?count where</span><br><span class="line">  &#123;</span><br><span class="line">    ?p foaf:interest &lt;http://www.livejournal.com/interests.bml?int=harry+potter&gt; .</span><br><span class="line">    ?p foaf:interest ?interest</span><br><span class="line">  &#125;</span><br><span class="line">GROUP BY ?interest ORDER BY DESC(COUNT(*)) LIMIT 10</span><br></pre></td></tr></table></figure>
 <p>上述查询中COUNT函数不用逗号分隔，要配合GROUP BY关键字使用。其他类似函数还有MIN, MAX, SUM。</p>
@@ -347,9 +347,9 @@
 <li>RDF/RDFS/OWL对于SCHEMA的扩展是非常灵活方便的。</li>
 <li>A Direct Mapping of Relational Data to RDF，R2RML: RDB to RDF Mapping Language是两种完成来SQL和SPARQL之间转换的协议。</li>
 </ul>
-<p>更多举例参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[SPARQL vs. SQL](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/)
+<p>更多举例参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[SPARQL vs. SQL.](https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/)
 ">[4]</span></a></sup>。</p>
-<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/" target="_blank" rel="noopener">sparql-nuts-bolts</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">https://www.w3.org/TR/sparql11-query/</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/2009/Talks/0615-qbe/" target="_blank" rel="noopener">SPARQL by Example</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/" target="_blank" rel="noopener">SPARQL vs. SQL</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-nuts-bolts/" target="_blank" rel="noopener">sparql nuts bolts.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/TR/sparql11-query/" target="_blank" rel="noopener">https://www.w3.org/TR/sparql11-query/.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.w3.org/2009/Talks/0615-qbe/" target="_blank" rel="noopener">SPARQL by Example.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.cambridgesemantics.com/blog/semantic-university/learn-sparql/sparql-vs-sql/" target="_blank" rel="noopener">SPARQL vs. SQL.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
           <ul class="pager no-print">

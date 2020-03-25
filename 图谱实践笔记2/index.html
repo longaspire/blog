@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Mar 20, 2020</span>
                                
-                                 <span class="meta-item">Updated On: Mar 22, 2020</span>
+                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -195,11 +195,11 @@
                               <a class="tag" href="/blog/tags/#RDF"
                                  title="RDF">RDF</a>
                               
-                              <a class="tag" href="/blog/tags/#RDFS"
-                                 title="RDFS">RDFS</a>
-                              
                               <a class="tag" href="/blog/tags/#SPARQL"
                                  title="SPARQL">SPARQL</a>
+                              
+                              <a class="tag" href="/blog/tags/#RDFS"
+                                 title="RDFS">RDFS</a>
                               
                               <a class="tag" href="/blog/tags/#Graph Database"
                                  title="Graph Database">Graph Database</a>
@@ -259,7 +259,7 @@
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>图谱实践笔记第二篇：SPARQL；重要摘抄来源<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://zhuanlan.zhihu.com/p/57202859](https://zhuanlan.zhihu.com/p/57202859)
+<p>图谱实践笔记第二篇：SPARQL；重要摘抄来源<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://zhuanlan.zhihu.com/p/57202859.](https://zhuanlan.zhihu.com/p/57202859)
 ">[6]</span></a></sup>。</p>
 </blockquote>
 <h3 id="RDBMS-to-RDF"><a href="#RDBMS-to-RDF" class="headerlink" title="RDBMS to RDF"></a>RDBMS to RDF</h3><p>direct mapping</p>
@@ -268,10 +268,10 @@
 <li>表的列作为属性（Property）。</li>
 <li>表的行作为实例/资源。</li>
 <li>表的单元格值为字面量（Literal）</li>
-<li>如果单元格所在的列是外键，那么其值为IRI，或者说实体/资源。<br>更多参照文献<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[rdb-direct-mapping](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/)
+<li>如果单元格所在的列是外键，那么其值为IRI，或者说实体/资源。<br>更多参照文献<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[rdb-direct-mapping.](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/)
 ">[1]</span></a></sup>。</li>
 </ol>
-<p>R2RML:更灵活的编辑和设置映射规则，参见文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[R2RML](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/)
+<p>R2RML:更灵活的编辑和设置映射规则，参见文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[R2RML.](https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/)
 ">[2]</span></a></sup>。R2RML也支持SQL语句来对查询结果进行映射。</p>
 <h3 id="图数据库"><a href="#图数据库" class="headerlink" title="图数据库"></a>图数据库</h3><p>图数据库很多，其中开源的如RDF4j、gStore等。商业数据库如Virtuoso、AllegroGraph、Stardog等。原生图数据库如Neo4j、OrientDB、Titan等。</p>
 <ul>
@@ -327,14 +327,14 @@
 <p>TDB是Jena用于存储RDF的组件（Native Tuple Store），是属于存储层面的技术。在单机情况下，它能够提供非常高的RDF存储性能。目前TDB的最新版本是TDB2，且与TDB1不兼容。</p>
 <p>Jena提供了RDFS、OWL和通用规则推理机。其实Jena的RDFS和OWL推理机也是通过Jena自身的通用规则推理机实现的。</p>
 <p>Fuseki是Jena提供的SPARQL服务器，也就是SPARQL Endpoint。其提供了四种运行模式：单机运行、作为系统的一个服务运行、作为web应用运行或者作为一个嵌入式服务器运行。</p>
-<p>RDF triples and graphs, and their various components, are accessed through Jena’s RDF API. Typical abstractions here are <code>Resource</code> representing an RDF resource (whether named with a URI or anonymous), <code>Literal</code> for data values (numbers, strings, dates, etc), <code>Statement</code> representing an RDF triple and Model representing the whole graph. The RDF API has basic facilities for adding and removing triples to graphs and finding triples that match particular patterns.<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena Architecture](https://jena.apache.org/about_jena/architecture.html)
+<p>RDF triples and graphs, and their various components, are accessed through Jena’s RDF API. Typical abstractions here are <code>Resource</code> representing an RDF resource (whether named with a URI or anonymous), <code>Literal</code> for data values (numbers, strings, dates, etc), <code>Statement</code> representing an RDF triple and Model representing the whole graph. The RDF API has basic facilities for adding and removing triples to graphs and finding triples that match particular patterns.<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena Architecture.](https://jena.apache.org/about_jena/architecture.html)
 ">[3]</span></a></sup></p>
 <p>在下载完apache-jena后，进入 Jena 文件夹的 bin/，运行：</p>
 <blockquote>
 <p>./tdbloader —loc=”../tdb/“ “path/to/NTriples”</p>
 </blockquote>
 <p>将 NTriples 加载到TDB中。其中 –loc 指定 tdb的存储位置。第二个参数是我们通过d2rq等工具生成的nt文件。</p>
-<p>常用API参见以下，更多参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena APIs](https://jena.apache.org/tutorials/rdf_api.html)
+<p>常用API参见以下，更多参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Jena APIs.](https://jena.apache.org/tutorials/rdf_api.html)
 ">[4]</span></a></sup>。</p>
 <h4 id="Creating-RDFs"><a href="#Creating-RDFs" class="headerlink" title="Creating RDFs"></a>Creating RDFs</h4><p><img src="example_jena_resource.png" alt="Jena创建RDF示例"><span class="image-caption-center">Jena创建RDF示例</span></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// some definitions</span></span><br><span class="line">String personURI    = <span class="string">"http://somewhere/JohnSmith"</span>;</span><br><span class="line">String givenName    = <span class="string">"John"</span>;</span><br><span class="line">String familyName   = <span class="string">"Smith"</span>;</span><br><span class="line">String fullName     = givenName + <span class="string">" "</span> + familyName;</span><br><span class="line"></span><br><span class="line"><span class="comment">// create an empty Model</span></span><br><span class="line">Model model = ModelFactory.createDefaultModel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// create the resource</span></span><br><span class="line"><span class="comment">//   and add the properties cascading style</span></span><br><span class="line">Resource johnSmith</span><br><span class="line">  = model.createResource(personURI)</span><br><span class="line">         .addProperty(VCARD.FN, fullName)</span><br><span class="line">         .addProperty(VCARD.N,</span><br><span class="line">                      model.createResource()</span><br><span class="line">                           .addProperty(VCARD.Given, givenName)</span><br><span class="line">                           .addProperty(VCARD.Family, familyName));</span><br></pre></td></tr></table></figure>
@@ -373,7 +373,7 @@
 </blockquote>
 <p>注意tdbloader2不支持update的增量更新，增量只能使用tdbloader。</p>
 <h4 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h4><p>在apache-jena-fuseki文件夹下，用命令行输入命令<code>java -jar fuseki-server.jar</code>，启动Fuseki服务。</p>
-<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/" target="_blank" rel="noopener">rdb-direct-mapping</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/" target="_blank" rel="noopener">R2RML</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/about_jena/architecture.html" target="_blank" rel="noopener">Jena Architecture</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/tutorials/rdf_api.html" target="_blank" rel="noopener">Jena APIs</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.jianshu.com/p/147209ffb49b" target="_blank" rel="noopener">Fuseki安装</a><a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://zhuanlan.zhihu.com/p/57202859" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/57202859</a><a href="#fnref:6" rev="footnote"> ↩</a></span></li></ol></div></div>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/rdb-direct-mapping/" target="_blank" rel="noopener">rdb-direct-mapping.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/r2rml/" target="_blank" rel="noopener">R2RML.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/about_jena/architecture.html" target="_blank" rel="noopener">Jena Architecture.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://jena.apache.org/tutorials/rdf_api.html" target="_blank" rel="noopener">Jena APIs.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.jianshu.com/p/147209ffb49b" target="_blank" rel="noopener">Fuseki安装.</a><a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://zhuanlan.zhihu.com/p/57202859" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/57202859.</a><a href="#fnref:6" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
           <ul class="pager no-print">
