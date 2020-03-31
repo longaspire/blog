@@ -4,6 +4,60 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B05/</loc>
+    <lastmod>2020-03-31T10:09:07.627Z</lastmod>
+    <data>
+        <display>
+        <title>图谱实践笔记5 - OpenKE</title>
+        <pubTime>2020-03-30T06:27:09.000Z</pubTime>
+        
+        <tag>KG Embedding</tag>
+         
+        <tag>OpenKE</tag>
+         
+        <tag>SLURM</tag>
+         
+        <tag>Singularity</tag>
+         
+        <tag>BYOBU</tag>
+         
+         
+           
+             
+              <breadCrumb title="KG" url="https://longaspire.github.io/blog/blog/categories/KG/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B04/</loc>
+    <lastmod>2020-03-31T10:08:18.190Z</lastmod>
+    <data>
+        <display>
+        <title>图谱实践笔记4 - Jena实训</title>
+        <pubTime>2020-03-29T03:27:09.000Z</pubTime>
+        
+        <tag>Jena</tag>
+         
+        <tag>Java</tag>
+         
+        <tag>RDF</tag>
+         
+        <tag>TURTLE</tag>
+         
+         
+           
+             
+              <breadCrumb title="KG" url="https://longaspire.github.io/blog/blog/categories/KG/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/</loc>
     <lastmod>2020-03-26T22:34:12.712Z</lastmod>
     <data>
@@ -134,28 +188,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B04/</loc>
-    <lastmod>2020-03-25T16:03:04.936Z</lastmod>
-    <data>
-        <display>
-        <title>图谱实践笔记4 - OpenKE</title>
-        <pubTime>2020-03-22T06:27:09.000Z</pubTime>
-        
-        <tag>KG Embedding</tag>
-         
-        <tag>OpenKE</tag>
-         
-         
-           
-             
-              <breadCrumb title="KG" url="https://longaspire.github.io/blog/blog/categories/KG/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02/</loc>
     <lastmod>2020-03-25T16:02:52.499Z</lastmod>
     <data>
@@ -163,6 +195,8 @@
         <title>图谱实践笔记2 - SPARQL</title>
         <pubTime>2020-03-20T04:27:09.000Z</pubTime>
         
+        <tag>Jena</tag>
+         
         <tag>RDF</tag>
          
         <tag>RDFS</tag>
@@ -170,8 +204,6 @@
         <tag>SPARQL</tag>
          
         <tag>Graph Database</tag>
-         
-        <tag>Jena</tag>
          
         <tag>Fuseki</tag>
          
@@ -221,13 +253,13 @@
         <title>图谱实践笔记1 - 基本概念</title>
         <pubTime>2020-03-20T02:27:09.000Z</pubTime>
         
+        <tag>RDF</tag>
+         
         <tag>Semantic Web</tag>
          
         <tag>Linked Data</tag>
          
         <tag>Knowledge Graph</tag>
-         
-        <tag>RDF</tag>
          
         <tag>RDFS</tag>
          
@@ -607,6 +639,26 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/%E8%AF%8D/</loc>
+    <lastmod>2019-05-13T19:12:12.822Z</lastmod>
+    <data>
+        <display>
+        <title>词 · 七首</title>
+        <pubTime>2018-05-12T07:26:07.000Z</pubTime>
+        
+        <tag>词作</tag>
+         
+         
+           
+             
+              <breadCrumb title="文字" url="https://longaspire.github.io/blog/blog/categories/%E6%96%87%E5%AD%97/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2019-05-13T19:12:12.822Z</lastmod>
     <data>
@@ -647,26 +699,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/%E8%AF%8D/</loc>
-    <lastmod>2019-05-13T19:12:12.822Z</lastmod>
-    <data>
-        <display>
-        <title>词 · 七首</title>
-        <pubTime>2018-05-12T07:26:07.000Z</pubTime>
-        
-        <tag>词作</tag>
-         
-         
-           
-             
-              <breadCrumb title="文字" url="https://longaspire.github.io/blog/blog/categories/%E6%96%87%E5%AD%97/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/%E7%90%86%E8%A7%A3%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</loc>
     <lastmod>2019-05-13T19:12:12.820Z</lastmod>
     <data>
@@ -674,9 +706,9 @@
         <title>理解垃圾回收机制</title>
         <pubTime>2014-12-19T11:22:14.000Z</pubTime>
         
-        <tag>垃圾回收</tag>
-         
         <tag>Java</tag>
+         
+        <tag>垃圾回收</tag>
          
         <tag>调度算法</tag>
          
@@ -907,28 +939,6 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/vita/</loc>
-    <lastmod>2019-05-13T19:12:12.654Z</lastmod>
-    <data>
-        <display>
-        <title>Vita: A Versatile Toolkit for Generating Indoor Mobility Data for Real-World Buildings</title>
-        <pubTime>2016-05-18T05:10:16.000Z</pubTime>
-        
-        <tag>Demo</tag>
-         
-        <tag>VLDB</tag>
-         
-         
-           
-             
-              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://longaspire.github.io/blog/blog/introduction-to-latex/</loc>
     <lastmod>2019-05-13T19:12:12.654Z</lastmod>
     <data>
@@ -951,6 +961,28 @@
 
     
   <url>
+    <loc>https://longaspire.github.io/blog/blog/vita/</loc>
+    <lastmod>2019-05-13T19:12:12.654Z</lastmod>
+    <data>
+        <display>
+        <title>Vita: A Versatile Toolkit for Generating Indoor Mobility Data for Real-World Buildings</title>
+        <pubTime>2016-05-18T05:10:16.000Z</pubTime>
+        
+        <tag>Demo</tag>
+         
+        <tag>VLDB</tag>
+         
+         
+           
+             
+              <breadCrumb title="研究工作" url="https://longaspire.github.io/blog/blog/categories/%E7%A0%94%E7%A9%B6%E5%B7%A5%E4%BD%9C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%953/</loc>
     <lastmod>2019-05-13T19:12:12.653Z</lastmod>
     <data>
@@ -966,32 +998,6 @@
            
              
               <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://longaspire.github.io/blog/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/</loc>
-    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
-    <data>
-        <display>
-        <title>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</title>
-        <pubTime>2013-05-30T11:26:41.000Z</pubTime>
-        
-        <tag>工具</tag>
-         
-        <tag>Mac OS</tag>
-         
-        <tag>Matplotlib</tag>
-         
-        <tag>Python</tag>
-         
-         
-           
-             
-              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
           
         </display>
     </data>
@@ -1025,23 +1031,25 @@
 
     
   <url>
-    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%952/</loc>
-    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <loc>https://longaspire.github.io/blog/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/</loc>
+    <lastmod>2019-05-13T19:12:12.653Z</lastmod>
     <data>
         <display>
-        <title>OpenWRT学习随录 (II): OpenWRT Buildroot</title>
-        <pubTime>2015-07-22T04:13:07.000Z</pubTime>
+        <title>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</title>
+        <pubTime>2013-05-30T11:26:41.000Z</pubTime>
         
-        <tag>Linux</tag>
+        <tag>工具</tag>
          
-        <tag>嵌入式</tag>
+        <tag>Mac OS</tag>
          
-        <tag>无线</tag>
+        <tag>Matplotlib</tag>
+         
+        <tag>Python</tag>
          
          
            
              
-              <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
+              <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
           
         </display>
     </data>
@@ -1088,6 +1096,30 @@
            
              
               <breadCrumb title="操作备忘" url="https://longaspire.github.io/blog/blog/categories/%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://longaspire.github.io/blog/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%952/</loc>
+    <lastmod>2019-05-13T19:12:12.652Z</lastmod>
+    <data>
+        <display>
+        <title>OpenWRT学习随录 (II): OpenWRT Buildroot</title>
+        <pubTime>2015-07-22T04:13:07.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>嵌入式</tag>
+         
+        <tag>无线</tag>
+         
+         
+           
+             
+              <breadCrumb title="OpenWRT学习随录" url="https://longaspire.github.io/blog/blog/categories/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%95/"/>
           
         </display>
     </data>
