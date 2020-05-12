@@ -1,3 +1,4 @@
+https://longaspire.github.io/blog/PCA_RPCA/
 https://longaspire.github.io/blog/图谱实践笔记5/
 https://longaspire.github.io/blog/图谱实践笔记4/
 https://longaspire.github.io/blog/图谱实践笔记2_1/
@@ -9,8 +10,8 @@ https://longaspire.github.io/blog/动态贝叶斯网络/
 https://longaspire.github.io/blog/变分推断介绍/
 https://longaspire.github.io/blog/终极算法读书笔记/
 https://longaspire.github.io/blog/Latex书写误区/
-https://longaspire.github.io/blog/诗/
 https://longaspire.github.io/blog/词/
+https://longaspire.github.io/blog/诗/
 https://longaspire.github.io/blog/博士论文致谢/
 https://longaspire.github.io/blog/trips/
 https://longaspire.github.io/blog/卡尔曼滤波/

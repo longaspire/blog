@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Apr 18, 2013</span>
                                
-                                 <span class="meta-item">Updated On: Mar 26, 2020</span>
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -192,6 +192,9 @@
                           </div>
                           <div class="tags text-center">
                               Tags: 
+                              <a class="tag" href="/blog/tags/#概率"
+                                 title="概率">概率</a>
+                              
                               <a class="tag" href="/blog/tags/#Hash"
                                  title="Hash">Hash</a>
                               
@@ -200,9 +203,6 @@
                               
                               <a class="tag" href="/blog/tags/#LSH"
                                  title="LSH">LSH</a>
-                              
-                              <a class="tag" href="/blog/tags/#概率"
-                                 title="概率">概率</a>
                               
                           </div>
                         
@@ -251,12 +251,12 @@
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-一开始"><a href="#1-一开始" class="headerlink" title="1. 一开始"></a>1. 一开始</h2><p>先从wiki上头截取一段话:</p>
 <blockquote>
-<p>Locality-sensitive hashing (LSH) is a method of performing probabilistic <a href="http://en.wikipedia.org/wiki/Dimension\_reduction" target="_blank" rel="noopener">dimension reduction</a> of high-dimensional data.</p>
-<p>The basic idea is to <a href="http://en.wikipedia.org/wiki/Hash\_Function" target="_blank" rel="noopener">hash</a> the input items so that similar items are mapped to the same buckets with high probability (the number of buckets being much smaller than the universe of possible input items). This is different from the conventional hash functions, such as those used in <a href="http://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener">cryptography</a> as in this case the goal is to maximize probability of “collision” of similar items rather than avoid collisions.<a href="http://en.wikipedia.org/wiki/Locality-sensitive\_hashing#cite\_note-1" target="_blank" rel="noopener">&#91;1&#93;</a>.</p>
-<p>Note how locality-sensitive hashing, in many ways, mirrors <a href="http://en.wikipedia.org/wiki/Cluster\_analysis" target="_blank" rel="noopener">data clustering</a> and <a href="http://en.wikipedia.org/wiki/Nearest\_neighbor\_search" target="_blank" rel="noopener">Nearest neighbor search</a>.</p>
+<p>Locality-sensitive hashing (LSH) is a method of performing probabilistic <a href="http://en.wikipedia.org/wiki/Dimension_reduction" target="_blank" rel="noopener">dimension reduction</a> of high-dimensional data.</p>
+<p>The basic idea is to <a href="http://en.wikipedia.org/wiki/Hash_Function" target="_blank" rel="noopener">hash</a> the input items so that similar items are mapped to the same buckets with high probability (the number of buckets being much smaller than the universe of possible input items). This is different from the conventional hash functions, such as those used in <a href="http://en.wikipedia.org/wiki/Cryptography" target="_blank" rel="noopener">cryptography</a> as in this case the goal is to maximize probability of “collision” of similar items rather than avoid collisions.<a href="http://en.wikipedia.org/wiki/Locality-sensitive_hashing#cite_note-1" target="_blank" rel="noopener">&#91;1&#93;</a>.</p>
+<p>Note how locality-sensitive hashing, in many ways, mirrors <a href="http://en.wikipedia.org/wiki/Cluster_analysis" target="_blank" rel="noopener">data clustering</a> and <a href="http://en.wikipedia.org/wiki/Nearest_neighbor_search" target="_blank" rel="noopener">Nearest neighbor search</a>.</p>
 </blockquote>
 <p><strong>LSH(Location Sensitive Hash)</strong>，即位置敏感哈希函数。与一般哈希函数不同的是位置敏感性，也就是散列前的相似点经过哈希之后，也能够在一定程度上相似，并且具有一定的概率保证。</p>
-<h2 id="2-给定义"><a href="#2-给定义" class="headerlink" title="2. 给定义"></a>2. 给定义</h2><p>对于任意$q$,$p$属于$S$，若从集合$S$到$U$的函数族$H={h_1,h_2…h_n}$对距离函数$D(\cdot)$，如欧式距离、曼哈顿距离等等，满足条件：</p>
+<h2 id="2-给定义"><a href="#2-给定义" class="headerlink" title="2. 给定义"></a>2. 给定义</h2><p>对于任意$q$,$p$属于$S$，若从集合$S$到$U$的函数族$H=\{h_1,h_2…h_n\}$对距离函数$D(\cdot)$，如欧式距离、曼哈顿距离等等，满足条件：</p>
 <p>$D(p,q) \leq r~\text{and}~Pr(h(p) = h(q)) \geq p_1$<br>$D(p,q) \leq r(1+\epsilon)~\text{and}~Pr(h(p) = h(q)) \leq p_1$</p>
 <p>则称$D(\cdot)$是位置敏感的。<br>如下图，空间上的点经位置敏感哈希函数散列之后，对于$q$，其rNN有可能散列到同一个桶（如第一个桶）,即散列到第一个桶的概率较大，会大于某一个概率阈值$p_1$; 而其$(1+\epsilon)rNN$之外的对象则不太可能散列到第一个桶，即散列到第一个桶的概率很小，会小于某个阈值$p_2$。</p>
 <p><img src="lsh-example.png" alt="LSH图例"><span class="image-caption-center">LSH图例</span></p>
@@ -287,7 +287,7 @@
 <p>.</p>
 <blockquote>
 <p><strong>扩展2————Approximation Nearest Neighbors (ANN)搜索</strong></p>
-<p>  定义Hash函数集合$H = {h_i(i = 1,…,k): M^d  \rightarrow S^k}$.</p>
+<p>  定义Hash函数集合$H = \{h_i(i = 1,…,k): M^d  \rightarrow S^k\}$.</p>
 <p> $M^d$是原始的 d 维特征空间，</p>
 <p> $S^k$是经hash函数集F散列后的k维空间，根据哈希函数设计的不同，可将Hashing分为data-independent和data-dependent两大类:</p>
 <p>  1.data-independent hashing包括：Locality-Sensitive Hashing (LSH)，经Hash函数映射后，仍保留原始空间的距离相似度；<br>  2.data-dependent hashing包括：spectral hashing, semi-supervised hashing, Restricted Boltzmann Machine (RBM), Boosting SSC等，引入机器学习算法，基于数据分布设计Hash函数。</p>
@@ -295,14 +295,14 @@
 </blockquote>
 <h2 id="4-方法"><a href="#4-方法" class="headerlink" title="4. 方法"></a>4. 方法</h2><h3 id="4-1-Bit-sampling-for-Hamming-distance"><a href="#4-1-Bit-sampling-for-Hamming-distance" class="headerlink" title="4.1 Bit sampling for Hamming distance"></a>4.1 Bit sampling for Hamming distance</h3><p>最简单的Hash函数，仅适用于原始特征空间是Binary的Hamming空间，即原始的特征向量每一维的取值为{0，1}的特征串，其Hash函数的基本思想就是随机选取d维特征向量中的某一维:</p>
 <blockquote>
-<p>$H = {h_i(i = i,…,k) | h(x) = x_i, i \in (1,…,d)}$</p>
+<p>$H = \{h_i(i = i,…,k) | h(x) = x_i, i \in (1,…,d)\}$</p>
 </blockquote>
 <h3 id="4-2-Random-projection"><a href="#4-2-Random-projection" class="headerlink" title="4.2 Random projection"></a>4.2 Random projection</h3><blockquote>
 <p>The random projection method of LSH is designed to approximate the cosine distance between vectors.</p>
 </blockquote>
 <p>其Hash函数设计的基本思想就是定义一个随机超平面$(w,b)$,$w,b$可看做分别是超平面的斜率和截距(参照二维平面直线的定义)，超平面将整个原始的特征空间划分为两部分(平面的两侧)，用{0, 1}表示，则Hash函数的映射过程为：</p>
 <blockquote>
-<p>$h(x) = \left\{ \begin{matrix} 1, w\cdot x + b &gt; 0 \\ 0, \text{else} \end{matrix} \right\}$</p>
+<p>$h(x) = \left \{ \begin{matrix} 1, w \cdot x + b &gt; 0 \\\\ 0, \text{else} \end{matrix} \right \}$</p>
 </blockquote>
 <p>$w$是d维的法向单位向量，即$||w||_2 = 1$，每一个不同的w即定义一个超平面(可令$b = 0$).<br>可证明两个特征vector经Hash函数散列后碰撞的概率和其在原始空间的余弦距离成正比，即$Pr(h(p)=h(q))=1-\frac{\theta(p,q)}{\pi}$是vector$p,q$的夹角，$1-\frac{\theta(p,q)}{\pi}$和余弦距离成正比.</p>
 <h3 id="4-3-Stable-distributions"><a href="#4-3-Stable-distributions" class="headerlink" title="4.3 Stable distributions"></a>4.3 Stable distributions</h3><p>Hash函数设计的基本思想也是定义一个随机超平面，不同于4.2之处在于Hash函数将d维的特征矢量散列到[0,r]之间的一个整数而不是{0, 1}二值码，其Hash过程：</p>
@@ -444,7 +444,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

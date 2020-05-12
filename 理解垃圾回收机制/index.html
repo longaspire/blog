@@ -243,7 +243,7 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">5,647 words in total, 20 minutes required.</span>
+          <span class="post-count">5,650 words in total, 20 minutes required.</span>
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -265,7 +265,7 @@
 </ul>
 <p>大多数垃圾回收算法使用了<strong>根集</strong> (root set) 这个概念；所谓根集就是正在执行的Java程序可以访问的引用变量的集合(包括局部变量、参数、类变量)，程序可以使用引用变量访问对象的属性和调用对象的方法。垃圾回收首先需要确定从根开始哪些是可达的和哪些是不可达的，从根集可达的对象都是活动对象，它们不能作为垃圾被回收，这也包括从根集间接可达的对象。而根集通过任意路径不可达的对象符合垃圾收集的条件，应该被回收。下面介绍几个常用算法：</p>
 <h4 id="2-1-引用计数法-Reference-Counting-Collector"><a href="#2-1-引用计数法-Reference-Counting-Collector" class="headerlink" title="2.1 引用计数法 Reference Counting Collector"></a>2.1 引用计数法 <code>Reference Counting Collector</code></h4><p>引用计数法是<strong>唯一没有使用根集的垃圾回收的方法</strong>，该算法使用引用计数器来区分存活对象和不再使用的对象。一般来说，堆中的每个对象对应一个引用计数器。当每一次创建一个对象并赋给一个变量时，引用计数器置为1。当对象被赋给任意变量时，引用计数器每次加1当对象出了作用域后(该对象丢弃不再使用)，引用计数器减1，一旦引用计数器为0，对象就满足了垃圾收集的条件。</p>
-<p>基于引用计数器的垃圾收集器运行较快，不会长时间中断程序执行，适宜地必须实时运行的程序。<em>但引用计数器增加了程序执行的开销，因为每次对象赋给新的变量，计数器加1，而每次现有对象出了作用域生，计数器减1。</em></p>
+<p>基于引用计数器的垃圾收集器运行较快，不会长时间中断程序执行，适宜地必须实时运行的程序。_但引用计数器增加了程序执行的开销，因为每次对象赋给新的变量，计数器加1，而每次现有对象出了作用域生，计数器减1。_</p>
 <h4 id="2-2-Tracing算法-Tracing-Collector"><a href="#2-2-Tracing算法-Tracing-Collector" class="headerlink" title="2.2 Tracing算法 Tracing Collector"></a>2.2 Tracing算法 <code>Tracing Collector</code></h4><p>tracing算法是为了解决引用计数法的问题而提出，它使用了根集的概念。基于tracing算法的垃圾收集器从根集开始扫描，识别出哪些对象可达，哪些对象不可达，并用某种方式标记可达对象，例如对每个可达对象设置一个或多个位。</p>
 <p>在扫描识别过程中，基于tracing算法的垃圾收集也称为标记和清除(<code>mark-and-sweep</code>)垃圾收集器。</p>
 <h4 id="2-3-Compacting算法-Compacting-Collector"><a href="#2-3-Compacting算法-Compacting-Collector" class="headerlink" title="2.3 Compacting算法 Compacting Collector"></a>2.3 Compacting算法 <code>Compacting Collector</code></h4><p>为了解决堆碎片问题，基于tracing的垃圾回收吸收了Compacting算法的思想，在清除的过程中，算法将所有的对象移到堆的一端，堆的另一端就变成了一个相邻的空闲内存区，收集器会对它移动的所有对象的所有引用进行更新，使得这些引用在新的位置能识别原来的对象。</p>
@@ -316,13 +316,13 @@
 <p>也就是说，并不是如果一个对象不再被使用，是不是要在finalize()中释放这个对象中含有的其它对象呢？不是的。因为无论对象是如何创建的，垃圾回收器都会负责释放那些对象占有的内存。</p>
 <h3 id="5-触发主GC的条件"><a href="#5-触发主GC的条件" class="headerlink" title="5. 触发主GC的条件"></a>5. 触发主GC的条件</h3><p>JVM进行次GC的频率很高，但因为这种GC占用时间极短,所以对系统产生的影响不大。更值得关注的是主GC的触发条件，因为它对系统影响很明显。总的来说，有两个条件会触发主GC：</p>
 <ul>
-<li><p>当<strong>应用程序空闲时</strong>，即没有应用线程在运行时，GC会被调用。<em>因为GC在优先级最低的线程中进行，所以当应用忙时，GC线程不会被调用，但以下条件除外</em>；</p>
+<li><p>当<strong>应用程序空闲时</strong>，即没有应用线程在运行时，GC会被调用。_因为GC在优先级最低的线程中进行，所以当应用忙时，GC线程不会被调用，但以下条件除外_；</p>
 </li>
 <li><p><strong>JAVA堆内存不存时，GC会被调用</strong>。当应用线程在运行，并在运行过程中创建新对象，若这时内存空间不足，JVM就会强制调用GC线程，以便回收内存用于行的分配。若GC一次后仍不能满足内存分配的要求，JVM会再次进行两次GC作进一步的尝试，若仍无法满足要求，则JVM将报<code>out of memory</code>的错误，JAVA应用将停止。</p>
 </li>
 </ul>
 <p>由于是否进行主GC由JVM根据系统环境决定，而系统环境在不断的变化当中，所以主GC的运行具有不确定性，无法预计它何时必然出现，但可以确定的是对于一个长期运行的应用来说，其主GC是反复进行的。</p>
-<h3 id="6-减少GC开销的措施"><a href="#6-减少GC开销的措施" class="headerlink" title="6. 减少GC开销的措施"></a>6. 减少GC开销的措施</h3><p>根据上述GC的机制，程序的运行会直接影响系统环境的变化，从而影响GC的触发。若不针对GC的特点进行设计和编码，就会出现内存驻留等一系列负面影响。为了避免这些影响，<em>基本的原则就是尽可能地减少垃圾和减少GC过程中的开销</em>，包括：</p>
+<h3 id="6-减少GC开销的措施"><a href="#6-减少GC开销的措施" class="headerlink" title="6. 减少GC开销的措施"></a>6. 减少GC开销的措施</h3><p>根据上述GC的机制，程序的运行会直接影响系统环境的变化，从而影响GC的触发。若不针对GC的特点进行设计和编码，就会出现内存驻留等一系列负面影响。为了避免这些影响，_基本的原则就是尽可能地减少垃圾和减少GC过程中的开销_，包括：</p>
 <ul>
 <li>不要显式调用<code>System.gc()</code></li>
 </ul>
@@ -515,7 +515,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

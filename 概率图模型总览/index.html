@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 15, 2016</span>
                                
-                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -192,6 +192,9 @@
                           </div>
                           <div class="tags text-center">
                               Tags: 
+                              <a class="tag" href="/blog/tags/#有向无环图"
+                                 title="有向无环图">有向无环图</a>
+                              
                               <a class="tag" href="/blog/tags/#概率推断"
                                  title="概率推断">概率推断</a>
                               
@@ -200,9 +203,6 @@
                               
                               <a class="tag" href="/blog/tags/#无向图"
                                  title="无向图">无向图</a>
-                              
-                              <a class="tag" href="/blog/tags/#有向无环图"
-                                 title="有向无环图">有向无环图</a>
                               
                               <a class="tag" href="/blog/tags/#概率参数估计"
                                  title="概率参数估计">概率参数估计</a>
@@ -341,7 +341,7 @@
 </blockquote>
 <p>无论是上述哪一种推断，我们可以按照引用<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="《机器学习》，周志华著，清华大学出版社.
 ">[1]</span></a></sup>中的形式进行较为一般的形式化定义：</p>
-<p>假设图模型对应的变量集$\mathbf{x} = { x_1, \ldots, x_N }$能够分为$\mathbf{x}_E$和$\mathbf{x}_F$两个不相交的变量集。推断问题的目标就是计算边缘概率$P(\mathbf{x}_F)$或者条件概率$P(\mathbf{x}_F \mid \mathbf{x}_E)$。由条件概率有：</p>
+<p>假设图模型对应的变量集$\mathbf{x} = \{ x_1, \ldots, x_N \}$能够分为$\mathbf{x}_E$和$\mathbf{x}_F$两个不相交的变量集。推断问题的目标就是计算边缘概率$P(\mathbf{x}_F)$或者条件概率$P(\mathbf{x}_F \mid \mathbf{x}_E)$。由条件概率有：</p>
 <blockquote>
 <p>$P(\mathbf{x}_F \mid \mathbf{x}_E) = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{P(\mathbf{x}_E)} = \frac{P(\mathbf{x}_E, \mathbf{x}_F)}{\sum_{\mathbf{x}_F}P(\mathbf{x}_E, \mathbf{x}_F)}$</p>
 </blockquote>
@@ -449,7 +449,7 @@
 </blockquote>
 <p>对数似然可以写为：</p>
 <blockquote>
-<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln { \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) }$</p>
+<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln \{ \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) \}$</p>
 </blockquote>
 <p>那么，上述例子中的推断和学习任务分别是在给定观测样本$\mathbf{x}$的情况下计算出概率分布$p(\mathbf{z} \mid \mathbf{x}, \Theta)$和分布的参数$\Theta$。</p>
 <p>在含有隐变量$\mathbf{z}$时，上述问题的求解可以使用EM算法：</p>
@@ -466,7 +466,7 @@
 <p>因此，通过E步和M步的迭代，最终可以获得稳定参数$\Theta$，从而也可以获得$\mathbf{z}$的分布。</p>
 <p>但是，$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$未必一定是$\mathbf{z}$的真实分布，而是一个近似值。若将近似分布表示为$q(\mathbf{z})$，则可以有下列公式成立：</p>
 <blockquote>
-<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln { \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} } \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
+<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln \{ \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} \} \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
 </blockquote>
 <p>上述公式看起来很复杂，但是试着把后面两个公式带入到上面公式中，就可以发现其实是贝叶斯公式$p(\mathbf{x}) = \frac{p(\mathbf{x}, \mathbf{z})}{p(\mathbf{z} \mid \mathbf{x})}$在符合$q$分布的变量$\mathbf{z}$在积分上的一种表达形式。</p>
 <p>接下来，考虑到$\mathbf{z}$可能模型复杂而难以完成E步中$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$的推断，此时，<strong>就可以借助变分推断</strong>，假设$\mathbf{z}$服从一个简单的分布：</p>
@@ -482,7 +482,7 @@
 <p>$q^{\star}_j(\mathbf{z}_j) = \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) / (\displaystyle\int \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) \rm{d}\mathbf{z}_j$</p>
 </blockquote>
 <p>通过上式可以看出，在对变量$\mathbf{z}_j$的最优分布$q^{\star}_j$估计时，融合了除$\mathbf{z}_j$外其他变量$\mathbf{z}_{i \neq j}$的信息，这是通过联合似然函数$p(\mathbf{x}, \mathbf{z})$在$\mathbf{z}_j$之外的隐变量求期望得到的，因此变分推断也被成为平均场（mean field）逼近方法。</p>
-<!-- > $\mathcal{L}(q) = \displaystyle\int \prod\_i q\_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum\_{i} \ln q\_i \} \rm{d}\mathbf{z}$ -->
+<!-- > $\mathcal{L}(q) = \displaystyle\int \prod_i q_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum_{i} \ln q_i \} \rm{d}\mathbf{z}$ -->
 <p>实践中对于变分推断的使用：</p>
 <ul>
 <li>首先，对隐变量进行拆解，假设各个分量服从何种分布</li>
@@ -617,7 +617,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

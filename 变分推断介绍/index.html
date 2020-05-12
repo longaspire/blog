@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 16, 2018</span>
                                
-                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -195,14 +195,14 @@
                               <a class="tag" href="/blog/tags/#概率推断"
                                  title="概率推断">概率推断</a>
                               
-                              <a class="tag" href="/blog/tags/#KL散度"
-                                 title="KL散度">KL散度</a>
-                              
                               <a class="tag" href="/blog/tags/#变分推断"
                                  title="变分推断">变分推断</a>
                               
                               <a class="tag" href="/blog/tags/#EM算法"
                                  title="EM算法">EM算法</a>
+                              
+                              <a class="tag" href="/blog/tags/#KL散度"
+                                 title="KL散度">KL散度</a>
                               
                           </div>
                         
@@ -271,7 +271,7 @@
 </blockquote>
 <p>对数似然可以写为：</p>
 <blockquote>
-<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln { \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) }$</p>
+<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln \{ \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) \}$</p>
 </blockquote>
 <p>那么，上述例子中的推断和学习任务分别是在给定观测样本$\mathbf{x}$的情况下计算出概率分布$p(\mathbf{z} \mid \mathbf{x}, \Theta)$和分布的参数$\Theta$。</p>
 <p>在含有隐变量$\mathbf{z}$时，上述问题的求解可以使用EM算法：</p>
@@ -288,7 +288,7 @@
 <p>因此，通过E步和M步的迭代，最终可以获得稳定参数$\Theta$，从而也可以获得$\mathbf{z}$的分布。</p>
 <p>但是，$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$未必一定是$\mathbf{z}$的真实分布，而是一个近似值。若将近似分布表示为$q(\mathbf{z})$，则可以有下列公式成立：</p>
 <blockquote>
-<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln { \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} } \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
+<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln \{ \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} \} \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
 </blockquote>
 <p>上述公式看起来很复杂，但是试着把后面两个公式带入到上面公式中，就可以发现其实是贝叶斯公式$p(\mathbf{x}) = \frac{p(\mathbf{x}, \mathbf{z})}{p(\mathbf{z} \mid \mathbf{x})}$在符合$q$分布的变量$\mathbf{z}$在积分上的一种表达形式。</p>
 <p>接下来，考虑到$\mathbf{z}$可能模型复杂而难以完成E步中$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$的推断，此时，<strong>就可以借助变分推断</strong>，假设$\mathbf{z}$服从一个简单的分布：</p>
@@ -304,7 +304,7 @@
 <p>$q^{\star}_j(\mathbf{z}_j) = \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) / (\displaystyle\int \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) \rm{d}\mathbf{z}_j$</p>
 </blockquote>
 <p>通过上式可以看出，在对变量$\mathbf{z}_j$的最优分布$q^{\star}_j$估计时，融合了除$\mathbf{z}_j$外其他变量$\mathbf{z}_{i \neq j}$的信息，这是通过联合似然函数$p(\mathbf{x}, \mathbf{z})$在$\mathbf{z}_j$之外的隐变量求期望得到的，因此变分推断也被成为平均场（mean field）逼近方法。</p>
-<!-- > $\mathcal{L}(q) = \displaystyle\int \prod\_i q\_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum\_{i} \ln q\_i \} \rm{d}\mathbf{z}$ -->
+<!-- > $\mathcal{L}(q) = \displaystyle\int \prod_i q_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum_{i} \ln q_i \} \rm{d}\mathbf{z}$ -->
 <p>实践中对于变分推断的使用：</p>
 <ul>
 <li>首先，对隐变量进行拆解，假设各个分量服从何种分布</li>
@@ -341,7 +341,7 @@
 <p><img src="vi_optimization.jpg" alt="变分推断等价于对于KL散度的优化"><span class="image-caption-center">变分推断等价于对于KL散度的优化</span></p>
 <h4 id="2-2-4-优化问题的求解"><a href="#2-2-4-优化问题的求解" class="headerlink" title="2.2.4 优化问题的求解"></a>2.2.4 优化问题的求解</h4><p>优化目标很明确，减小KL散度的值即可。由于KL的表达式中依然有一部分不可求的后验概率，可以使用ELBO（Evidence Lower BOund）来进行替代，ELBO中只包括联合概率$p(z, x)$和$q(z; v)$，从而摆脱后验概率。</p>
 <blockquote>
-<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln { \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} } \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
+<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln \{ \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} \} \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
 </blockquote>
 <p>ELBO就是$\mathcal{L}(q)$！！！给定数据集后（$\mathbf{x}$），最小化KL等价于最大化ELBO，因此ELBO的最大化过程结束时，对应获得的$q(z;v^{\star})$，就成为了最后输出。</p>
 <p>对于$\mathcal{L}(q)$的最大化，就是对$z$进行拆解、假设其各分量分布简单的情况下完成的。具体推导，可以参见引用<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="《机器学习》，周志华著，清华大学出版社.
@@ -464,7 +464,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

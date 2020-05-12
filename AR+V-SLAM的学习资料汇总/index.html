@@ -281,7 +281,7 @@
 </li>
 </ul>
 <h2 id="3-经典论文和框架系统"><a href="#3-经典论文和框架系统" class="headerlink" title="3. 经典论文和框架系统"></a>3. 经典论文和框架系统</h2><h3 id="3-1-介绍SLAM算法框架的一些文献"><a href="#3-1-介绍SLAM算法框架的一些文献" class="headerlink" title="3.1 介绍SLAM算法框架的一些文献"></a>3.1 介绍SLAM算法框架的一些文献</h3><ul>
-<li><p>MonoSLAM. 基于滤波器的V-SLAM 主要的参考为文献<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="Andrew J. Davison, Ian D. Reid, Nicholas Molton, Olivier Stasse. MonoSLAM: Real-Time Single Camera SLAM. IEEE Trans. Pattern Anal. Mach. Intell. 29(6): 1052-1067 (2007).">[1]</span></a></sup>，是一个基于单目摄像头的SLAM系统，MonoSLAM中每个时刻的系统状态是由当前的运动参数 $ C<em>t $ 和所有的三维点 $ \mathbf{X_1}, \ldots, \mathbf{X_n} $ 构成的，而当前状态的概率偏差由滤波器来控制和进行更新，选用的是扩展卡尔曼滤波器（Extended Kalman Filter，EKF），预测阶段(prediction)利用 $ C</em>{t-1} $ 和线性、旋转加速度和时间差对 $ C<em>t $进行确认，随后在更新阶段(update)则将观测到的图像点投影到三维场景中，得到新的三维点位置。注意每一时刻参与计算的系统状态只有 $ C_t $ 和所有的三维点 $ \mathbf{X_1}, \ldots, \mathbf{X_n} $ ，而不考虑 $ C_1, \ldots, C</em>{t-1} $ 的影响。</p>
+<li><p>MonoSLAM. 基于滤波器的V-SLAM 主要的参考为文献<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="Andrew J. Davison, Ian D. Reid, Nicholas Molton, Olivier Stasse. MonoSLAM: Real-Time Single Camera SLAM. IEEE Trans. Pattern Anal. Mach. Intell. 29(6): 1052-1067 (2007).">[1]</span></a></sup>，是一个基于单目摄像头的SLAM系统，MonoSLAM中每个时刻的系统状态是由当前的运动参数 $ C_t $ 和所有的三维点 $ \mathbf{X_1}, \ldots, \mathbf{X_n} $ 构成的，而当前状态的概率偏差由滤波器来控制和进行更新，选用的是扩展卡尔曼滤波器（Extended Kalman Filter，EKF），预测阶段(prediction)利用 $ C_{t-1} $ 和线性、旋转加速度和时间差对 $ C_t $进行确认，随后在更新阶段(update)则将观测到的图像点投影到三维场景中，得到新的三维点位置。注意每一时刻参与计算的系统状态只有 $ C_t $ 和所有的三维点 $ \mathbf{X_1}, \ldots, \mathbf{X_n} $ ，而不考虑 $ C_1, \ldots, C_{t-1} $ 的影响。</p>
 </li>
 <li><p>MSCKF. 是一个基于IMU的滤波器V-SLAM，参考文献为<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="Anastasios I. Mourikis, Stergios I. Roumeliotis. A Multi-State Constraint Kalman Filter for Vision-aided Inertial Navigation. ICRA 2007: 3565-3572.">[2]</span></a></sup>。和MonoSLAM一样，诞生于2007年，基于滤波器对系统状态进行预测更新，不同在于：预测阶段，IMU数据被用来传递系统状态；更新阶段，MSCKF是利用一个窗口大小，将临近的多帧的运动参数都加入到一个状态变量集合中。这个集合中的运动参数在不断更新的过程中不断被优化，可以用来缓解误差的累积。</p>
 </li>
@@ -504,7 +504,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

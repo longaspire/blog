@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: Jun 10, 2015</span>
                                
-                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -284,7 +284,7 @@
 </blockquote>
 <p>那么，通过这么多的推论和证明，我们终于可以认为ITML算法实际上与low-rank kernel learning的问题是一致的，因此，我们可以将ITML算法的输入由一个初始矩阵$A_0$置换成$K_0$，将限制条件更改为$K_{ii} + K_{jj} - 2K_{ij}$，而相应的输出也变成了一个$K^{\star}$。</p>
 <h3 id="3-ITML算法的核化"><a href="#3-ITML算法的核化" class="headerlink" title="3. ITML算法的核化"></a>3. ITML算法的核化</h3><p>我们在<a href="/blog/谈谈Metric Learning3">上一篇</a>提及ITML的思想是希望优化的$A$在满足constraints的情况下尽可能地逼近$A_0$，而$A_0$的选择就体现出了你想要求解一个怎样的问题。</p>
-<p>假设，我希望这个度量是满足欧氏距离特性的，那么就应该选择单位矩阵$I$来作为初始化的$A_0$。由此，假设$A_0 = I$，则$K_0 = X^{T}A_0X = X^{T}X$，实际上就是一个<a href="http://en.wikipedia.org/wiki/Gramian\_matrix" target="_blank" rel="noopener">Gram矩阵</a>。</p>
+<p>假设，我希望这个度量是满足欧氏距离特性的，那么就应该选择单位矩阵$I$来作为初始化的$A_0$。由此，假设$A_0 = I$，则$K_0 = X^{T}A_0X = X^{T}X$，实际上就是一个<a href="http://en.wikipedia.org/wiki/Gramian_matrix" target="_blank" rel="noopener">Gram矩阵</a>。</p>
 <p>这里我们定义一个kernel function来替代上述这种直观的表达，即</p>
 <blockquote>
 <p>$k(x,y) = \phi(x)^{T}\phi(y)$</p>
@@ -312,7 +312,7 @@
 <p>那么这个prediction的loss可以表达为$l_t(A_t) = (d_t - \widetilde{d_t})^2$。其中，$d_t$我们称之为$x_t$和$y_t$之间的”true/target” distance。</p>
 <p>那么通过一次prediction，算法将$A_t$修改为$A_{t+1}$，并且用新的model进行接下来的预测，我们于是得到predicitons的total loss 为$\sum_{tl_t}(A_t)$。</p>
 <p>对于这样一个total loss，由于输入数据和他们的target distance是没有关联的，我们找不到它的bound，一个可行的方案就是将其和离线阶段中的最佳可能（best possible）方案进行对比。</p>
-<p>对于最佳可能方案，可以这样得到，假设给出一个T-trail sequence $S = {(x_1,y_1,d_1),\ldots,(x_T,y_T,d_T)}$, best possible方案满足：</p>
+<p>对于最佳可能方案，可以这样得到，假设给出一个T-trail sequence $S = \{(x_1,y_1,d_1),\ldots,(x_T,y_T,d_T)\}$, best possible方案满足：</p>
 <blockquote>
 <p>$A^{\star} = \arg\min\limits_{A \succeq 0} \sum\limits_{t = 1}^{T}l_t(A)$</p>
 </blockquote>
@@ -451,7 +451,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">

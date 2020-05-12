@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 2, 2016</span>
                                
-                                 <span class="meta-item">Updated On: Mar 25, 2020</span>
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -192,14 +192,14 @@
                           </div>
                           <div class="tags text-center">
                               Tags: 
-                              <a class="tag" href="/blog/tags/#概率推断"
-                                 title="概率推断">概率推断</a>
-                              
                               <a class="tag" href="/blog/tags/#贝叶斯定理"
                                  title="贝叶斯定理">贝叶斯定理</a>
                               
                               <a class="tag" href="/blog/tags/#有向无环图"
                                  title="有向无环图">有向无环图</a>
+                              
+                              <a class="tag" href="/blog/tags/#概率推断"
+                                 title="概率推断">概率推断</a>
                               
                               <a class="tag" href="/blog/tags/#结构学习"
                                  title="结构学习">结构学习</a>
@@ -380,7 +380,7 @@
 </ul>
 <p>网络结构确定的步骤：</p>
 <ol>
-<li>选择一组刻画问题的随机变量${ X_1, X_2, \ldots, X_n }$</li>
+<li>选择一组刻画问题的随机变量$\{ X_1, X_2, \ldots, X_n \}$</li>
 <li>确定一个变量顺序$a = \langle X_1, X_2, \ldots, X_n \rangle$</li>
 <li>参数学习从一个空图出发，按照顺序$a$逐个将变量加入$\xi$中</li>
 <li>假设当前加入的变量是$X_i$，此时$\xi$中已经包含变量$X_1, \ldots, X_{i-1}$<ul>
@@ -550,7 +550,7 @@
 <h3 id="5-2-近似推断"><a href="#5-2-近似推断" class="headerlink" title="5.2 近似推断"></a>5.2 近似推断</h3><p>所有类型的贝叶斯网络都可以用精确算法来进行概率推断。但Cooper指出，贝叶斯网络中的精确概率推断是一个NP-Hard问题。对于一个特定拓扑结构的网络，其复杂性取决于结点数。所以，精确算法一般用于结构较为简单的单联网络（Single connected）。对于解决一般性的问题，我们不希望它是多项式次复杂。因而，许多情况下都采用近似算法。它可以大大简化计算和推断过程，虽然它不能够提供每个结点的精确概率值<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[什么是贝叶斯网络？](http://blog.sciencenet.cn/home.php?mod=space&uid=227347&do=blog&id=219725)
 ">[4]</span></a></sup>。</p>
 <p>贝叶斯网的近似推断常常采用吉布斯采样（Gibbs sampling）或者变分推断来完成。以下介绍一些随机采样方法吉布斯采样。</p>
-<p>给定$\mathbf{Q} = { Q_1, \ldots, Q_n }$表示待查询变量，$\mathbf{E} = { E_1, \ldots, E_k }$为证据变量。两者的取值分别为$\mathbf{q} = { q_1, \ldots, q_n }$和$\mathbf{e} = { e_1, \ldots, e_k }$。目标是计算后验概率$P(\mathbf{Q} = \mathbf{q}  \mid  \mathbf{E} = \mathbf{e})$。下图来自于<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="《机器学习》，周志华著，清华大学出版社.
+<p>给定$\mathbf{Q} = \{ Q_1, \ldots, Q_n \}$表示待查询变量，$\mathbf{E} = \{ E_1, \ldots, E_k \}$为证据变量。两者的取值分别为$\mathbf{q} = \{ q_1, \ldots, q_n \}$和$\mathbf{e} = \{ e_1, \ldots, e_k \}$。目标是计算后验概率$P(\mathbf{Q} = \mathbf{q}  \mid  \mathbf{E} = \mathbf{e})$。下图来自于<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="《机器学习》，周志华著，清华大学出版社.
 ">[6]</span></a></sup>中的算法代码。</p>
 <p><img src="watermelon_fig_7.5.png" alt="吉布斯采样算法"><span class="image-caption-center">吉布斯采样算法</span></p>
 <p>对上述代码进行解释：</p>
@@ -691,7 +691,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                104.4k <b>Words</b>
+                108.2k <b>Words</b>
         </div>
 
         <div class="search-container">
