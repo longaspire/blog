@@ -181,7 +181,7 @@
                                <span class="meta-item">Author: Huan Li</span>
                                <span class="meta-item">Date: May 12, 2020</span>
                                
-                                 <span class="meta-item">Updated On: May 13, 2020</span>
+                                 <span class="meta-item">Updated On: May 19, 2020</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -240,7 +240,7 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">3,092 words in total, 11 minutes required.</span>
+          <span class="post-count">3,358 words in total, 12 minutes required.</span>
           <hr>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -322,21 +322,24 @@
 <h4 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h4><script type="math/tex; mode=display">
 \min_{L,S} \text{rank}(L) + \lambda ||S||_0 \\ s.t. \, \, M = L+S</script><p>由于rank和L0范数在优化上存在<strong>非凸</strong>和<strong>非光滑</strong>特性，所以我们一般将它转换成求解以下一个松弛的凸优化问题：</p>
 <script type="math/tex; mode=display">
-\min_{L,S} ||L||_{*} + \lambda ||S||_1 \\ s.t. \, \, M = L+S</script><p>上式中，L1范数可以引出更好的稀疏性，因此用于$S$的稀疏矩阵构造。$||||_{*}$是核范数(nuclear norm)，是奇异值的L1范数，最小化这一项相当于得到更加稀疏的奇异值，即导致低秩。</p>
+\min_{L,S} ||L||_{*} + \lambda ||S||_1 \\ s.t. \, \, M = L+S</script><p>上式中，L1范数可以引出更好的稀疏性，因此用于$S$的稀疏矩阵构造。$||\cdot||_{*}$是核范数(nuclear norm)，是奇异值的L1范数，最小化这一项相当于得到更加稀疏的奇异值，即导致低秩。</p>
+<p>传统针对于核范数进行最小化优化的方法，是通过迭代地缩小（shrinking）一个近似矩阵的奇异值，基本上复杂度相当于SVD分解。当然，在RPCA问题中，因为要同时对核范数和稀疏矩阵进行最小化优化，这个收敛过程很慢。下面引入ALM，即增广拉格朗日乘子法来进行RPCA的优化。</p>
 <h4 id="优化算法ALM"><a href="#优化算法ALM" class="headerlink" title="优化算法ALM"></a>优化算法ALM</h4><p>更多参见<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[Robust PCA大法好！](https://blog.csdn.net/ibunny/article/details/79410050)
 ">[3]</span></a></sup>，下列材料摘抄自原论文<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="Candès, E. J., Li, X., Ma, Y., & Wright, J. (2011). Robust principal component analysis?. Journal of the ACM (JACM), 58(3), 1-37.
 ">[4]</span></a></sup></p>
-<p>ALM即增广拉格朗日乘子法。</p>
 <p><img src="ALM_text.png" alt="ALM算法描述"><span class="image-caption-center">ALM算法描述</span></p>
+<p>在通用的拉格朗日乘子法中，会通过不断将$L$和$S$设置成最小化$l(L,S,Y)$的数值，然后更新拉格朗日乘子矩阵，来完成优化。而在RPCA中，解决上述问题可以通过一种分步更新的方式，即先后去更新$S$和$L$。</p>
+<p>即，先在固定$S$的情况下优化$L$使得$l$最小，然后固定$L$去优化$S$，最后再更新拉格朗日乘子矩阵$Y$（根据残余值$M-L-S$）。算法给出如下。</p>
 <p><img src="ALM_alg.png" alt="ALM算法"><span class="image-caption-center">ALM算法</span></p>
 <ul>
-<li><p>shrinkage operator $S_\tau[x]=sgn(x)max(|x|−\tau,0)$<br>取 $S$中的奇异值然后减去$\tau$，如果值比$\tau$小，就round为0。反之，就将两者的差反号，使得奇异值更接近0。总的来说这个shrinkage操作就是使得奇异值更小从而使它们更加稀疏。以实现找到一个sparse的$S$的目标。</p>
+<li><p>shrinkage operator $S_\tau[x]=sgn(x)max(|x|−\tau,0)$<br>取$S$中的奇异值然后减去$\tau$，如果值比$\tau$小，就round为0。反之，就将两者的差反号，使得奇异值更接近0。总的来说这个shrinkage操作就是使得奇异值更小从而使它们更加稀疏。以实现找到一个sparse的$S$的目标。</p>
 </li>
-<li><p>singular value thresholder $D$<br>就是先对矩阵做SVD分解，然后通过$S$的shrinkage操作使得奇异值变小之后，再重构$D_\tau(X)=U S_\tau (\Sigma)V^∗D_\tau(X) = U S_\tau(\Sigma)V^∗$得到低秩矩阵 $L$的近似。</p>
+<li><p>singular value thresholder $D$<br>就是先对矩阵做SVD分解，然后通过$S$的shrinkage操作使得奇异值变小之后，再重构$D_\tau(X)=U S_\tau (\Sigma)V^∗D_\tau(X) = U S_\tau(\Sigma)V^∗$得到低秩矩阵$L$的近似。</p>
 </li>
 <li><p>第3、4步的意思大概是，因为我们的目标是要把原矩阵分解成一个低秩矩阵$L$加上一个稀疏矩阵$S$，所以这里我们要不断让低秩矩阵等于原矩阵减去稀疏矩阵，同时让稀疏矩阵尽可能等于$M-L$。是一个典型的交替更新的方法。</p>
 </li>
 </ul>
+<p>这个算法是ALM的一种特殊形式，称之为alternating directions。上述算法的超参数是$\mu$和stopping threshold。</p>
 <h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://www.zhihu.com/question/41120789/answer/583063178" target="_blank" rel="noopener">理解主成分分析.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://blog.csdn.net/qq_38640439/article/details/102490369" target="_blank" rel="noopener">RPCA笔记.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://blog.csdn.net/ibunny/article/details/79410050" target="_blank" rel="noopener">Robust PCA大法好！</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Candès, E. J., Li, X., Ma, Y., &amp; Wright, J. (2011). Robust principal component analysis?. Journal of the ACM (JACM), 58(3), 1-37.<a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
@@ -450,7 +453,7 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                108.2k <b>Words</b>
+                108.4k <b>Words</b>
         </div>
 
         <div class="search-container">
