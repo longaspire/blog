@@ -1,3 +1,7 @@
+https://longaspire.github.io/blog/童话国新旅1/
+https://longaspire.github.io/blog/图谱论文笔记3/
+https://longaspire.github.io/blog/图谱论文笔记2/
+https://longaspire.github.io/blog/图谱论文笔记1/
 https://longaspire.github.io/blog/瘟疫狂想曲/
 https://longaspire.github.io/blog/PCA_RPCA/
 https://longaspire.github.io/blog/图谱实践笔记5/
@@ -11,8 +15,8 @@ https://longaspire.github.io/blog/动态贝叶斯网络/
 https://longaspire.github.io/blog/变分推断介绍/
 https://longaspire.github.io/blog/终极算法读书笔记/
 https://longaspire.github.io/blog/Latex书写误区/
-https://longaspire.github.io/blog/词/
 https://longaspire.github.io/blog/诗/
+https://longaspire.github.io/blog/词/
 https://longaspire.github.io/blog/博士论文致谢/
 https://longaspire.github.io/blog/trips/
 https://longaspire.github.io/blog/卡尔曼滤波/
@@ -44,6 +48,3 @@ https://longaspire.github.io/blog/LSH那些事儿3/
 https://longaspire.github.io/blog/LSH那些事儿2/
 https://longaspire.github.io/blog/相似性度量笔记/
 https://longaspire.github.io/blog/LSH那些事儿1/
-https://longaspire.github.io/blog/introduction-to-latex/
-https://longaspire.github.io/blog/数据挖掘十大算法/
-https://longaspire.github.io/blog/游青城山记/
