@@ -1,4 +1,6 @@
+https://longaspire.github.io/blog/童话国新旅2/
 https://longaspire.github.io/blog/童话国新旅1/
+https://longaspire.github.io/blog/童话国新旅10/
 https://longaspire.github.io/blog/图谱论文笔记3/
 https://longaspire.github.io/blog/图谱论文笔记2/
 https://longaspire.github.io/blog/图谱论文笔记1/
@@ -46,5 +48,3 @@ https://longaspire.github.io/blog/install-python-numpy-scipy-and-matplotlib-on-m
 https://longaspire.github.io/blog/LSH那些事儿4/
 https://longaspire.github.io/blog/LSH那些事儿3/
 https://longaspire.github.io/blog/LSH那些事儿2/
-https://longaspire.github.io/blog/相似性度量笔记/
-https://longaspire.github.io/blog/LSH那些事儿1/

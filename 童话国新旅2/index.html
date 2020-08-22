@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/童话国新旅2/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        童话国新旅(II) - 用电与用网｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/blog/css/main.css">
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="/blog/css/highlight.css">
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8">
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/Aalborg.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>童话国新旅(II) - 用电与用网</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Aug 22, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: Aug 22, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#丹麦见闻"
+                                 title="丹麦见闻">丹麦见闻</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#电力"
+                                 title="电力">电力</a>
+                              
+                              <a class="tag" href="/blog/tags/#能源"
+                                 title="能源">能源</a>
+                              
+                              <a class="tag" href="/blog/tags/#网络"
+                                 title="网络">网络</a>
+                              
+                              <a class="tag" href="/blog/tags/#Wi-Fi"
+                                 title="Wi-Fi">Wi-Fi</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2,802 words in total, 10 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>最近租了一个新房，准备逃离目前这喧闹得经不起折腾的老公寓。在此之前，有一段深刻的心路历程，从买house到租house到租apartment，看似一路降级，但是也是经过仔细评估自身情况以及咨询了众多经验人士得出的最终结论，有空应单列一到二辑来叙述下这段有趣的故事。言归正传，这一篇要表一表租房到手后的重要事宜，选择电力公司和网络公司，想想办法从空白的砖墙上把电流和数据引入家中的电子电器设备上。</p>
+</blockquote>
+<h3 id="丹麦用电"><a href="#丹麦用电" class="headerlink" title="丹麦用电"></a>丹麦用电</h3><p>这部分内容大多来自于汉化，不多说，贴干货：</p>
+<p>丹麦有众多的电力公司，严格来说分为电力供应商和电网商，后者也可以做前者的买卖。电力供应商直接面向用户，提供不同的协议，因此你可以通过更改供应商或更改协议来省钱。</p>
+<p>如果你想要气候友好的电力，许多公司也提供它-但是在选择之前请仔细看一下。</p>
+<h4 id="选择电商之前检查报价"><a href="#选择电商之前检查报价" class="headerlink" title="选择电商之前检查报价"></a>选择电商之前检查报价</h4><p>丹麦电力市场是非常自由的。因此，你可以选择谁将为你的房屋供电以及你要购买哪种电气产品。在选择电商之前，请注意以下三点：</p>
+<ol>
+<li><p>误导性的电话推销员<br>电话销售员可以与你联系并诱使你获得有关电器产品的大量优惠。很难弄清手机中的价格，你可能会陷入难以摆脱的锁定期。你是否正在与电话推销员联系，他想向你出售廉价的电力交易？然后要求他们以书面形式发送要约和交付条款，然后再说“是”。这样，你可以自己检查报价的价格，条款和费用。你是否正在考虑更换供应商？然后，你还可以将新报价与你当前的电力协议进行比较。</p>
+</li>
+<li><p>介绍性的offer<br>电力供应商会根据电力协议为你提供较低的介绍价格吗？然后检查交易的后续价格。</p>
+</li>
+<li><p>绑定期<br>检查你受协议约束的时间。一些电力协议没有约束力，而另一些则具有长达6个月的约束力。</p>
+</li>
+</ol>
+<h4 id="了解你的用电量"><a href="#了解你的用电量" class="headerlink" title="了解你的用电量"></a>了解你的用电量</h4><p>你可以通过了解自己的消耗量来找到便宜的电力交易。找出你的家庭一年通常花费多少千瓦时。在你的网上银行或最新的年度用电账单中查看电费单。通常，你还可以通过登录到电力供应商的网站来查看用电量的发展情况。你的用电量可能会受到日常生活变化的影响。也许你因为节省电费而使电费变得更低了？还是你的消费增加了，因为你刚买了干衣机，或者更多的进入了家庭？</p>
+<h4 id="进行廉价的电力交易"><a href="#进行廉价的电力交易" class="headerlink" title="进行廉价的电力交易"></a>进行廉价的电力交易</h4><p>在elpris.dk上，你可以概览市场上的各种电力供应商，其价格和电气产品。Elpris.dk是Forsyningstilsynet背后的价格比较网站。该页面显示了哪个电力供应商可以根据你的消耗为你提供最佳价格。切记在更换供应商之前，保持最优惠的价格直到你当前的协议和价格。从最便宜的供应商到最昂贵的供应商，每千瓦时的价格通常仅波动20-40øre。这意味着，如果你住在较大的房屋中，则每年可以节省200-400克朗。</p>
+<p>尽管电价大致相似，但各个电商之间仍可能存在差异。付款条款可能因供应商而异。不同的电气产品是否考虑气候之间也存在差异。</p>
+<h4 id="气候友好型电力"><a href="#气候友好型电力" class="headerlink" title="气候友好型电力"></a>气候友好型电力</h4><p>你想要气候友好的电力吗？然后，你可以选择从支持更加气候友好型能源生产的电力供应商那里购买电力。</p>
+<p>你从插座中获得的动力将始终由多种不同的工厂产生。它可以是风能，水，煤或核能。</p>
+<p>组合将由你在购买电源时哪个制造商可以提供最便宜的电源来确定。</p>
+<p>声称产品能真正改变气候的电力供应商应从太阳能电池等可再生能源中购买电力，并提出例如减少二氧化碳配额或增加使用可再生能源的工厂的规模。但是请注意，一些电力供应商将自己推销为绿色公司，即使他们没有。</p>
+<p>许多电力供应商经常将绿色文具或带有风力涡轮机，树木和鸟类的徽标用作误导性营销。</p>
+<p>检查各种电力供应商的网站。询问有关动力来自何处的关键问题。例如，他们的网站是否清楚显示电力供应商正在投资哪种能源或购买了哪些证书？</p>
+<p>目前很多电力公司如orsted<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://privat.orsted.dk/el/kampagner/elprisdk/](https://privat.orsted.dk/el/kampagner/elprisdk/)
+">[2]</span></a></sup>和ewii<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://ewii.com/privat/el/introstroem](https://ewii.com/privat/el/introstroem)
+">[3]</span></a></sup>都提供了6个月免费的绿色能源0费率的服务，当然加上税后还是要收费的，单价大概在1.9kr每千瓦时。</p>
+<h4 id="固定或者可变电价"><a href="#固定或者可变电价" class="headerlink" title="固定或者可变电价"></a>固定或者可变电价</h4><p>你可以根据电力协议选择固定价格或可变价格。使用固定价格协议，你每月需支付固定的电费，而可变价格则遵循电力的市场价格。这意味着价格可以下降也可以上升。</p>
+<p>如果你选择价格浮动的电力协议，则每月费用通常会略低。另一方面，你可能会面临电价上涨的风险。</p>
+<p>如果你选择固定价格协议，则你每月将支付稍高的价格，但作为回报，你将获得更高的安全性。你知道用电期间的用电价格。</p>
+<p>帐内付款与电力供应商也不同。</p>
+<p>在某些地方，你必须提前3个月支付消费费用，而与其他供应商一起，则只需提前1个月支付费用。要求你的电力供应商获得最适合你的解决方案。</p>
+<h4 id="切换供应商"><a href="#切换供应商" class="headerlink" title="切换供应商"></a>切换供应商</h4><p>你要搬到新家吗？还是你对当前的供应商不满意，因此想换一个新的供应商？然后，你可以免费更换电商。只是不要打破绑定期。你的公司最多可将你约束该协议6个月。</p>
+<p>你要搬到新家吗？然后联系你的新电力供应商并签订新协议。给电表拍一张照片并写下显示的内容。然后，你避免支付前居民的用电费用。</p>
+<p>你要从家里搬家吗？然后，如果你没有带自动读取功能的远程读取电表，请阅读电表并拍照。你必须将数字提供给你的旧供应商，否则新供应商将为你做所有实际的事情。<br>检查新协议的条款<br>你的新电力供应商将向你发送一份新合同，并会告知你新合同的生效日期。在签订合同之前，请检查协议条款。</p>
+<p>另外，例如，请检查协议中的约束期以及是否可以保留协议。</p>
+<p>投诉：如何投诉你的电力供应商<br>你的用电是否有问题，还是对电费不满意？然后，你可以投诉。</p>
+<p>请务必先与你的电力供应商联系。通过电子邮件或信件向他们发送书面投诉。</p>
+<p>始终保留用于投诉的文档。</p>
+<p>发送书面投诉1个月后，你没有收到电力公司的回复吗？还是你不同意公司的评级？然后，你可以向能源领域的上诉委员会投诉。</p>
+<h4 id="节省消费"><a href="#节省消费" class="headerlink" title="节省消费"></a>节省消费</h4><p>电费不仅取决于你的供应商。如果你想减少电费支出，可以自己做一些事情来节省电费。可以参见这篇博文<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="[https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/elregningen-7-sparetips](https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/elregningen-7-sparetips)
+">[4]</span></a></sup>。重点是，对于浮动费率，5pm到8pm是用电最贵的时间段，避免洗碗洗衣。</p>
+<h3 id="丹麦用网"><a href="#丹麦用网" class="headerlink" title="丹麦用网"></a>丹麦用网</h3><p>相比于电力供应，丹麦的宽带供应不仅公司数目众多，服务方案也是五花八门。相比于电力而言，带宽的质量决定了价格的高低，但是即便是相同的带宽上下行，价格也是波动很大。</p>
+<p>丹麦的主干网络的建设有TDC、Telenor、Telia、3等等，而供应商则是player扎堆，要想搞清楚情况，可以上samlino.dk上了解各家的服务。</p>
+<p>丹麦除了国内大量普及的ADSL（电话线缆）和fiber（光缆）外，还有电视接口-同轴电缆（COAX）。从认知看，COAX基本界定于ADSL和fiber之间，因此fiber的价格往往更高，在一定的带宽需求内，COAX是相对经济的方案。</p>
+<p>丹麦的带宽的参数，都是标注上行和下行速度，用Mbit/s来衡量，部分网络如光纤方案有时能实现上下行保持一致，当然个人觉得这个对绝大多数网络用户而言是比较鸡肋的，除非你是个大up主。</p>
+<p>带宽的选择有初装费等等，但是往往可以实现减免。你的住址是否能实现光纤，也可以很容易地在供应商的网页上检索，得到答案。</p>
+<p>TDC是丹麦的网络建设商，也是供应商。由于处于产业链的上游，他们的终端服务价格是偏高的，例如相比于fastspeed和telenor这些租用了部分TDC网络的供应商，它的价格要高出100克朗每月。TDC一般是以yousee这个品牌在参与市场竞争的，yousee不仅仅具备宽带服务，也有电视服务，价格在200-400克朗每月。</p>
+<p>提到fastspeed，它是一家新成立于2018年的供应商，只提供一种带宽服务即1000/100 Mbit/s，定价249每月。但从性价比而言是最高的了。telenor最近也提出了类似的服务，1000/60，价格相同。相比之下，telenor可能有更大的用户群体，自有的建设网络和固网IP等，并且没有6个月的绑定期，也是吸引用户的一点。其他的服务商如stofa、hiper等也有各种类型的服务，不在多表。</p>
+<p>一般而言，网络设备是通过邮寄的方式寄到住址的，许多带有无线功能的路由器供应商是不收取费用的。但是，如果需要上门服务，价格较高，可以达到一次699克朗。当然，对年轻人而言，这并不是一个难的问题。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/el-find-den-bedste-aftale-dig" target="_blank" rel="noopener">https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/el-find-den-bedste-aftale-dig</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://privat.orsted.dk/el/kampagner/elprisdk/" target="_blank" rel="noopener">https://privat.orsted.dk/el/kampagner/elprisdk/</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://ewii.com/privat/el/introstroem" target="_blank" rel="noopener">https://ewii.com/privat/el/introstroem</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/elregningen-7-sparetips" target="_blank" rel="noopener">https://taenk.dk/test-og-forbrugerliv/privatoekonomi-og-aftaler/forsyning/elregningen-7-sparetips</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://zdlm.github.io/guide/2017/07/21/denmark-drive-question-answer/" target="_blank" rel="noopener">https://zdlm.github.io/guide/2017/07/21/denmark-drive-question-answer/</a><a href="#fnref:5" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              
+              <li class="next">
+                  <a href="/blog/童话国新旅1/" data-toggle="tooltip" data-placement="top"
+                     title="童话国新旅(I) - 交通规则">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#丹麦用电"><span class="toc-text">丹麦用电</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#选择电商之前检查报价"><span class="toc-text">选择电商之前检查报价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#了解你的用电量"><span class="toc-text">了解你的用电量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进行廉价的电力交易"><span class="toc-text">进行廉价的电力交易</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#气候友好型电力"><span class="toc-text">气候友好型电力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#固定或者可变电价"><span class="toc-text">固定或者可变电价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#切换供应商"><span class="toc-text">切换供应商</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#节省消费"><span class="toc-text">节省消费</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#丹麦用网"><span class="toc-text">丹麦用网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用"><span class="toc-text">引用</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            <li>
+                <a target="_blank" href="https://twitter.com/LeeSte7en">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.facebook.com/stevenhuanlee">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2020
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                124.5k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/main.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

@@ -528,7 +528,7 @@ footer .copyright {
 #tag_cloud .tag {
     font-size: 14px;
     color: #ffffff;
-    background: #D6D6D6;
+    background: #b1b1b1;
     display: inline-block;
     border: none;
     border-radius: 4px;
@@ -1313,7 +1313,7 @@ article blockquote cite:before {
 .local-search-result-cls {
     position: absolute;
     /*z-index: 99;*/
-    width: 500px;
+    max-width: 40%; /* width: 500px; */
     /*top: 50px;*/
     /*right: 0;*/
 }
@@ -1329,7 +1329,7 @@ article blockquote cite:before {
 
 .local-search-result-cls ul {
     border-radius: 6px;
-    width: 500px;
+    max-width: 100%; /* width: 500px; */
     max-height: 450px;
     min-height: 0;
     height: auto;
@@ -1376,13 +1376,13 @@ article blockquote cite:before {
 }
 
 .local-search-result-cls .search-result-list::-webkit-scrollbar-track {
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #eee;
 }
 
 .local-search-result-cls .search-result-list::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background: #3DB6A4;
+    background: #e58c7c; /* background: #3DB6A4; */
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
 }
 
