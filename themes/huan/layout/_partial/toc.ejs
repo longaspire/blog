@@ -1,4 +1,4 @@
-<% if(config.toc.enable){ %>
+<% if(config.toc.enable && !page.toc_disable){ %>
   <div class="hidden-xs col-sm-3 toc-col">
     <div class="toc-wrap">
         <%- __('sidebar.toc') %>

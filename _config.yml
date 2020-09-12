@@ -174,7 +174,7 @@ post_update_date_enable: true
 
 # default cover image
 # example: animated gif as header
-cover_default_img: /blog/img/northernlights-sisimiut-lake.jpg
+cover_default_img: /blog/img/Subtle-Prism.svg
 brand_logo_img: /blog/img/banner.png?h=350&auto=compress&cs=tinysrgb
 
 

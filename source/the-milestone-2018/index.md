@@ -5,8 +5,8 @@ toc_number_disable: true
 mathjax: false
 comments: false
 description: 'Hexo版Little Stone，带来我的改变'
-cover_img: /blog/img/northernlights-sisimiut-lake.jpg
-cover_img_from_root: true
+#cover_img: /blog/img/Subtle-Prism.svg
+#cover_img_from_root: true
 permalink:
 ---
 

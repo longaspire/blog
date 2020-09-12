@@ -31,9 +31,9 @@ description:
 
 #### 2.1 距离
 
-对于一个$n$个点构成的集合${x\_1,...,x\_n}$, 其中$x\_i \in \mathbb{R}^d$，我们可以得到马氏距离的定义：
+对于一个$n$个点构成的集合${x_1,...,x_n}$, 其中$x_i \in \mathbb{R}^d$，我们可以得到马氏距离的定义：
 
-> $d\_A(x\_i, x\_j) = (x\_i - x\_j)^T A (x\_i - x\_j)$
+> $d_A(x_i, x_j) = (x_i - x_j)^T A (x_i - x_j)$
 
 这里我们稍微采取了一点处理，首先为了避免平方根，我们将马氏距离取平方；其次，我们用一个symmetric PSD矩阵$A$来替代之前使用的$M$。
 
@@ -43,8 +43,8 @@ description:
 
 这里，我们将其称之为Interpoint Distance Constraints，其中对于两个相似（不相似）的items有
 
-> $ d\_A(x\_i,x\_j) \leq u $
-> $ d\_A(x\_i,x\_j) \geq l $
+> $ d_A(x_i,x_j) \leq u $
+> $ d_A(x_i,x_j) \geq l $
 
 $u$($l$)是一个值很小(大)的upper（lower）bound。
 
@@ -55,31 +55,31 @@ $u$($l$)是一个值很小(大)的upper（lower）bound。
 例如，对于一个数据是Gaussian分布的问题，我们往往期望
 > parameterizing the distance function by the inverse of the sample covariance.
 
-同样，对于一些欧式空间的距离度量，我们往往希望distance function是接近欧式距离的，因此，我们需要对我们的PSD matrix也就是$A$采取优化，具体而言就是，当我的先验知识告诉我$A$应该要逼近一个由$A\_0$定义的度量时，我们往往需要在满足限制条件的情况下，使得$A$尽可能地接近我们选择的$A\_0$。
+同样，对于一些欧式空间的距离度量，我们往往希望distance function是接近欧式距离的，因此，我们需要对我们的PSD matrix也就是$A$采取优化，具体而言就是，当我的先验知识告诉我$A$应该要逼近一个由$A_0$定义的度量时，我们往往需要在满足限制条件的情况下，使得$A$尽可能地接近我们选择的$A_0$。
 
-这儿，就是ITML的核心思想，如何去选择合适的$A\_0$并使得我们learn的$A$尽可能逼近它。
+这儿，就是ITML的核心思想，如何去选择合适的$A_0$并使得我们learn的$A$尽可能逼近它。
 
 #### 2.4 使用KL散度
 
-又一次使用散度的概念，这在我们metric learning系列的[第一篇](谈谈Metric Learning1)已经提到，散度用于分析随机变量在两个分布下的相似度。这里的两个分布自然是由$A\_0$和$A$来度量的，这是因为$A\_0$和$A$是两个分布的协方差矩阵的逆。
+又一次使用散度的概念，这在我们metric learning系列的[第一篇](谈谈Metric Learning1)已经提到，散度用于分析随机变量在两个分布下的相似度。这里的两个分布自然是由$A_0$和$A$来度量的，这是因为$A_0$和$A$是两个分布的协方差矩阵的逆。
 
-我们需要来定义一个，$x\_i$在$A$下的Gaussian分布：
+我们需要来定义一个，$x_i$在$A$下的Gaussian分布：
 
-> $p(x;A) = \frac{1}{Z} \cdot \exp \{ -\frac{1}{2} d\_A(x,\mu) \}$
+> $p(x;A) = \frac{1}{Z} \cdot \exp \{ -\frac{1}{2} d_A(x,\mu) \}$
 
-其中，$Z$是一个用于正规化处理的常数，而$A$是分布的协方差covariance，$\mu$是mean，那么我们可以定义出$A$与$A\_0$这两个分布的KL散度。
+其中，$Z$是一个用于正规化处理的常数，而$A$是分布的协方差covariance，$\mu$是mean，那么我们可以定义出$A$与$A_0$这两个分布的KL散度。
 
-> $\mathit{KL}(p(x; A\_0) || p(x; A)) = \displaystyle\int p(x ; A\_0) \log{\frac{p(x; A\_0)}{p(x; A)}} \rm{d}x$
+> $\mathit{KL}(p(x; A_0) || p(x; A)) = \displaystyle\int p(x ; A_0) \log{\frac{p(x; A_0)}{p(x; A)}} \rm{d}x$
 
 #### 2.5 问题形式化
 
 那么，对于给定的constraints set $\mathit{S}$和$\mathit{D}$，我们将问题形式化为：
 
-> $\min\limits\_{A} \mathit{KL} (p(x; A\_0) || p(x; A))$
+> $\min\limits_{A} \mathit{KL} (p(x; A_0) || p(x; A))$
 >
 > $\text{s.t.}$
->   $d\_A(x\_i, x\_j) \leq u, (i,j) \in \mathit{S}$
->   $d\_A(x\_i, x\_j) \geq l, (i,j) \in \mathit{D}$
+>   $d_A(x_i, x_j) \leq u, (i,j) \in \mathit{S}$
+>   $d_A(x_i, x_j) \geq l, (i,j) \in \mathit{D}$
 
 ### 3. 算法
 
@@ -89,39 +89,39 @@ $u$($l$)是一个值很小(大)的upper（lower）bound。
 
 > $\Phi(X) = -\log\det X$
 
-这个函数是定义在正定矩阵的cone上的，基于这个函数，我们可以把它的[Bregman matrix divergence](http://en.wikipedia.org/wiki/Bregman\_divergence)做成一个LogDet divergence。事实上，LogDet divergence是用于来描述两个矩阵的差异性。
+这个函数是定义在正定矩阵的cone上的，基于这个函数，我们可以把它的[Bregman matrix divergence](http://en.wikipedia.org/wiki/Bregman_divergence)做成一个LogDet divergence。事实上，LogDet divergence是用于来描述两个矩阵的差异性。
 
-上述divergence，我们提到是对于两个矩阵，即$A$和$A\_0$的差异性的度量，可以这么写：
+上述divergence，我们提到是对于两个矩阵，即$A$和$A_0$的差异性的度量，可以这么写：
 
-> $D\_{ld}(A, A\_0) = tr(A A^{-1}) - \log\det(A A\_0^{-1}) - n$
+> $D_{ld}(A, A_0) = tr(A A^{-1}) - \log\det(A A_0^{-1}) - n$
 
-联系我们在上一节中介绍过的KL散度，两个metric定义中的矩阵$A$和$A\_0$的“closeness”就可以通过散度，也就是LogDet divergence来一起定义，那么写成
+联系我们在上一节中介绍过的KL散度，两个metric定义中的矩阵$A$和$A_0$的“closeness”就可以通过散度，也就是LogDet divergence来一起定义，那么写成
 
-> $ \mathit{KL}(p(x; A\_0) || p(x;A)) = \frac{1}{2} \cdot D\_{ld}(A\_0^{-1},A^{-1}) = \frac{1}{2} \cdot D\_{ld}(A,A\_0)$
+> $ \mathit{KL}(p(x; A_0) || p(x;A)) = \frac{1}{2} \cdot D_{ld}(A_0^{-1},A^{-1}) = \frac{1}{2} \cdot D_{ld}(A,A_0)$
 
-事实上，这个等价推导过程是非常巧妙的，它借鉴了微分相对熵的一些知识，这在[Davis2006](http://machinelearning.wustl.edu/mlpapers/paper\_files/NIPS2006\_147.pdf)中有很详细的介绍。
+事实上，这个等价推导过程是非常巧妙的，它借鉴了微分相对熵的一些知识，这在[Davis2006](http://machinelearning.wustl.edu/mlpapers/paper_files/NIPS2006_147.pdf)中有很详细的介绍。
 
 最后，在这里我们可知，2.5给出的问题形式化，从最小化KL散度最后变成了一个最小化LogDet的问题。但是，我们给出更加严格化的问题描述:
 
 1.  给出$c(i,j)$，表示第$(i,j)$-th个constraint；
 2.  给出trade-off parameter $\gamma$；
-3.  给出松弛变量slack variables，并将其初始化为$\vec{\xi}\_0$，注意这是一个vector，其中等于$u$的部分为similar constraints，等于$l$的部分为dissimilar constraints；
+3.  给出松弛变量slack variables，并将其初始化为$\vec{\xi}_0$，注意这是一个vector，其中等于$u$的部分为similar constraints，等于$l$的部分为dissimilar constraints；
 4.  那么对于一个Mahalonbios距离的学习问题，我们需要保证$A$是对称半正定的，形式化就可以写成$A \succeq 0$，现在我们要最小化$A$和$\vec{\xi}$，并保证两个矩阵相似。
 
 终于，我们可以来重新定义一个严格的问题描述：
 
-> $\min\limits\_{A \succeq 0, \vec{\xi}} D\_{ld}(A,A\_0) + \gamma \cdot D\_{ld}(diag(\vec{\xi}), diag(\vec{\xi\_0}))$
+> $\min\limits_{A \succeq 0, \vec{\xi}} D_{ld}(A,A_0) + \gamma \cdot D_{ld}(diag(\vec{\xi}), diag(\vec{\xi_0}))$
 >
 > $\text{s.t.}$
-> $tr(A(x\_i,x\_j)(x\_i,x\_j)^T) \leq \vec{\xi}\_{c(i,j)}, (i,j) \in \mathit{S} $
-> $tr(A(x\_i,x\_j)(x\_i,x\_j)^T) \geq \vec{\xi}\_{c(i,j)}, (i,j) \in \mathit{D} $
+> $tr(A(x_i,x_j)(x_i,x_j)^T) \leq \vec{\xi}_{c(i,j)}, (i,j) \in \mathit{S} $
+> $tr(A(x_i,x_j)(x_i,x_j)^T) \geq \vec{\xi}_{c(i,j)}, (i,j) \in \mathit{D} $
 
 那么最终，ITML的距离度量，从一堆constraints中对于$A$的优化实际上变成了一个LogDet的优化问题。
 
 这个函数，我们可以概括为：
 
-1.  希望$A$和$A\_0$尽量靠近；
-2.  希望对应的松弛变量$\vec{\xi}$和$\vec{\xi}\_0$尽可能地靠近；
+1.  希望$A$和$A_0$尽量靠近；
+2.  希望对应的松弛变量$\vec{\xi}$和$\vec{\xi}_0$尽可能地靠近；
 3.  优化参数$A$为半正定。
 
 #### 3.2 算法解释
@@ -170,7 +170,7 @@ return A
 
 我们可以看到，上述是一个projected gradient descent的过程。循环中的34行实际上是一次projection，保证$A$依然在convex set中，这事实上是一个Bregman projection过程：
 
-> $A\_{t+1} = A\_{t} + \beta A\_{t}(x\_i, x\_j)(x\_i, x\_j)^TA\_{t} $
+> $A_{t+1} = A_{t} + \beta A_{t}(x_i, x_j)(x_i, x_j)^TA_{t} $
 
 其中，$\beta$是projection parameter，一个与constraint相关的拉格朗日乘子。一次projection的时间复杂度是$O(d^2)$，那么对于有$c$个constraint的一次iteration，则时间复杂度为$O(cd^2)$。
 

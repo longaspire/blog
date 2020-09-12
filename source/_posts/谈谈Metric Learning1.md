@@ -45,7 +45,7 @@ description:
 
 #### 2.3 Minkowski Distance
 
-> $d\_p(x,x') = ||x - x'||\_p = (\sum\limits\_{i=1}^{d}|(x\_i - x'\_i)^{p}|)^{\frac{1}{p}}$
+> $d_p(x,x') = ||x - x'||_p = (\sum\limits_{i=1}^{d}|(x_i - x'_i)^{p}|)^{\frac{1}{p}}$
 
 $p=1$：Manhattan distance 曼哈顿距离
 $p =2$：Euclidean distance 欧氏距离
@@ -53,7 +53,7 @@ $p \rightarrow \infty$：Chebyshev distance 切比雪夫距离，相当于取各
 
 #### 2.4 Manhalanobis Distance
 
-> $d\_M(x,x') = \sqrt{(x-x')^TM(x-x')}$.
+> $d_M(x,x') = \sqrt{(x-x')^TM(x-x')}$.
 
 其中，$M$是一个对称半正定矩阵（symmetric PSD matrix），对于$M$的解释，可以这样认为，假设$x,x'$是随机向量，符合同样的分布，且其协方差矩阵（covariance matrix）是$\Sigma$，那么，我们可得到$M = \Sigma^{-1}$.
 
@@ -61,7 +61,7 @@ $p \rightarrow \infty$：Chebyshev distance 切比雪夫距离，相当于取各
 
 在数据挖掘和信息检索中一个常用的metric是cosine distance，在bag-of-words和sparse vectors中都有很好的应用，是这样定义的：
 
-> $K\_{cos}(x,x') = \frac{x^Tx'}{||x||\_2||x'||\_2}$
+> $K_{cos}(x,x') = \frac{x^Tx'}{||x||_2||x'||_2}$
 
 类似于计算两个vector的夹角，即方向上有多靠近，下标用的是二范数。
 
@@ -69,7 +69,7 @@ $p \rightarrow \infty$：Chebyshev distance 切比雪夫距离，相当于取各
 
 与2.4写出的马氏距离Manhalanobis distance类似，是由一个矩阵$M \in \mathbb{R}^{d \times d}$来parameterize的，但不要求为半正定或者对称
 
-> $K\_M(x,x') = x^TMx'$
+> $K_M(x,x') = x^TMx'$
 
 #### 2.7 KL散度
 
@@ -79,13 +79,13 @@ $p \rightarrow \infty$：Chebyshev distance 切比雪夫距离，相当于取各
 
 给定一个字符集的概率分布$\mathit{X}$，可设计一种编码，使得表示该字符集组成的字符串平均需要的比特数最少。对$x \in \mathit{X}$，设其出现概率为$P(x)$，那么其最优编码平均需要的比特数等于这个字符集的熵为
 
-> $H(x) = \sum\limits\_{x \in \mathit{X}} P(x) {log}{\frac{1}{P(x)}}$
+> $H(x) = \sum\limits_{x \in \mathit{X}} P(x) {log}{\frac{1}{P(x)}}$
 
 如此，同样的字符集上，假设存在另一个概率分布$Q(X)$。如果用概率分布$P(X)$的最优编码（即字符x的编码长度等于$log(\frac{1}{P(x)})$，来为符合分布$Q(X)$的字符编码，那么表示这些字符就会比理想情况多用一些比特数。
 
 KL-divergence就是用来衡量这种情况下平均每个字符多用的比特数，因此可以用来衡量两个分布的距离。表达公式为：
 
-> $D\_{KL}(Q \parallel P) = \sum\limits\_{x \in \mathit{X}} Q(x) {log}{\frac{1}{P(x)}} - \sum\limits\_{x \in \mathit{X}} Q(x) {log}{\frac{1}{Q(x)}} = \sum\limits\_{x \in \mathit{X}} Q(x) {log}{\frac{Q(x)}{P(x)}}$
+> $D_{KL}(Q \parallel P) = \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{1}{P(x)}} - \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{1}{Q(x)}} = \sum\limits_{x \in \mathit{X}} Q(x) {log}{\frac{Q(x)}{P(x)}}$
 
 KL散度是不对称的，且KL散度始终是大于零的， 简单的证明[在此](http://blog.csdn.net/caohao2008/article/details/6910794)。
 
@@ -93,7 +93,7 @@ KL散度是不对称的，且KL散度始终是大于零的， 简单的证明[�
 
 凸优化（Convex Optimization）实在是太过于重要，这里应该有很多篇幅来讲，这里只讲对于后续有用的一些重要性质：
 
-1.  function $ f : \mathbb{R}^n \rightarrow \mathbb{R}$ is convex if $x\_1, x\_2 \in \mathbb{R}^n, 0 \leq a \leq 1 \Rightarrow f(ax\_1 + (1-a)x\_2) \leq af(x\_1) + (1-a)f(x\_2)$
+1.  function $ f : \mathbb{R}^n \rightarrow \mathbb{R}$ is convex if $x_1, x_2 \in \mathbb{R}^n, 0 \leq a \leq 1 \Rightarrow f(ax_1 + (1-a)x_2) \leq af(x_1) + (1-a)f(x_2)$
 2.  function $ f : \mathbb{R}^n \rightarrow \mathbb{R}$ is convex iff its Hessian matrix $\triangledown^2f(x)$ is PSD
 3.  if function $ f : \mathbb{R}^n \rightarrow \mathbb{R}$ is convex, then any local minimum of function $ f $ is also a global minimum of $ f $
 
