@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/Data Sketching笔记-Quantiles/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        Data Sketching笔记 - Quantiles｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/img/Subtle-Prism.svg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>Data Sketching笔记 - Quantiles</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Jun 2, 2021</span>
+                               
+                                 <span class="meta-item">Updated On: Jun 3, 2021</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#Data Sketching笔记"
+                                 title="Data Sketching笔记">Data Sketching笔记</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#概率"
+                                 title="概率">概率</a>
+                              
+                              <a class="tag" href="/blog/tags/#Sketch"
+                                 title="Sketch">Sketch</a>
+                              
+                              <a class="tag" href="/blog/tags/#分位数"
+                                 title="分位数">分位数</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">974 words in total, 3 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是对于分位数（Quantiles）计算方法的总结，主要基于Data Sketching技术。</p>
+</blockquote>
+<h2 id="计算分位数"><a href="#计算分位数" class="headerlink" title="计算分位数"></a>计算分位数</h2><p>Quantiles的计算非常基础，被认为是和sum、max、top-k、count-distinct一样十分基础的数据操作。Quantiles是分布的一种近似表达，许多分布的相似度可以通过对比它们的quantiles进行对比，这就是Kolmogorov-Smirnov Divergence（和KL散度相比，KS散度可以被视为一种对称距离，一些讨论可见<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.](https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance)
+">[1]</span></a></sup>）。</p>
+<p>给出Quantiles的一般定义：</p>
+<blockquote>
+<p>给定一个包含$n$个元素的有序的multi(set) $S$，$\phi$-quantile ($0 &lt; \phi &lt; 1$) 是在$S$中排名为第 $\left \lfloor \phi n \right \rfloor$ 小的元素。</p>
+</blockquote>
+<p>由于实际上输入数据本身容易存在误差，因此在计算Quantiles往往允许一定的误差率$\varepsilon$，我们定义</p>
+<blockquote>
+<p>一个$\varepsilon$-approximate $\phi$-quantile的排名在$(\phi - \varepsilon)n$和$(\phi + \varepsilon)n$之间。</p>
+</blockquote>
+<h2 id="算法分类"><a href="#算法分类" class="headerlink" title="算法分类"></a>算法分类</h2><p>文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Quantiles over data streams: An experimental study.](https://dl.acm.org/doi/abs/10.1145/2463676.2465312)
+">[2]</span></a></sup>对算法分类从三个方面进行了叙述：</p>
+<ol>
+<li>turnstile vs. cash register：前者允许插入和删除一个元素，而后者只允许插入；</li>
+<li>comparison vs. fixed universe：对于前者，算法只能维护一组它已经观测到的元素并从中计算quantiles不能“创造”一个新的元素作为quantiles。对于后者，元素可能认为是1到$u$之间的所有可枚举整数。comparison算法可被运用到fixed universe，但反之则不行。comparison算法可以在很多场景下适用，例如变长的字符串、用户自定义类型等等；</li>
+<li>deterministic vs. randomized：在randomized的算法中，允许以一定概率出现那些超过了误差率$\varepsilon$的分位数计算结果。通常，这个概率值会被设置成一个常量。</li>
+</ol>
+<h2 id="Cash-Register算法"><a href="#Cash-Register算法" class="headerlink" title="Cash Register算法"></a>Cash Register算法</h2><h3 id="Greenwald-Khanna算法"><a href="#Greenwald-Khanna算法" class="headerlink" title="Greenwald-Khanna算法"></a>Greenwald-Khanna算法</h3><p>GK算法的sketch可以记为$S(n)$，它是一个排序元组对应所有观测数据的一个有代表的子集。其当中的每个元素$v \in S(n)$，我们需要能获知其对应的implicit bound，即其对于所有观测点而言的最大可能和最小可能的rank，记为$rmin(v)$和$rmax(v)$。实际上，$S(n)$中的每个元素的存储是一个三元组$(v_i, g_i, \Delta_i)$，包含：</p>
+<ol>
+<li>$v_i$是数据流中实际出现的值；</li>
+<li>$g_i = rmin(v_i) - rmin(v_{i-1})$；</li>
+<li>$\Delta_i = rmax(v_i) - rmin(v_i)$.</li>
+</ol>
+<p>其中，$g_i$和排列的上一个元素相关，$\Delta_i$只和当前元素$v_i$相关。</p>
+<p>上述数据结构保证我们能够恢复$S(n)$中的每个元素的最大和最小可能rank，比如</p>
+<ol>
+<li>$rmin(v_i) = \sum_{j \leq i} g_j$ （相对于第一个元素的最小可能排名）</li>
+<li>$rmax(v_i) = \sum_{j \leq i} g_j + \Delta_i = \sum_{j \leq i} (g_j + \Delta_j)$</li>
+</ol>
+<p>$S(n)$在构建中需要满足以下两个条件：</p>
+<ol>
+<li>$\sum_{j \leq i} g_j \leq r(v_i) + 1 \leq \sum_{j \leq i} g_j + \Delta_i $ （该条件定义了排名的上界和下界）</li>
+<li>对任意元素$v_i$而言，$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （证明参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
+">[4]</span></a></sup>）</li>
+</ol>
+<p>对于当前最大的元素和最小的元素（当$i = 0$或者$i = n-1$的时候），他们的最大排名和最小排名是一样的，即$\Delta_i = 0$。</p>
+<p>此外，$g_i + \Delta_i - 1$是$v_{i-1}$和$v_i$之间最多可能出现的元素的个数，要求$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （上述条件2）是为了保证从$\varepsilon n$到任意一个$\phi n$之间至少有一个元素。</p>
+<p>关于GK算法的insert、delete、compress和get rank的算法，可以参考<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.](https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/)
+">[3]</span></a></sup><sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
+">[4]</span></a></sup>的解读。</p>
+<h3 id="Q-Digest算法"><a href="#Q-Digest算法" class="headerlink" title="Q-Digest算法"></a>Q-Digest算法</h3><p>Q-Digest （Quantile Digest）可以看成是一个叶结点是值本身的二叉树。其通过设置压缩比将fixed universe的数值在index上进行索引。</p>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance">https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/2463676.2465312">Quantiles over data streams: An experimental study.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/">https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://blog.csdn.net/matrix_zzl/article/details/78641264">https://blog.csdn.net/matrix_zzl/article/details/78641264.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              
+              <li class="next">
+                  <a href="/blog/Data%20Sketching%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top"
+                     title="Data Sketching笔记">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%88%86%E4%BD%8D%E6%95%B0"><span class="toc-text">计算分位数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB"><span class="toc-text">算法分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cash-Register%E7%AE%97%E6%B3%95"><span class="toc-text">Cash Register算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Greenwald-Khanna%E7%AE%97%E6%B3%95"><span class="toc-text">Greenwald-Khanna算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-Digest%E7%AE%97%E6%B3%95"><span class="toc-text">Q-Digest算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

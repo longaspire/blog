@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/变分推断介绍/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        变分推断介绍｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/bayes_avator.png');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>变分推断介绍</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: May 16, 2018</span>
+                               
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#概率图模型"
+                                 title="概率图模型">概率图模型</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#概率推断"
+                                 title="概率推断">概率推断</a>
+                              
+                              <a class="tag" href="/blog/tags/#变分推断"
+                                 title="变分推断">变分推断</a>
+                              
+                              <a class="tag" href="/blog/tags/#EM算法"
+                                 title="EM算法">EM算法</a>
+                              
+                              <a class="tag" href="/blog/tags/#KL散度"
+                                 title="KL散度">KL散度</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2.8k words in total, 11 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文部分内容总结自引用<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[如何简单易懂地理解变分推断](https://www.zhihu.com/question/41765860).
+">[1]</span></a></sup>。</p>
+</blockquote>
+<p>变分推断，是一种在概率图模型中进行概率推断的近似方法。相比于基于采样的随机化方法，变分推断是一种确定性逼近方法。更多关于概率图推断的介绍，可以参见<a href="/blog/概率图模型总览">概率图模型总览</a>。</p>
+<h2 id="1-理论知识"><a href="#1-理论知识" class="headerlink" title="1. 理论知识"></a>1. 理论知识</h2><p>变分推断的思想的要点可以概括如下：</p>
+<ul>
+<li>使用已知的简单分布来逼近需推断的复杂分布；</li>
+<li>限制近似分布的类型；</li>
+<li>得到一种局部最优、但具有确定解的<strong>近似后验分布</strong>。</li>
+</ul>
+<p>简单地说，原始目标是根据已有数据推断需要的分布$p$；当$p$不容易表达、不能直接求解时，可以尝试用变分推断即，寻找容易表达和求解的分布$q$，当$q$和$p$的差距很小的时候（技术上而言，是KL散度距离最小），$q$就可以作为$p$的近似分布，成为输出结果。</p>
+<blockquote>
+<p>以下先结合文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="《机器学习》，周志华著，清华大学出版社.
+">[2]</span></a></sup> 15.5.2节中的一个例子来解答下变分推断的学习目标、及其在学习任务中具体的思想和用途。</p>
+</blockquote>
+<p>假定隐变量$\mathbf{z}$直接和$N$个可观测的变量$\mathbf{x} = x_1, \ldots, x_N$相连，那么，所有可观测的变量的联合分布的概率密度函数可以表示为：</p>
+<blockquote>
+<p>$p(\mathbf{x} \mid \Theta) = \prod_{i=1}^{N}\sum_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta)$</p>
+</blockquote>
+<p>对数似然可以写为：</p>
+<blockquote>
+<p>$\ln p(\mathbf{x} \mid \Theta) = \sum_{i=1}^{N} \ln \{ \prod_{\mathbf{z}} p(x_i, \mathbf{z} \mid \Theta) \}$</p>
+</blockquote>
+<p>那么，上述例子中的推断和学习任务分别是在给定观测样本$\mathbf{x}$的情况下计算出概率分布$p(\mathbf{z} \mid \mathbf{x}, \Theta)$和分布的参数$\Theta$。</p>
+<p>在含有隐变量$\mathbf{z}$时，上述问题的求解可以使用EM算法：</p>
+<ul>
+<li>E步，根据$t$时刻参数$\Theta^{t}$对$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$进行推断，并对以上的<strong>联合似然函数</strong>$p(\mathbf{x}, \mathbf{z} \mid \Theta)$进行计算；</li>
+<li><p>M步，基于E步计算的结果进行最大化寻优，即在<strong>$\mathbf{z}$被当前参数和观测确定的情况下，对上述的对数似然求最大化</strong>：</p>
+<blockquote>
+<p>$\Theta^{t+1} = \arg\max\limits_{\Theta} \mathcal{Q}(\Theta; \Theta^{t}) = \arg\max\limits_{\Theta} \sum\limits_{\mathbf{z}} p(\mathbf{z} \mid \mathbf{x}, \Theta^{t}) \ln p(\mathbf{x}, \mathbf{z} \mid \Theta)$</p>
+</blockquote>
+<p>上式中，最大化的一项，实际上是对数联合似然函数$\ln p(\mathbf{x}, \mathbf{z} \mid \Theta)$在分布$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$下的期望。</p>
+<p>当分布$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$和变量$\mathbf{z}$的后验分布相等时，上式中最大化的期望值$\mathcal{Q}(\Theta; \Theta^{t})$可以近似于对数似然函数。</p>
+</li>
+</ul>
+<p>因此，通过E步和M步的迭代，最终可以获得稳定参数$\Theta$，从而也可以获得$\mathbf{z}$的分布。</p>
+<p>但是，$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$未必一定是$\mathbf{z}$的真实分布，而是一个近似值。若将近似分布表示为$q(\mathbf{z})$，则可以有下列公式成立：</p>
+<blockquote>
+<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln \{ \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} \} \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
+</blockquote>
+<p>上述公式看起来很复杂，但是试着把后面两个公式带入到上面公式中，就可以发现其实是贝叶斯公式$p(\mathbf{x}) = \frac{p(\mathbf{x}, \mathbf{z})}{p(\mathbf{z} \mid \mathbf{x})}$在符合$q$分布的变量$\mathbf{z}$在积分上的一种表达形式。</p>
+<p>接下来，考虑到$\mathbf{z}$可能模型复杂而难以完成E步中$p(\mathbf{z} \mid \mathbf{x}, \Theta^{t})$的推断，此时，<strong>就可以借助变分推断</strong>，假设$\mathbf{z}$服从一个简单的分布：</p>
+<blockquote>
+<p>$q(\mathbf{z}) = \prod_{i=1}^{M}q_i(\mathbf{z}_i)$</p>
+</blockquote>
+<p>即假设复杂的多变量$\mathbf{z}$可拆解为一系列相互独立的多变量$\mathbf{z}_i$。并且，还可以假设每个分布$q_i$相对简单或有很好的结构。<br>考虑到上述对数似然的形式，我们假设每个分布符合指数族分布（易于积分求解），那么对于每一个独立的变量子集$\mathbf{z}_j$，其最优的分量分布$q^{\star}_j$应该满足：</p>
+<blockquote>
+<p>$\ln q^{\star}_j(\mathbf{z}_j) = \mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] + \text{const}$<br>$\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})] = \displaystyle\int p(\mathbf{x}, \mathbf{z}) \prod_{i \neq j} q_i \rm{d}\mathbf{z}_i$<br>$\text{const}$为一个常数。</p>
+</blockquote>
+<p>对上述公式进行转换，可以得到一个最优分量分布（最接近真实情形）的表达式：</p>
+<blockquote>
+<p>$q^{\star}_j(\mathbf{z}_j) = \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) / (\displaystyle\int \exp (\mathbb{E}_{i \neq j}[\ln p(\mathbf{x}, \mathbf{z})]) \rm{d}\mathbf{z}_j$</p>
+</blockquote>
+<p>通过上式可以看出，在对变量$\mathbf{z}_j$的最优分布$q^{\star}_j$估计时，融合了除$\mathbf{z}_j$外其他变量$\mathbf{z}_{i \neq j}$的信息，这是通过联合似然函数$p(\mathbf{x}, \mathbf{z})$在$\mathbf{z}_j$之外的隐变量求期望得到的，因此变分推断也被成为平均场（mean field）逼近方法。</p>
+<!-- > $\mathcal{L}(q) = \displaystyle\int \prod_i q_i \{ \ln p(\mathbf{x},\mathbf{z}) - \sum_{i} \ln q_i \} \rm{d}\mathbf{z}$ -->
+<p>实践中对于变分推断的使用：</p>
+<ul>
+<li>首先，对隐变量进行拆解，假设各个分量服从何种分布</li>
+<li>再利用上述最优分布求解，对隐变量的后验概率分布进行估计</li>
+<li>通过EM方法迭代求解，得到最终概率图模型的推断和参数估计</li>
+</ul>
+<h2 id="2-通过实例进行理解"><a href="#2-通过实例进行理解" class="headerlink" title="2. 通过实例进行理解"></a>2. 通过实例进行理解</h2><p>变分推断的思想，即采用简易的分布来近似复杂的隐变量分布，从而实现在观测变量之下，通过EM方法迭代对隐变量和观测变量的联合概率分布的参数估计进行求解。当然，变分推断的公式推导有些难以理解，虽然出现了KL散度的概念，但目前为止，如何实现对其的优化来完成分布的逼近依然没有得到解释，这一节，我们通过对于引用<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[如何简单易懂地理解变分推断](https://www.zhihu.com/question/41765860).
+">[1]</span></a></sup>中的回答进行review来进行理解。</p>
+<h3 id="2-1-简易理解"><a href="#2-1-简易理解" class="headerlink" title="2.1 简易理解"></a>2.1 简易理解</h3><p><img src="vi_example.jpg" alt="变分推断中分布逼近的示例"><span class="image-caption-center">变分推断中分布逼近的示例</span></p>
+<p>上图中，为了对原始目标分布$p$进行求解，我们选择了两个高斯分布（简易好解释），来分别衡量它们和目标分布的相似性，并选择相似性高的分布来逼近$p$。</p>
+<h3 id="2-2-求解思路"><a href="#2-2-求解思路" class="headerlink" title="2.2 求解思路"></a>2.2 求解思路</h3><p>理解变分推断的步骤：</p>
+<ol>
+<li>拥有两部分输入：数据$x$，模型$p(z, x)$</li>
+<li>需要推断的是后验概率$p(z \mid x)$，但不能直接求</li>
+<li>构造后验概率$p(z \mid x)$的近似分布$q(z; v)$</li>
+<li>不断缩小$q$和$p$之间的距离直至收敛 - 使用EM算法</li>
+</ol>
+<p>以下分别解释下上述4个步骤中重要的问题。</p>
+<h4 id="2-2-1-模型和输入确定"><a href="#2-2-1-模型和输入确定" class="headerlink" title="2.2.1 模型和输入确定"></a>2.2.1 模型和输入确定</h4><p>变分推断要解决的问题，简单来说，专家利用他们的知识，给出合理的模型假设$p(z, x)$，其中包括隐含变量$z$和观察值变量$x$。隐含变量$z$在通常情况下不止一个，并且相互之间存在依赖关系，这也是问题难求解的原因之一。</p>
+<p>为了理解隐含变量和观察值的关系，一个很重要的概念叫做“生成过程模型”。我们认为，观察值是从已知的隐含变量组成的层次结构中生成出来的。</p>
+<blockquote>
+<p>以高斯混合模型问题举例。我们有5个相互独立的高斯分布，分别从中生成很多数据点，这些数据点混合在一起，组成了一个数据集。当我们转换角度，单从每一个数据点出发，考虑它是如何被生成的呢？生成过程分两步，第一步，从5个颜色类中选一个（比如粉红色），然后，再根据这个类对应的高斯分布，生成了这个点在空间中的位置。隐含变量有两个，第一个是5个高斯分布的参数$u$，第二个是每个点属于哪个高斯分布$c$，$u$和$c$共同组成隐含变量$z$。$u$和$c$之间也存在依赖关系。</p>
+</blockquote>
+<h4 id="2-2-2-后验概率求解"><a href="#2-2-2-后验概率求解" class="headerlink" title="2.2.2 后验概率求解"></a>2.2.2 后验概率求解</h4><p>后验概率$p(z \mid x)$即基于现有数据集合$x$，推断隐含变量的分布情况。</p>
+<blockquote>
+<p>利用高斯混合模型的例子来说，就是求得每个高斯分布的参数$u$的概率和每个数据点的颜色的概率$c$。根据贝叶斯公式，$p(z \mid x) = p(z, x) / p(x)$。根据专家提供的生成模型，可知$p(z, x)$部分（可以写出表达式并且方便优化），但是边缘概率$p(x)$是不能求得的，当$z$连续时边缘概率需要对所有可能的$z$求积分，不好求。当$z$离散时，计算复杂性随着$x$的增加而指数增长。</p>
+</blockquote>
+<h4 id="2-2-3-近似逼近后验概率"><a href="#2-2-3-近似逼近后验概率" class="headerlink" title="2.2.3 近似逼近后验概率"></a>2.2.3 近似逼近后验概率</h4><p>此时需要构造$q(z; v)$，并且不断更新$v$，使得$q(z;v)$更接近$p(z \mid x)$。$q(z;v)$意思是$z$是变量，$v$是$z$的概率分布$q$的参数。所以在构造$q$的时候也分两步，第一，概率分布的选择。第二，参数的选择。</p>
+<p>第一步，我们在选择$q$的概率分布时，通常会直观选择$p$可能的概率分布，这样能够更好地保证$q$和$p$的相似程度。</p>
+<blockquote>
+<p>例如高斯混合模型中，原始假设$p$服从高斯分布，则构造的$q$依然服从高斯分布。</p>
+</blockquote>
+<p>第二步，通过改变$v$，使得$q$不断逼近$p$。</p>
+<p><img src="vi_optimization.jpg" alt="变分推断等价于对于KL散度的优化"><span class="image-caption-center">变分推断等价于对于KL散度的优化</span></p>
+<h4 id="2-2-4-优化问题的求解"><a href="#2-2-4-优化问题的求解" class="headerlink" title="2.2.4 优化问题的求解"></a>2.2.4 优化问题的求解</h4><p>优化目标很明确，减小KL散度的值即可。由于KL的表达式中依然有一部分不可求的后验概率，可以使用ELBO（Evidence Lower BOund）来进行替代，ELBO中只包括联合概率$p(z, x)$和$q(z; v)$，从而摆脱后验概率。</p>
+<blockquote>
+<p>$\ln p(\mathbf{x}) = \mathcal{L}(q) + \text{KL}(q \parallel p)$<br>$\mathcal{L}(q) = \displaystyle\int q(\mathbf{z}) \ln \{ \frac{p(\mathbf{x},\mathbf{z})}{q(\mathbf{z})} \} \rm{d}\mathbf{z}$<br>$\text{KL}(q \parallel p) = - \displaystyle\int q(\mathbf{z}) \ln  \frac{p(\mathbf{z} \mid \mathbf{x})}{q(\mathbf{z})}  \rm{d}\mathbf{z}$</p>
+</blockquote>
+<p>ELBO就是$\mathcal{L}(q)$！！！给定数据集后（$\mathbf{x}$），最小化KL等价于最大化ELBO，因此ELBO的最大化过程结束时，对应获得的$q(z;v^{\star})$，就成为了最后输出。</p>
+<p>对于$\mathcal{L}(q)$的最大化，就是对$z$进行拆解、假设其各分量分布简单的情况下完成的。具体推导，可以参见引用<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="《机器学习》，周志华著，清华大学出版社.
+">[2]</span></a></sup> 14.5.2节中的内容。</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41765860">如何简单易懂地理解变分推断</a>.<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">《机器学习》，周志华著，清华大学出版社.<a href="#fnref:2" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E5%8A%A8%E6%80%81%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/" data-toggle="tooltip" data-placement="left"
+                     title="动态贝叶斯网络">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top"
+                     title="终极算法读书笔记">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86"><span class="toc-text">1. 理论知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E8%BF%9B%E8%A1%8C%E7%90%86%E8%A7%A3"><span class="toc-text">2. 通过实例进行理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%AE%80%E6%98%93%E7%90%86%E8%A7%A3"><span class="toc-text">2.1 简易理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%B1%82%E8%A7%A3%E6%80%9D%E8%B7%AF"><span class="toc-text">2.2 求解思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%BE%93%E5%85%A5%E7%A1%AE%E5%AE%9A"><span class="toc-text">2.2.1 模型和输入确定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87%E6%B1%82%E8%A7%A3"><span class="toc-text">2.2.2 后验概率求解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E8%BF%91%E4%BC%BC%E9%80%BC%E8%BF%91%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87"><span class="toc-text">2.2.3 近似逼近后验概率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%82%E8%A7%A3"><span class="toc-text">2.2.4 优化问题的求解</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-text">引用</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/page/2/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "false" data-istags="false" data-ishome = "true" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- index.ejs -->
+<!--<article class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">-->
+    <!---->
+<!--</article>-->
+
+<div id = "body_container" class="container homepage">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/firenze.png')">
+    <a href="/blog/PCA_RPCA/">
+        <h2 class="post-title">
+            从PCA到Robust PCA
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 12, 2020</span>
+          <span class="meta-item">Updated On May 19, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本文大部分内容来自于阅读他人博客的笔记，已经在扩展阅读材料中列出。
+
+回顾PCAPCA即Principal components analysis，中文译作主成分分析或主元分析。通俗来讲，它是一种数据在度量空间上的降维方法：也就是说，我们在将数据进行表征空间的变换之后，能够最大化地用几个正交基..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B05/">
+        <h2 class="post-title">
+            图谱实践笔记5 - OpenKE
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 30, 2020</span>
+          <span class="meta-item">Updated On Mar 31, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+图谱实践笔记第五篇：OpenKE- KG Embedding
+
+OPENKE简介清华大学自然语言处理实验室近日发布了 OpenKE 平台，整合了 TransE、TransH、TransR、TransD、RESCAL、DistMult、HolE、ComplEx 等算法的统一接口高效实现，以及面向..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B04/">
+        <h2 class="post-title">
+            图谱实践笔记4 - Jena实训
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 29, 2020</span>
+          <span class="meta-item">Updated On Mar 31, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+图谱实践笔记第四篇：Jena实训，生成所需的subgraph
+
+读取RDF文件Jena 2.10引入了RDF I/O technology (RIOT) 技术。
+
+
+
+
+Class
+Comment
+
+
+
+
+RDFDataMgr
+Main set of functions to read and..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02_1/">
+        <h2 class="post-title">
+            图谱实践笔记2番外篇 - SPARQL by Example
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 23, 2020</span>
+          <span class="meta-item">Updated On Mar 25, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本篇是对SPARQL的番外补充；是对于cambridgesemantics教程[1]的学习笔记内容。
+
+SPARQL1.0语法SPARQL1.0 是一个read-only language，不具有update等进阶功能。
+Graph PatternSPARQL可以看做是对Graph Patte..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B03/">
+        <h2 class="post-title">
+            图谱实践笔记3 - GeoSPARQL
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 20, 2020</span>
+          <span class="meta-item">Updated On Mar 25, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+图谱实践笔记第三篇：Jena + GeoSPARQL
+
+GeoSPARQLGeoSPARQL: A Geographic Query Language for RDF Data; It supports representing and querying geospatial data on ..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02/">
+        <h2 class="post-title">
+            图谱实践笔记2 - SPARQL
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 20, 2020</span>
+          <span class="meta-item">Updated On Mar 25, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+图谱实践笔记第二篇：SPARQL；重要摘抄来源[6]。
+
+RDBMS to RDFdirect mapping
+
+数据库的表作为本体中的类（Class）。比如我们在mysql中保存的数据，一共有5张表。那么通过映射后，我们的本体就有5个类了，而不是我们自己定义的三个类。
+表的列作为属性（Pro..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/graphs.jpg')">
+    <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B01/">
+        <h2 class="post-title">
+            图谱实践笔记1 - 基本概念
+        </h2>
+        
+        <div class="post-meta">
+          <span>Mar 20, 2020</span>
+          <span class="meta-item">Updated On Mar 25, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+图谱实践笔记第一篇：基本概念，主要摘抄自知乎专栏[1]。
+
+语义网络（Semantic Network）上世纪60年代提出的知识表达模式，其用相互连接的节点和边来表示知识。节点表示对象、概念，边表示节点之间的关系。
+优缺点：语义网络的优点：
+
+容易理解和展示。
+
+相关概念容易聚类。
+
+
+语义网..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+            <div class="post-preview "
+     style="background-image: url('/blog/post_cover_images/bayes_avator.png')">
+    <a href="/blog/%E5%8A%A8%E6%80%81%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E8%BF%9B%E9%98%B6/">
+        <h2 class="post-title">
+            动态贝叶斯网络进阶：推断和学习
+        </h2>
+        
+        <div class="post-meta">
+          <span>May 25, 2018</span>
+          <span class="meta-item">Updated On May 12, 2020</span>
+        </div>
+        <div class="post-content-preview">
+            <p>
+                
+本文主要内容学习整理自引用[1]。
+
+1. 引言在上一篇中，我们对动态贝叶斯网络的基本形式、概念和模型问题进行了一定的解释。其中，大部分内容都还停留在对单独的子模型（sub-model）的问题求解（例如，两大主要问题：推断和学习）。在这篇文章中，我们将从时序模型的角度出发，考虑在时间上结点具有..
+            </p>
+        </div>
+    </a>
+</div>
+<hr>
+
+          
+          <ul class="pager no-print">
+    
+        <li class="previous"><a href="/blog/">&larr;  Newer Posts</a></li>
+    
+    
+        <li class="next"><a href="/blog/page/3/">Previous Posts  &rarr;</a></li>
+    
+</ul>
+
+        </div>
+        <!-- partial('_partial/sidebar-profile') -->
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

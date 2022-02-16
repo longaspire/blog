@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/PCA_RPCA/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        从PCA到Robust PCA｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/firenze.png');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>从PCA到Robust PCA</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: May 12, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: May 19, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#度量和表征"
+                                 title="度量和表征">度量和表征</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#PCA"
+                                 title="PCA">PCA</a>
+                              
+                              <a class="tag" href="/blog/tags/#RPCA"
+                                 title="RPCA">RPCA</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">3.5k words in total, 13 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文大部分内容来自于阅读他人博客的笔记，已经在扩展阅读材料中列出。</p>
+</blockquote>
+<h3 id="回顾PCA"><a href="#回顾PCA" class="headerlink" title="回顾PCA"></a>回顾PCA</h3><p>PCA即Principal components analysis，中文译作主成分分析或主元分析。通俗来讲，它是一种数据在度量空间上的降维方法：也就是说，我们在将数据进行表征空间的变换之后，能够最大化地用几个正交基来表示原有的数据（当然，这一过程可能是有损的）。当我们能用更少的维度来表达原有更多维度的数据时，降维的目的也即达成了。注意，主成分分析的结果是得到新的特征，而不是简单地舍弃原来的特征列表中的一些特征。</p>
+<p>本质上，允许我们这么做的原因，是数据间往往存在关联性，他们实际的表达可以在去除这些相关性后变得更为简单和有效。至于为什么选择方差（或者是协方差），则是为了让我们找到方差最大的特征维度，使得其能够最好地区分开数据的差异，实现主成分提取的目标。</p>
+<p>为什么要使用到奇异值分解，是我们希望提取的成分都是正交即不相关的，这样能最大化表达的非冗余性。</p>
+<p>我们先从协方差矩阵入手，给定两个维度$x$,$y$，他们的协方差矩阵表示如下</p>
+<script type="math/tex; mode=display">\begin{bmatrix}
+ \sigma_x^2 & \sigma(x,y)\\
+ \sigma(x,y)& \sigma_y^2
+\end{bmatrix}</script><p>其中， $\sigma_x^2$和$\sigma_y^2$分别是维度$x$和$y$的变异，$\sigma(x,y)$是二者间的协方差，代表他们的共变程度或相关性。</p>
+<script type="math/tex; mode=display">\sigma_x^2 = \frac{1}{N-1} \sum_{i=1}^N(x_i - \bar{x})</script><script type="math/tex; mode=display">\sigma(x,y) = \frac{1}{N-1} \sum_{i=1}^N(x_i - \bar{x})(y_i - \bar{y})</script><p>上述二维的协方差矩阵可以推广到$n$维，即给定一个$n \times m$的矩阵$\mathbf{X}$，可以很容易得到它的协方差矩阵为$\frac{1}{m}\mathbf{X}\mathbf{X}^\mathsf{T}$，这个对称矩阵中，$n$是维度，$m$是$\mathbf{X}$中样本点的个数。</p>
+<p>数据的全部信息包含在协方差矩阵所描述的全部变异中。$\sigma_x^2$和$\sigma_y^2$描述了在两个维度上数据的分散程度；而协方差$\sigma(x,y)$表示两个维度的相关程度，其越大，也就意味着噪声越大，信息的冗余程度越高。主成分分析的目的就是要最小化噪声，最大化提取出数据中包含的信息。它可以帮助我们找到新的维度，从而剔除不同维度之间的冗余信息，即让不同维度之间的相关为0。</p>
+<p>理想地，最后得到两个维度$p1$和$p2$上，数据的协方差矩阵如下：</p>
+<script type="math/tex; mode=display">\begin{bmatrix}
+ \sigma_{p1}^2 & 0\\
+ 0& \sigma_{p2}^2
+\end{bmatrix}</script><p>总结来讲，两个小目标：</p>
+<ul>
+<li>找到变异最大的新维度，以最大程度地区分不同数据点</li>
+<li>这一新维度应该可以让我们预测和重建原始维度，重建或投影误差应该最小化</li>
+</ul>
+<h4 id="引入特征向量"><a href="#引入特征向量" class="headerlink" title="引入特征向量"></a>引入特征向量</h4><p>特征向量的使用可以帮助我们快速找到主成分的维度。从数学上讲，主成分分析实际上就是让原始数据的协方差矩阵对角化，即让原始矩阵转换成只有对角线上有数值，非对角线上为0的矩阵。而特征向量则是让矩阵对角化的工具：一个$n \times n$的矩阵有$n$个特征向量（如果特征向量存在）每个特征向量有相应的特征值，一个特征向量就是一个方向，它是该方向上的单位向量。总之，特征向量定义了新的坐标系，它将原始数据转换到相互独立的两个方向上，且在主成分上方差达到最大化。<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[理解主成分分析.](https://www.zhihu.com/question/41120789/answer/583063178)
+">[1]</span></a></sup></p>
+<blockquote>
+<p>可知特征向量满足：协方差矩阵 $\times$ 特征向量 = 特征值 $\times$ 特征向量</p>
+</blockquote>
+<p>也即，我们可以在新的协方差矩阵的对角线上填充两个特征向量对应的特征值。</p>
+<h4 id="协方差矩阵和特征向量的关系"><a href="#协方差矩阵和特征向量的关系" class="headerlink" title="协方差矩阵和特征向量的关系"></a>协方差矩阵和特征向量的关系</h4><p>从原始的协方差矩阵到PCA输出的协方差矩阵，这个过程从数学的角度理解，就是一个子空间线性转换（缩放、旋转）的问题。</p>
+<p>再来看这个等式：协方差矩阵 $\times$ 特征向量 = 特征值 $\times$ 特征向量</p>
+<p>这意味着，一个特征向量，它在经过协方差矩阵的线性变换后，不会改变方向，而只是在原方向上进行了缩放。缩放比例就是这个特征向量对应的特征值。</p>
+<p>形象地说：</p>
+<ul>
+<li>特征向量重建了坐标系，相当于是一个旋转矩阵</li>
+<li>缩放矩阵的平方等于对角线为特征值的对角矩阵</li>
+</ul>
+<p>我们通过数学来推导下，设原始数据矩阵$\mathbf{X}$对应的协方差矩阵为$\mathbf{C}$，其有$m$个样本，而$\mathbf{P}$是一组基按行组成的矩阵，设$\mathbf{Y}=\mathbf{P}\mathbf{X}$，则$\mathbf{Y}$为$\mathbf{X}$对$\mathbf{P}$做基变换后的数据。设$\mathbf{Y}$的协方差矩阵为$\mathbf{C}$，则有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{D} & = \frac{1}{m} \mathbf{Y}\mathbf{Y}^\mathsf{T} \\
+           & = \frac{1}{m} \mathbf{P}\mathbf{X}\mathbf{X}^\mathsf{T}\mathbf{P}^\mathsf{T} \\
+           & = \mathbf{P} \frac{1}{m} \mathbf{X}\mathbf{X}^\mathsf{T} \mathbf{P}^\mathsf{T} \\
+           & = \mathbf{P} \mathbf{C} \mathbf{P}^\mathsf{T} \\
+\end{aligned}</script><p>我们要找的$\mathbf{P}$不是别的，而是能让原始协方差矩阵对角化变成$\mathbf{D}$的$\mathbf{P}$。换句话说，优化目标变成了寻找一个矩阵$\mathbf{P}$，满足是一个对角矩阵，并且对角元素按从大到小依次排列，那么$\mathbf{P}$的前$k$行就是要寻找的基，用$\mathbf{P}$的前$k$行组成的矩阵乘以$\mathbf{X}$就使得$\mathbf{X}$从$n$维降到了$k$维并满足上述优化条件。</p>
+<p>协方差矩阵$\mathbf{C}$是一个是对称矩阵，在线性代数上，实对称矩阵有一系列非常好的性质：</p>
+<ul>
+<li>实对称矩阵不同特征值对应的特征向量必然正交。</li>
+<li>设特征向量$\lambda$重数为$r$，则必然存在$r$个线性无关的特征向量对应于$\lambda\lambda$，因此可以将这$r$个特征向量单位正交化。</li>
+</ul>
+<p>由上面两条可知，一个$n$行$n$列的实对称矩阵一定可以找到$n$个单位正交特征向量，设这$n$个特征向量排成一个矩阵为$\mathbf{E} = (e_1,e_2,\ldots,e_n)$，则有</p>
+<script type="math/tex; mode=display">
+\mathbf{E} \mathbf{C} \mathbf{E}^\mathsf{T} = \Lambda =
+\begin{bmatrix}
+ \lambda_1 &  &  & \\
+ &  \lambda_2 &  & \\
+ &  & \ldots  & \\
+ &  &  & \lambda_n
+\end{bmatrix}</script><p>$\mathbf{P}$是协方差矩阵的特征向量单位化后按行排列出的矩阵，其中每一行都是$\mathbf{C}$的一个特征向量。如果设$\mathbf{P}$按照$\Lambda$中特征值的从大到小，将特征向量从上到下排列，则用$\mathbf{P}$的前$k$行组成的矩阵乘以原始数据矩阵$\mathbf{X}$，就得到了我们需要的降维后的数据矩阵$\mathbf{Y}$。</p>
+<h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><p>总结一下PCA的算法步骤，设有$m$条$n$维数据。</p>
+<ul>
+<li>将原始数据按列组成$n$行$m$列矩阵$\mathbf{X}$</li>
+<li>将$\mathbf{X}$的每一行（代表一个属性字段）进行零均值化，即减去这一行的均值</li>
+<li>求出协方差矩阵</li>
+<li>求出协方差矩阵的特征值及对应的特征向量</li>
+<li>将特征向量按对应特征值大小从上到下按行排列成矩阵，取前$k$行组成矩阵$\mathbf{P}$</li>
+<li>$\mathbf{Y}=\mathbf{P}\mathbf{X}$即为降维到$k$维后的数据</li>
+</ul>
+<h4 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h4><p>PCA本质上是将方差最大的方向作为主要特征，并且在各个正交方向上将数据<code>离相关</code>，也就是让它们在不同正交方向上没有相关性。</p>
+<p>因此，PCA也存在一些限制，例如它可以很好的解除线性相关，但是对于高阶相关性就没有办法了，对于存在高阶相关性的数据，可以考虑Kernel PCA，通过Kernel函数将非线性相关转为线性相关。另外，PCA假设数据各主特征是分布在正交方向上，如果在非正交方向上存在几个方差较大的方向，PCA的效果就大打折扣了。</p>
+<p>最后需要说明的是，PCA是一种无参数技术，也就是说面对同样的数据，如果不考虑清洗，谁来做结果都一样，没有主观参数的介入，所以PCA便于通用实现，但是本身无法个性化的优化。</p>
+<h3 id="RPCA的引入"><a href="#RPCA的引入" class="headerlink" title="RPCA的引入"></a>RPCA的引入</h3><p>为什么使用RPCA? 求解被高幅度尖锐噪声而不是高斯分布噪声污染的信号分离问题。</p>
+<p>假设一个储存数据的矩阵$\mathbf{D}$，经典PCA所研究的是找到一个低秩矩阵$\mathbf{A}$，使$\mathbf{A}$与$\mathbf{D}$之间的差异最小。</p>
+<p>经典PCA假设数据为高斯的，但是在实际应用中一旦出现大的噪声而或者严重的离群点，会对PCA产生很大的影响，导致其无法工作。鲁棒主成分分析的提出改善了PCA的这一缺陷。RPCA的核心思想是数据矩阵在最优化准则下可以表示为一个低秩矩阵和一个系数矩阵的叠加。低秩矩阵和稀疏矩阵分别代表不同的信息。例如，在图像矩阵中，源图像的显著信息可以通过从稀疏矩阵中提取的特征来描述。在红外图像中，目标为突出信息以及与模糊背景不相同的突出部分。因此，红外目标信息可以被建模为与稀疏矩阵相关的分量，同时可以将背景信息建模为与低秩矩阵相关的分量。<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[RPCA笔记.](https://blog.csdn.net/qq_38640439/article/details/102490369)
+">[2]</span></a></sup></p>
+<h4 id="RPCA和PCA的区别"><a href="#RPCA和PCA的区别" class="headerlink" title="RPCA和PCA的区别"></a>RPCA和PCA的区别</h4><p>给定矩阵$M$，传统PCA寻找最好的$r$秩矩阵$L$，使得$||L-M||$最小化，本质上是一个求协方差矩阵的相似对角化的过程。可以用SVD求解特征值解决。传统的PCA可以处理很小的噪音，但是对于严重损坏的观察结果却很脆弱：即使是单个损坏的观察也可能会严重干扰答案。(对于低秩数据观测矩阵$X$，假如$X$受到随机（稀疏）噪声的影响，则$X$的低秩性就会破坏，使$X$变成满秩的。)</p>
+<p>相比之下，RPCA是将$M$分解为两个部分，$M = L + S$，其中$L$是一个低秩部分（由于内部有一定的结构信息，造成各行或列间是线性相关的），$S$是稀疏部分（由于含有噪声，而噪声是稀疏的）。</p>
+<h4 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h4><script type="math/tex; mode=display">
+\min_{L,S} \text{rank}(L) + \lambda ||S||_0 \\ s.t. \, \, M = L+S</script><p>由于rank和L0范数在优化上存在<strong>非凸</strong>和<strong>非光滑</strong>特性，所以我们一般将它转换成求解以下一个松弛的凸优化问题：</p>
+<script type="math/tex; mode=display">
+\min_{L,S} ||L||_{*} + \lambda ||S||_1 \\ s.t. \, \, M = L+S</script><p>上式中，L1范数可以引出更好的稀疏性，因此用于$S$的稀疏矩阵构造。$||\cdot||_{*}$是核范数(nuclear norm)，是奇异值的L1范数，最小化这一项相当于得到更加稀疏的奇异值，即导致低秩。</p>
+<p>传统针对于核范数进行最小化优化的方法，是通过迭代地缩小（shrinking）一个近似矩阵的奇异值，基本上复杂度相当于SVD分解。当然，在RPCA问题中，因为要同时对核范数和稀疏矩阵进行最小化优化，这个收敛过程很慢。下面引入ALM，即增广拉格朗日乘子法来进行RPCA的优化。</p>
+<h4 id="优化算法ALM"><a href="#优化算法ALM" class="headerlink" title="优化算法ALM"></a>优化算法ALM</h4><p>更多参见<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Robust PCA大法好！](https://blog.csdn.net/ibunny/article/details/79410050)
+">[3]</span></a></sup>，下列材料摘抄自原论文<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Candès, E. J., Li, X., Ma, Y., & Wright, J. (2011). Robust principal component analysis?. Journal of the ACM (JACM), 58(3), 1-37.
+">[4]</span></a></sup></p>
+<p><img src="ALM_text.png" alt="ALM算法描述"><span class="image-caption-center">ALM算法描述</span></p>
+<p>在通用的拉格朗日乘子法中，会通过不断将$L$和$S$设置成最小化$l(L,S,Y)$的数值，然后更新拉格朗日乘子矩阵，来完成优化。而在RPCA中，解决上述问题可以通过一种分步更新的方式，即先后去更新$S$和$L$。</p>
+<p>即，先在固定$S$的情况下优化$L$使得$l$最小，然后固定$L$去优化$S$，最后再更新拉格朗日乘子矩阵$Y$（根据残余值$M-L-S$）。算法给出如下。</p>
+<p><img src="ALM_alg.png" alt="ALM算法"><span class="image-caption-center">ALM算法</span></p>
+<ul>
+<li><p>shrinkage operator $S_\tau[x]=sgn(x)max(|x|−\tau,0)$<br>取$S$中的奇异值然后减去$\tau$，如果值比$\tau$小，就round为0。反之，就将两者的差反号，使得奇异值更接近0。总的来说这个shrinkage操作就是使得奇异值更小从而使它们更加稀疏。以实现找到一个sparse的$S$的目标。</p>
+</li>
+<li><p>singular value thresholder $D$<br>就是先对矩阵做SVD分解，然后通过$S$的shrinkage操作使得奇异值变小之后，再重构$D_\tau(X)=U S_\tau (\Sigma)V^∗D_\tau(X) = U S_\tau(\Sigma)V^∗$得到低秩矩阵$L$的近似。</p>
+</li>
+<li><p>第3、4步的意思大概是，因为我们的目标是要把原矩阵分解成一个低秩矩阵$L$加上一个稀疏矩阵$S$，所以这里我们要不断让低秩矩阵等于原矩阵减去稀疏矩阵，同时让稀疏矩阵尽可能等于$M-L$。是一个典型的交替更新的方法。</p>
+</li>
+</ul>
+<p>这个算法是ALM的一种特殊形式，称之为alternating directions。上述算法的超参数是$\mu$和stopping threshold。</p>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41120789/answer/583063178">理解主成分分析.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38640439/article/details/102490369">RPCA笔记.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://blog.csdn.net/ibunny/article/details/79410050">Robust PCA大法好！</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Candès, E. J., Li, X., Ma, Y., &amp; Wright, J. (2011). Robust principal component analysis?. Journal of the ACM (JACM), 58(3), 1-37.<a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E7%98%9F%E7%96%AB%E7%8B%82%E6%83%B3%E6%9B%B2/" data-toggle="tooltip" data-placement="left"
+                     title="瘟疫狂想曲">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B05/" data-toggle="tooltip" data-placement="top"
+                     title="图谱实践笔记5 - OpenKE">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BEPCA"><span class="toc-text">回顾PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-text">引入特征向量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5%E5%92%8C%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">协方差矩阵和特征向量的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-text">算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3"><span class="toc-text">引申</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPCA%E7%9A%84%E5%BC%95%E5%85%A5"><span class="toc-text">RPCA的引入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RPCA%E5%92%8CPCA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">RPCA和PCA的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87"><span class="toc-text">优化目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95ALM"><span class="toc-text">优化算法ALM</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

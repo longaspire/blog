@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/LSH那些事儿1/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        LSH那些事儿 (I): 总览｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/img/Subtle-Prism.svg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>LSH那些事儿 (I): 总览</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Apr 18, 2013</span>
+                               
+                                 <span class="meta-item">Updated On: May 12, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#LSH那些事儿"
+                                 title="LSH那些事儿">LSH那些事儿</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#概率"
+                                 title="概率">概率</a>
+                              
+                              <a class="tag" href="/blog/tags/#Hash"
+                                 title="Hash">Hash</a>
+                              
+                              <a class="tag" href="/blog/tags/#Index"
+                                 title="Index">Index</a>
+                              
+                              <a class="tag" href="/blog/tags/#LSH"
+                                 title="LSH">LSH</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2.5k words in total, 10 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-一开始"><a href="#1-一开始" class="headerlink" title="1. 一开始"></a>1. 一开始</h2><p>先从wiki上头截取一段话:</p>
+<blockquote>
+<p>Locality-sensitive hashing (LSH) is a method of performing probabilistic <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Dimension_reduction">dimension reduction</a> of high-dimensional data.</p>
+<p>The basic idea is to <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Hash_Function">hash</a> the input items so that similar items are mapped to the same buckets with high probability (the number of buckets being much smaller than the universe of possible input items). This is different from the conventional hash functions, such as those used in <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cryptography">cryptography</a> as in this case the goal is to maximize probability of “collision” of similar items rather than avoid collisions.<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Locality-sensitive_hashing#cite_note-1">&#91;1&#93;</a>.</p>
+<p>Note how locality-sensitive hashing, in many ways, mirrors <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cluster_analysis">data clustering</a> and <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Nearest_neighbor_search">Nearest neighbor search</a>.</p>
+</blockquote>
+<p><strong>LSH(Location Sensitive Hash)</strong>，即位置敏感哈希函数。与一般哈希函数不同的是位置敏感性，也就是散列前的相似点经过哈希之后，也能够在一定程度上相似，并且具有一定的概率保证。</p>
+<h2 id="2-给定义"><a href="#2-给定义" class="headerlink" title="2. 给定义"></a>2. 给定义</h2><p>对于任意$q$,$p$属于$S$，若从集合$S$到$U$的函数族$H=\{h_1,h_2…h_n\}$对距离函数$D(\cdot)$，如欧式距离、曼哈顿距离等等，满足条件：</p>
+<p>$D(p,q) \leq r~\text{and}~Pr(h(p) = h(q)) \geq p_1$<br>$D(p,q) \leq r(1+\epsilon)~\text{and}~Pr(h(p) = h(q)) \leq p_1$</p>
+<p>则称$D(\cdot)$是位置敏感的。<br>如下图，空间上的点经位置敏感哈希函数散列之后，对于$q$，其rNN有可能散列到同一个桶（如第一个桶）,即散列到第一个桶的概率较大，会大于某一个概率阈值$p_1$; 而其$(1+\epsilon)rNN$之外的对象则不太可能散列到第一个桶，即散列到第一个桶的概率很小，会小于某个阈值$p_2$。</p>
+<p><img src="lsh-example.png" alt="LSH图例"><span class="image-caption-center">LSH图例</span></p>
+<h2 id="3-LSH的作用"><a href="#3-LSH的作用" class="headerlink" title="3. LSH的作用"></a>3. LSH的作用</h2><h3 id="3-1-高维下近似查询"><a href="#3-1-高维下近似查询" class="headerlink" title="3.1 高维下近似查询"></a>3.1 高维下近似查询</h3><p>相似性检索在各种领域特别是在视频、音频、图像、文本等含有丰富特征信息领域中的应用变得越来越重要。丰富的特征信息一般用高维向量表示，由此相似性检索一般通过K近邻或近似近邻查询来实现。一个理想的相似性检索一般需要满足以下四个条件：</p>
+<ol>
+<li>高准确性；即返回的结果和线性查找的结果接近。</li>
+<li>空间复杂度低；即占用内存空间少。理想状态下，空间复杂度随数据集呈线性增长，但不会远大于数据集的大小。</li>
+<li>时间复杂度低；检索的时间复杂度最好为$O(1)$或$O(\log_{}{N})$。</li>
+<li>支持高维度；能够较灵活地支持高维数据的检索。</li>
+</ol>
+<p>传统主要方法是基于空间划分的算法——tree类似算法，如R-tree，Kd-tree，SR-tree。这种算法返回的结果是精确的，但是这种算法在高维数据集上的时间效率并不高。维度高于10之后，基于空间划分的算法时间复杂度反而不如线性查找。LSH方法能够在保证一定程度上的准确性的前提下，时间和空间复杂度得到降低，并且能够很好地支持高维数据的检索。</p>
+<h3 id="3-2-分类和聚类"><a href="#3-2-分类和聚类" class="headerlink" title="3.2 分类和聚类"></a>3.2 分类和聚类</h3><p>根据LSH的特性，即可将相近（相似）的对象散列到同一个桶之中，则可以对图像、音视频、文本等丰富的高维数据进行分类或聚类。</p>
+<h3 id="3-3-数据压缩"><a href="#3-3-数据压缩" class="headerlink" title="3.3 数据压缩"></a>3.3 数据压缩</h3><p>如广泛地应用于信号处理及数据压缩等领域的Vector Quantization量子化技术。</p>
+<p>总而言之，哪儿需要近似kNN查询，哪儿都能用上LSH.</p>
+<blockquote>
+<p><strong>扩展1————图像检索和c-NN搜索</strong></p>
+<p>  图像检索其基本定义为给定的一个包含n个图像数据集，每个图像可以用一个d维的特征向量来描述，因此整个图像数据集就映射为d维空间的n个点，在此d维空间中用一个相似度度量函数来测量两个图像点之间的距离，对于任意给定的查询点q，需要设计一个数据结构，来快速的返回距离q最近(Nearest Neighbor)的图像点(或者Ranking的多个点)。</p>
+<p>  当d较小时(10-20)，可采用如kd-tree的结构，但当d较大时(一个Discriminative的图像描述向量通常成百上千甚至万维)，其查询时间将随d指数级增长，这就是通常所说的维数灾难”the curse of dimensionality”，同时d较大时，其所需的存储空间也变的intolerable。因此降维和Approximation NN算法通常会用到当前的检索系统中，ANN搜索就是对于给定的查询点q，若数据集中存在点p距其小于距离R，允许系统返回点p，where$\Phi(q, p’) = cR$，则称为c-NN搜索。</p>
+<p>  当前图像检索要求快、准、同时可容易的扩展至大规模数据</p>
+<ol>
+<li>Fast：hashing structure，small code， ANN;</li>
+<li>Accurate: discriminative feature fingerprint;</li>
+<li><p>Scalable: very little memroy.</p>
+<p>由此可见，紧凑的fingerprint和有效的hash结构对整个检索系统至关重要,目前的图像检索系统中，常采用Hashing技术将高维的图像特征编码为低维的特征，在映射后的$S^k$ 空间中采用一定的距离度量进行</p>
+</li>
+</ol>
+</blockquote>
+<p>.</p>
+<blockquote>
+<p><strong>扩展2————Approximation Nearest Neighbors (ANN)搜索</strong></p>
+<p>  定义Hash函数集合$H = \{h_i(i = 1,…,k): M^d  \rightarrow S^k\}$.</p>
+<p> $M^d$是原始的 d 维特征空间，</p>
+<p> $S^k$是经hash函数集F散列后的k维空间，根据哈希函数设计的不同，可将Hashing分为data-independent和data-dependent两大类:</p>
+<p>  1.data-independent hashing包括：Locality-Sensitive Hashing (LSH)，经Hash函数映射后，仍保留原始空间的距离相似度；<br>  2.data-dependent hashing包括：spectral hashing, semi-supervised hashing, Restricted Boltzmann Machine (RBM), Boosting SSC等，引入机器学习算法，基于数据分布设计Hash函数。</p>
+<p>  位置敏感哈希Locality-Sensitive Hashing (LSH)，其基本的思想就是通过哈希函数将输入的高维特征矢量散列至低维特征空间，并满足在原始空间中距离较近的点经过散列之后在低维空间依然距离较近，距离较近的点散列后碰撞的概率要大于距离较远的点碰撞的概率。</p>
+</blockquote>
+<h2 id="4-方法"><a href="#4-方法" class="headerlink" title="4. 方法"></a>4. 方法</h2><h3 id="4-1-Bit-sampling-for-Hamming-distance"><a href="#4-1-Bit-sampling-for-Hamming-distance" class="headerlink" title="4.1 Bit sampling for Hamming distance"></a>4.1 Bit sampling for Hamming distance</h3><p>最简单的Hash函数，仅适用于原始特征空间是Binary的Hamming空间，即原始的特征向量每一维的取值为{0，1}的特征串，其Hash函数的基本思想就是随机选取d维特征向量中的某一维:</p>
+<blockquote>
+<p>$H = \{h_i(i = i,…,k) | h(x) = x_i, i \in (1,…,d)\}$</p>
+</blockquote>
+<h3 id="4-2-Random-projection"><a href="#4-2-Random-projection" class="headerlink" title="4.2 Random projection"></a>4.2 Random projection</h3><blockquote>
+<p>The random projection method of LSH is designed to approximate the cosine distance between vectors.</p>
+</blockquote>
+<p>其Hash函数设计的基本思想就是定义一个随机超平面$(w,b)$,$w,b$可看做分别是超平面的斜率和截距(参照二维平面直线的定义)，超平面将整个原始的特征空间划分为两部分(平面的两侧)，用{0, 1}表示，则Hash函数的映射过程为：</p>
+<blockquote>
+<p>$h(x) = \left \{ \begin{matrix} 1, w \cdot x + b &gt; 0 \\\\ 0, \text{else} \end{matrix} \right \}$</p>
+</blockquote>
+<p>$w$是d维的法向单位向量，即$||w||_2 = 1$，每一个不同的w即定义一个超平面(可令$b = 0$).<br>可证明两个特征vector经Hash函数散列后碰撞的概率和其在原始空间的余弦距离成正比，即$Pr(h(p)=h(q))=1-\frac{\theta(p,q)}{\pi}$是vector$p,q$的夹角，$1-\frac{\theta(p,q)}{\pi}$和余弦距离成正比.</p>
+<h3 id="4-3-Stable-distributions"><a href="#4-3-Stable-distributions" class="headerlink" title="4.3 Stable distributions"></a>4.3 Stable distributions</h3><p>Hash函数设计的基本思想也是定义一个随机超平面，不同于4.2之处在于Hash函数将d维的特征矢量散列到[0,r]之间的一个整数而不是{0, 1}二值码，其Hash过程：</p>
+<blockquote>
+<p>$h(x) = \left \lfloor \frac{w \cdot x + b}{r} \right \rfloor$</p>
+</blockquote>
+<p>w是d维向量，每一维都是一个随机变量，各维之间独立同分布，服从一个Stable Distribution，b是一个[0,r]间均匀分布的随机变量。</p>
+<blockquote>
+<p>稳态分布的定义：</p>
+<p>  A distribution $D$over $\mathbb{R}$is called p-stable, if there exists such that for any $n$real number$v_1,…,v_n$and i.i.d. variables $X_1,…,X_n$ with $D$ distribution, the random variable $\sum_iv_iX_i$ has the same distribution as the variable $(\sum_i|v_i|^p)^{\frac{1}{p}}X$ where $X$ is a random variable with distribution $D$.</p>
+<p>  简而言之就是若随机变量线性组合的分布与随机变量乘一个$L_p$归一化系数服从同一分布，则此分布即为稳态分布，对于$p \in (0,2]$，都存在一个稳态分布, 两个常用的Stable Distribution：</p>
+<ol>
+<li>Cauchy distribution: 1-stable即L1稳态，其概率密度函数为$c(x) = \frac{1}{\pi}\frac{1}{1+{x}^{2}}$</li>
+<li>Gaussian distribution: 2-stable即L2稳态，概率密度函数为:$g(x)=\frac{1}{\sqrt{2\pi}}{e}^{-{x}^{2}/2}$</li>
+</ol>
+</blockquote>
+<p>由稳态分布的性质，我们可以看出基于稳态分布Hash函数设计的思想：</p>
+<p>$w \cdot x$将d维的向量x映射到一条直线，将此直线划分为r大小等间隔的段，则哈希函数$h(x)$将向量x映射到直线的某一段；</p>
+<p>w中每一维${w}_{i}$都是一个稳态分布的变量，因此$w \cdot x$是稳态分布变量的线性组合，因此$w \cdot x$的分布等价于${|x|}_{p} \cdot {w}_{i}$的分布；</p>
+<p>由此，可得出对于两个原始空间的向量${x}_{1},{x}_{2}$，其映射后的距离为$({x}_{1}-{x}_{2}) \cdot w$，其分布等价于${|{x}_{1}-{x}_{2}|}_{p} \cdot w$的分布，${|{x}_{1}-{x}_{2}|}_{p}$是原始空间向量${x}_{1},{x}_{2}$之间的距离，只需证明$Pr(h({x}_{1})=h({x}_{2})) \propto 1/{|{x}_{1}-{x}_{2}|}_{p}$，即两个向量经Hash函数映射后碰撞的概率反比于两个向量之间的$L_p$距离。</p>
+<p>令$c={|{x}_{1}-{x}_{2}|}_{p}$，$p(c)={Pr}(h({x}_{1})=h({x}_{2}))$，则对于上述两个稳态分布，可得出：</p>
+<p>1.Cauchy distribution:<br> $p(c)=2\frac{\tan^{-1} (r/c)}{\pi}-\frac{1}{\pi (r/c)}\ln (1+(r/c)^2)$<br>2.Gaussian distribution:<br> $p(c)=1-2norm(-r/c)-\frac{2}{\sqrt{2\pi}r/c}(1-e^{-(r^2/2c^2)})$</p>
+<p>$norm(\cdot)$是正态分布$N(0,1)$随机变量的累积分布。</p>
+
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%BA%A6%E9%87%8F%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="left"
+                     title="相似性度量笔记">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/introduction-to-latex/" data-toggle="tooltip" data-placement="top"
+                     title="Introduction to Latex">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%80%E5%BC%80%E5%A7%8B"><span class="toc-text">1. 一开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%99%E5%AE%9A%E4%B9%89"><span class="toc-text">2. 给定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-LSH%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">3. LSH的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%AB%98%E7%BB%B4%E4%B8%8B%E8%BF%91%E4%BC%BC%E6%9F%A5%E8%AF%A2"><span class="toc-text">3.1 高维下近似查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%88%86%E7%B1%BB%E5%92%8C%E8%81%9A%E7%B1%BB"><span class="toc-text">3.2 分类和聚类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-text">3.3 数据压缩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95"><span class="toc-text">4. 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Bit-sampling-for-Hamming-distance"><span class="toc-text">4.1 Bit sampling for Hamming distance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Random-projection"><span class="toc-text">4.2 Random projection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Stable-distributions"><span class="toc-text">4.3 Stable distributions</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

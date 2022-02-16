@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/数据挖掘十大算法/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        ICDM：数据挖掘十大算法｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/firenze.png');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>ICDM：数据挖掘十大算法</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Apr 15, 2013</span>
+                               
+                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#科研笔记"
+                                 title="科研笔记">科研笔记</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#EM算法"
+                                 title="EM算法">EM算法</a>
+                              
+                              <a class="tag" href="/blog/tags/#AdaBoost"
+                                 title="AdaBoost">AdaBoost</a>
+                              
+                              <a class="tag" href="/blog/tags/#关联分析"
+                                 title="关联分析">关联分析</a>
+                              
+                              <a class="tag" href="/blog/tags/#PageRank"
+                                 title="PageRank">PageRank</a>
+                              
+                              <a class="tag" href="/blog/tags/#SVM算法"
+                                 title="SVM算法">SVM算法</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2k words in total, 7 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>2006年12月，国际会议IEEE International Conference on Data Mining（ICDM）评选出了数据挖掘领域的十大经典算法：<strong>C4.5, k-Means, SVM, Apriori, EM, PageRank, AdaBoost, kNN, Naive Bayes, and CART.</strong></p>
+</blockquote>
+<h2 id="投票过程"><a href="#投票过程" class="headerlink" title="投票过程"></a>投票过程</h2><p>提名</p>
+<blockquote>
+<p>ICDM2006上邀请ACM KDD Innovation Aword 和IEEE ICDM Research Contributions Aword 获奖者参与top 10 大算法的提名。每人各提名10种他认为最重要的算法，同时给出提名该算法的理由，该算法的代表性论文。所提名的算法必须是在该领域被广泛研究和引用的论文</p>
+</blockquote>
+<p>审核</p>
+<blockquote>
+<p>通过Google Scholar对每个提名算法引用进行审核。以此删除名单中引用低于50的论文。最后剩下18种算法。</p>
+</blockquote>
+<p>投票</p>
+<blockquote>
+<p>邀请了：</p>
+<ol>
+<li>KDD06/ICDM06和SDM06的程序委员会的成员</li>
+<li>ACM KDD创新奖和IEEE ICDM研究贡献奖获得者</li>
+</ol>
+<p>最后通过投票排名选出Top 10算法。</p>
+</blockquote>
+<h2 id="18个候选者"><a href="#18个候选者" class="headerlink" title="18个候选者"></a>18个候选者</h2><ul>
+<li>Classification<ul>
+<li>C4.5 (1993) C4.5: programs for Machine Learning</li>
+<li>CART(1984) classification and Regression Trees</li>
+<li>K Nearest Neighbors(KNN) (1996) Discriminant Adaptive Nearest Neighbor Classification</li>
+<li>Naïve Bayes(2001) Idiot’s Bayes: Not So Stupid After All?Internat</li>
+</ul>
+</li>
+<li>Statistical Learning<ul>
+<li>SVM(1995) The Nature of Statistical Learning Theory</li>
+<li>EM(2000) Finite Mixture Models</li>
+</ul>
+</li>
+<li>Association Analysis<ul>
+<li>Apriori(1994) Fast Algorithms for Mining Association Rules</li>
+<li>FP. Tree(2000) Mining Frequent patterns without candidate generation</li>
+</ul>
+</li>
+<li>Link Mining<ul>
+<li>Page Rank(1998) The anatomy of a large-scale hyperlinked environment</li>
+<li>HITS(1998) Authoritative source in a hyperlinked environment</li>
+</ul>
+</li>
+<li>Clustering<ul>
+<li>K-Means(1967) Some methods for classification and analysis of multivariate observations</li>
+<li>BIRCH(1996) BIRCH: an efficient data clustering method for very large databases</li>
+</ul>
+</li>
+<li>Bagging and Boosting<ul>
+<li>AdaBoost(1997) A decision-theoretic generalization of on-line learning and an application to boosting</li>
+</ul>
+</li>
+<li>Sequential Patterns<ul>
+<li>GSP(1996) Mining Sequential Patterns: Generalizations and Performance Improvements</li>
+<li>PrefixSpan(2001) PrefixSpan: Mining Sequential Patterns Efficiently by Projected Pattern Growth</li>
+</ul>
+</li>
+<li>Integrated Mining<ul>
+<li>CBA(1998) Integrating classification and association rule mining<br>Rough Sets</li>
+<li>Finding reduct(1992) Rough Sets: Theoretical Aspects of Reasoning about Data<br>Graph Mining</li>
+<li>gSpan(2002) gSpan: Graph-Based Substructure Pattern Mining</li>
+</ul>
+</li>
+</ul>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="top10.png" alt="Top 10 algorithm in DM"><span class="image-caption-center">Top 10 algorithm in DM</span></p>
+<h2 id="相关文献"><a href="#相关文献" class="headerlink" title="相关文献"></a>相关文献</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="http://book.douban.com/subject/4140223/" title="The top ten algorithms in data mining">Wu, Xindong, and Vipin Kumar. The top ten algorithms in data mining. Vol. 9. Chapman &amp; Hall, 2009.</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://link.springer.com/article/10.1007/s10115-007-0114-2" title="Top 10 algorithms in data mining">Wu, Xindong, et al. “Top 10 algorithms in data mining.” Knowledge and Information Systems_ 14.1 (2008): 1-37.</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://ishare.iask.sina.com.cn/f/8142264.html" title="ICDM06 Panel">Top 10 Algorithms in Data Mining (ICDM06 Panel)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.tnove.com/?p=209">http://www.tnove.com/?p=209</a></p>
+</li>
+</ul>
+<h2 id="十大算法简介"><a href="#十大算法简介" class="headerlink" title="十大算法简介"></a>十大算法简介</h2><h3 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h3><p>C4.5算法是机器学习算法中的一种分类决策树算法,其核心算法是ID3算法. C4.5算法继承了ID3算法的优点，并在以下几方面对ID3算法进行了改进：</p>
+<p>1) 用信息增益率来选择属性，克服了用信息增益选择属性时偏向选择取值多的属性的不足；<br>2) 在树构造过程中进行剪枝；<br>3) 能够完成对连续属性的离散化处理；<br>4) 能够对不完整数据进行处理。</p>
+<p>C4.5算法有如下优点：产生的分类规则易于理解，准确率较高。其缺点是：在构造树的过程中，需要对数据集进行多次的顺序扫描和排序，因而导致算法的低效。</p>
+<p>$### The k-means algorithm 即K-Means算法</p>
+<p>k-means algorithm算法是一个聚类算法，把n的对象根据他们的属性分为k个分割，k &lt; n。它与处理混合正态分布的最大期望算法很相似，因为他们都试图找到数据中自然聚类的中心。它假设对象属性来自于空间向量，并且目标是使各个群组内部的均方误差总和最小。</p>
+<h3 id="Support-vector-machines"><a href="#Support-vector-machines" class="headerlink" title="Support vector machines"></a>Support vector machines</h3><p>支持向量机，英文为Support Vector Machine，简称SV机（论文中一般简称SVM）。它是一种監督式學習的方法，它广泛的应用于统计分类以及回归分析中。支持向量机将向量映射到一个更高维的空间里，在这个空间里建立有一个最大间隔超平面。在分开数据的超平面的两边建有两个互相平行的超平面。分隔超平面使两个平行超平面的距离最大化。假定平行超平面间的距离或差距越大，分类器的总误差越小。一个极好的指南是C.J.C Burges的《模式识别支持向量机指南》。van der Walt 和 Barnard 将支持向量机和其他分类器进行了比较。</p>
+<h3 id="The-Apriori-algorithm"><a href="#The-Apriori-algorithm" class="headerlink" title="The Apriori algorithm"></a>The Apriori algorithm</h3><p>Apriori算法是一种最有影响的挖掘布尔关联规则频繁项集的算法。其核心是基于两阶段频集思想的递推算法。该关联规则在分类上属于单维、单层、布尔关联规则。在这里，所有支持度大于最小支持度的项集称为频繁项集，简称频集。</p>
+<h3 id="最大期望-EM-算法"><a href="#最大期望-EM-算法" class="headerlink" title="最大期望(EM)算法"></a>最大期望(EM)算法</h3><p>在统计计算中，最大期望（EM，Expectation–Maximization）算法是在概率（probabilistic）模型中寻找参数最大似然估计的算法，其中概率模型依赖于无法观测的隐藏变量（Latent Variabl）。最大期望经常用在机器学习和计算机视觉的数据集聚（Data Clustering）领域。</p>
+<h3 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h3><p>PageRank是Google算法的重要内容。2001年9月被授予美国专利，专利人是Google创始人之一拉里•佩奇（Larry Page）。因此，PageRank里的page不是指网页，而是指佩奇，即这个等级方法是以佩奇来命名的。</p>
+<p>PageRank根据网站的外部链接和内部链接的数量和质量俩衡量网站的价值。PageRank背后的概念是，每个到页面的链接都是对该页面的一次投票，被链接的越多，就意味着被其他网站投票越多。这个就是所谓的“链接流行度”——衡量多少人愿意将他们的网站和你的网站挂钩。PageRank这个概念引自学术中一篇论文的被引述的频度——即被别人引述的次数越多，一般判断这篇论文的权威性就越高。</p>
+<h3 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h3><p>Adaboost是一种迭代算法，其核心思想是针对同一个训练集训练不同的分类器(弱分类器)，然后把这些弱分类器集合起来，构成一个更强的最终分类器 (强分类器)。其算法本身是通过改变数据分布来实现的，它根据每次训练集之中每个样本的分类是否正确，以及上次的总体分类的准确率，来确定每个样本的权值。将修改过权值的新数据集送给下层分类器进行训练，最后将每次训练得到的分类器最后融合起来，作为最后的决策分类器。</p>
+<h3 id="kNN-k-nearest-neighbor-classification"><a href="#kNN-k-nearest-neighbor-classification" class="headerlink" title="kNN: k-nearest neighbor classification"></a>kNN: k-nearest neighbor classification</h3><p>K最近邻(k-Nearest Neighbor，KNN)分类算法，是一个理论上比较成熟的方法，也是最简单的机器学习算法之一。该方法的思路是：如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别。</p>
+<h3 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h3><p>在众多的分类模型中，应用最为广泛的两种分类模型是决策树模型(Decision Tree Model)和朴素贝叶斯模型（Naive Bayesian Model，NBC）。 朴素贝叶斯模型发源于古典数学理论，有着坚实的数学基础，以及稳定的分类效率。同时，NBC模型所需估计的参数很少，对缺失数据不太敏感，算法也比较简单。理论上，NBC模型与其他分类方法相比具有最小的误差率。但是实际上并非总是如此，这是因为NBC模型假设属性之间相互独立，这个假设在实际应用中往往是不成立的，这给NBC模型的正确分类带来了一定影响。在属性个数比较多或者属性之间相关性较大时，NBC模型的分类效率比不上决策树模型。而在属性相关性较小时，NBC模型的性能最为良好。</p>
+<h3 id="CART-分类与回归树"><a href="#CART-分类与回归树" class="headerlink" title="CART: 分类与回归树"></a>CART: 分类与回归树</h3><p>CART, Classification and Regression Trees。 在分类树下面有两个关键的思想。第一个是关于递归地划分自变量空间的想法；第二个想法是用验证数据进行剪枝。</p>
+
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/introduction-to-latex/" data-toggle="tooltip" data-placement="left"
+                     title="Introduction to Latex">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E6%B8%B8%E9%9D%92%E5%9F%8E%E5%B1%B1%E8%AE%B0/" data-toggle="tooltip" data-placement="top"
+                     title="游青城山记">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+  <br>
+
+  
+  <!-- livere begin-->
+  <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM1MC8xMjg4NQ">
+      <script type="text/javascript" defer>
+          (function(d, s) {
+              var j, e = d.getElementsByTagName(s)[0];
+
+              if (typeof LivereTower === 'function') { return; }
+
+              j = d.createElement(s);
+              j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+              j.async = true;
+              e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+      </script>
+      <noscript> To show LiveRe comment, please use JavaScript</noscript>
+  </div>
+  <!-- livere end -->
+  
+
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%95%E7%A5%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">投票过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18%E4%B8%AA%E5%80%99%E9%80%89%E8%80%85"><span class="toc-number">2.</span> <span class="toc-text">18个候选者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">3.</span> <span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E7%8C%AE"><span class="toc-number">4.</span> <span class="toc-text">相关文献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%A4%A7%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="toc-number">5.</span> <span class="toc-text">十大算法简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#C4-5"><span class="toc-number">5.1.</span> <span class="toc-text">C4.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Support-vector-machines"><span class="toc-number">5.2.</span> <span class="toc-text">Support vector machines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Apriori-algorithm"><span class="toc-number">5.3.</span> <span class="toc-text">The Apriori algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B-EM-%E7%AE%97%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">最大期望(EM)算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PageRank"><span class="toc-number">5.5.</span> <span class="toc-text">PageRank</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdaBoost"><span class="toc-number">5.6.</span> <span class="toc-text">AdaBoost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kNN-k-nearest-neighbor-classification"><span class="toc-number">5.7.</span> <span class="toc-text">kNN: k-nearest neighbor classification</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Naive-Bayes"><span class="toc-number">5.8.</span> <span class="toc-text">Naive Bayes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CART-%E5%88%86%E7%B1%BB%E4%B8%8E%E5%9B%9E%E5%BD%92%E6%A0%91"><span class="toc-number">5.9.</span> <span class="toc-text">CART: 分类与回归树</span></a></li></ol></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

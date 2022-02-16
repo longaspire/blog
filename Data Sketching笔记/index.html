@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/Data Sketching笔记/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        Data Sketching笔记｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/img/Subtle-Prism.svg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>Data Sketching笔记</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: May 18, 2021</span>
+                               
+                                 <span class="meta-item">Updated On: Jun 3, 2021</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#Data Sketching笔记"
+                                 title="Data Sketching笔记">Data Sketching笔记</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#概率"
+                                 title="概率">概率</a>
+                              
+                              <a class="tag" href="/blog/tags/#Sketch"
+                                 title="Sketch">Sketch</a>
+                              
+                              <a class="tag" href="/blog/tags/#布隆过滤器"
+                                 title="布隆过滤器">布隆过滤器</a>
+                              
+                              <a class="tag" href="/blog/tags/#Count-Min"
+                                 title="Count-Min">Count-Min</a>
+                              
+                              <a class="tag" href="/blog/tags/#HyperLogLog"
+                                 title="HyperLogLog">HyperLogLog</a>
+                              
+                              <a class="tag" href="/blog/tags/#Big Data"
+                                 title="Big Data">Big Data</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">4.1k words in total, 16 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是根据Ding et al.在KDD20发布的tutorial<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Data Sketching for Real Time Analytics: Theory and Practice.](https://dl.acm.org/doi/abs/10.1145/3394486.3406480)
+">[1]</span></a></sup><sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://www.youtube.com/watch?v=WUOYVIL_-vg.](https://www.youtube.com/watch?v=WUOYVIL_-vg)
+">[2]</span></a></sup>以及Cormode在Communications of the ACM发布的文章<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://dl.acm.org/doi/10.1145/3080008.](https://dl.acm.org/doi/10.1145/3080008)
+">[3]</span></a></sup>整理而成。</p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Big Data的三大问题是speed，cost和scale。Scale的问题随着各类分布式系统的出现，已经得到了一定的解决。Speed和cost的问题，必须通过对数据进行更加进阶的处理，才能更好地实现亚秒级的延迟，当然in-memory和更加高效的计算硬件都是有效的措施。Data Sketching（DS）也正是在这一背景下孕育而生的。一些热点的DS问题，包括couting distinct items，qualitiles，histograms，heavy hitters，和大型的聚合操作。</p>
+<p>DS技术不能保证应对所有的query processing，但是可以处理其一个子集。Sketching可抽象为三个过程：</p>
+<ul>
+<li>Summarization，将数据转换为一个随机过程，保持能够回答一个子集问题的答案；</li>
+<li>Encoding，找到一个随机过程在小空间和高效的sketch上的表达；</li>
+<li>Estimation，从sketch中抽取答案并分析误差；</li>
+</ul>
+<p>DS的代价：</p>
+<blockquote>
+<p>Coping with the vast scale of information means making compromises: The description of the world is approximate rather than exact; the nature of queries to be answered must be decided in advance rather than after the fact; and some questions are now insoluble.</p>
+</blockquote>
+<h2 id="DS方法"><a href="#DS方法" class="headerlink" title="DS方法"></a>DS方法</h2><h3 id="简单采样"><a href="#简单采样" class="headerlink" title="简单采样"></a>简单采样</h3><p>仅通过采样（sampling）保留部分信息：</p>
+<ul>
+<li>uniform random sampling</li>
+<li>其他类型的sampling技术</li>
+</ul>
+<p>对于随机均匀采样而言，其导致的误差大致为$1/\sqrt{s}$，其中$s$表示采样的大小。采样越为频繁或采样数目越大，则误差越小。<br>对于批量数据而言，可以用标准随机数来采样；而对于流数据而言，可以以概率$p$对item的采样可能性进行随机。</p>
+<p>对于流数据而言，使用$p$来采样，随着时间推移将产生一个比较大的$s$：一种解决办法是给每个record一个随机数，在采样中仅维护$s$个最小随机数的records，以保证<em>固定</em>数量的采样。</p>
+<p>采样并非万能的，例如当我们需要统计某个个体是否在目标集合中时，那么可能需要借助于布隆过滤器（以下进行介绍），因为采样可能会将我们关注的个体筛除—从而导致不正确的结果；再如，需要对某个特定的类别进行计数时，采样显然是不合时宜的，这个时候可以考虑Hyperloglog技术；再比如，需要对数据频度进行分析时，可以采用Count-Min sketch，这样的误差率从$1/\sqrt{s}$可以极大提高到$1/s$，当然，其牺牲在于，需要事先指定某个特定的用于频度分析的目标属性。</p>
+<p>采样被认为是最为灵活也最为直接的一种DS方法。</p>
+<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h3><p>布隆过滤器（Bloom Filter，BF）可以用于检索一个元素是否在一个集合中（membership question）—“某样东西一定不存在或者可能存在”。它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难<sup id="fnref:7"><a href="#fn:7" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://zhuanlan.zhihu.com/p/43263751.](https://zhuanlan.zhihu.com/p/43263751)
+">[7]</span></a></sup>。</p>
+<p>布隆过滤器的长度为$M$，对于一个incoming data item，它可以使用$K$个hash函数将其映射到$M$长度的过滤器的$K$个bit上并将其置为1。给定一个新的item，如果它经过$K$个hash函数映射，在布隆过滤器上对应的某个bit上得到了0，则说明该item之前一定没有被映射过。反过来，我们只能说这个item可能存在，因为布隆过滤器上特定的bit可能会被多个items复写。示例如图1所示。</p>
+<p><img src="example-bloom.png" alt="图1：BF的示例"><span class="image-caption-center">图1：BF的示例</span></p>
+<p>很显然，过小长度$M$的布隆过滤器很快所有的bit位都会被置为1，那么查询任何值都会返回”可能存在”，起不到过滤的目的了。布隆过滤器的长度会直接影响误报率，布隆过滤器越长其误报率越小。</p>
+<p>当布隆过滤器有$N$个items时，得到一个false postive的可能性约为<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.huoding.com/2020/06/22/825.](https://blog.huoding.com/2020/06/22/825)
+">[4]</span></a></sup></p>
+<script type="math/tex; mode=display">[1 - (1 - (1/M)^{NK})]^{K} \approx (1 - e^{-KN/M})^K</script><p>当然，从实践角度出发，我们更应该知道的是如何选择最优的$K$值。理论上使得false positive最小的$K$可以计算为$K = (M/N) ln2$。博客<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.huoding.com/2020/06/22/825.](https://blog.huoding.com/2020/06/22/825)
+">[4]</span></a></sup>中给出了举例：</p>
+<ul>
+<li>如果比特数组大小是过滤器中元素数量的4倍（也就是$M/N$ = 4），那么哈希函数数量为3（实际为2.77四舍五入）的时候，误报率（14.7%）相对较低。</li>
+<li>如果比特数组大小是过滤器中元素数量的6倍（也就是$M/N$ = 6），那么哈希函数数量为4（实际为4.16四舍五入）的时候，误报率（5.61%）相对较低。</li>
+<li>如果比特数组大小是过滤器中元素数量的8倍（也就是$M/N$ = 8），那么哈希函数数量为6（实际为5.55四舍五入）的时候，误报率（2.16%）相对较低。</li>
+</ul>
+<p>更数学形式的推导可见<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html.](http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html)
+">[5]</span></a></sup>。</p>
+<p>哈希函数应该尽可能保证数据分布均匀，此外，为了保证运行效率，应该选择尽可能快的哈希函数，比如：murmurhash、FNV，至于md5、sha1等等，并不是好的选择<sup id="fnref:7"><a href="#fn:7" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://zhuanlan.zhihu.com/p/43263751.](https://zhuanlan.zhihu.com/p/43263751)
+">[7]</span></a></sup>。</p>
+<h4 id="布隆过滤器的删除操作"><a href="#布隆过滤器的删除操作" class="headerlink" title="布隆过滤器的删除操作"></a>布隆过滤器的删除操作</h4><p>虽然布隆过滤器简单好用，但是它也有自己的缺点：<em>不支持删除元素</em>。原因是如果删除元素，那么需要把元素对应的若干个索引位置的值从1置为0，可是这些索引位置可能关系到别的元素，一旦置为0，所有的相关元素都会被删除。如果你使用布隆过滤器，并且需要删除元素的话，那么你只能删除元素后重建整个数据结构<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html.](http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html)
+">[5]</span></a></sup>。</p>
+<p>也有一些对应的解决方案：Counting BF（CBF）将标准BF的bit数组的每一位扩展为一个小的计数器（counter），在插入元素时给对应的$K$（$K$为哈希函数个数）个counter的值分别加1，删除元素时给对应的$K$个counter的值分别减 1。CBF通过多占用几倍的存储空间的代价，给BF增加了删除操作。在文章<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://cloud.tencent.com/developer/article/1136056.](https://cloud.tencent.com/developer/article/1136056)
+">[6]</span></a></sup>中对counter的位数进行了说明，并解释4位的counter在实践中有效。</p>
+<p>CBF虽说解决了BF的不能删除元素的问题，但是自身仍有不少的缺陷有待完善，比如counter的引入就会带来很大的资源浪费，CBF的false positive还有很大可以降低的空间。SBF（Spectral BF）在CBF的基础上提出了元素出现频率查询的概念，将CBF的应用扩展到了multi-set的领域；dlCBF（d-Left Counting BF）利用d-left hashing的方法存储 fingerprint，解决哈希表的负载平衡问题；ACBF（Accurate Counting BF）通过offset indexing的方式将counter数组划分成多个层级，来降低误判率<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://cloud.tencent.com/developer/article/1136056.](https://cloud.tencent.com/developer/article/1136056)
+">[6]</span></a></sup>。</p>
+<h4 id="布隆过滤器的运用"><a href="#布隆过滤器的运用" class="headerlink" title="布隆过滤器的运用"></a>布隆过滤器的运用</h4><blockquote>
+<p> BFs are at their most attractive when the consequence of a false positive is not the introduction of an error in a computation, but rather when it causes some additional work that does not adversely impact the overall performance of the system. Many of these applications have the flavor of the preceding example: the filter gives a fast answer to lookup queries, and positive answers may be double-checked in an authoritative reference.</p>
+<p>Many large distributed databases (Google’s Bigtable, Apache’s Cassandra and HBase) use BFs as indexes on distributed chunks of data. They use the filter to keep track of which rows or columns of the database are stored on disk, thus avoiding a (costly) disk access for non-existent attributes.</p>
+</blockquote>
+<h3 id="Count-Min-Sketch"><a href="#Count-Min-Sketch" class="headerlink" title="Count-Min Sketch"></a>Count-Min Sketch</h3><p>Count-Min主要用以应对计数问题：设想需要在高速海量的数据中对多个类别的item的数量进行统计，可能需要对每个item维护一个counter，但是这一效率可能非常低下。文章<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://dl.acm.org/doi/10.1145/3080008.](https://dl.acm.org/doi/10.1145/3080008)
+">[3]</span></a></sup>对Count-Min的特性解释如下：</p>
+<blockquote>
+<p> It encodes a potentially massive number of item types in a small array. The guarantee is that large counts will be preserved fairly accurately, while small counts may incur greater (relative) error. This means it is good for applications where you are interested in the head of a distribution and less so in its tail.</p>
+</blockquote>
+<p>图2给出了一个Count-Min具体实施的过程，Count-Min也使用了一个array和一系列hash函数，但是其和BF在逻辑上有很大的区别。如图所示，相当于每个hash函数将一个item映射到一行array的特定位置，并给对应的位置加上数量。可知，Count-Min中不允许hash函数将数据映射到相同的range上，而是分别的。</p>
+<p><img src="example-count-min.png" alt="图2：Count-Min的示例"><span class="image-caption-center">图2：Count-Min的示例</span></p>
+<p>当需要对最终某个item的数量进行统计时，我们需要检查每一行对应的计数器，可以发现，由于不同的hash函数在不同行可能会把不同item映射到同一个bit上导致一定偏差。我们通常只需要把最小的counter拿出来作为计数依据即可。这就是名称Count-Min的由来。</p>
+<p>乍一看，Count-Min可能会导致偏高的估计结果。然后从数学上可以发现，每多增加一行使得bad estimate的几率减半，而同样提升每行array的size则使得estimate的噪声减半。这些优良特性，使得一个size为$s$的sketch，其错误率和$1/s$成比例。</p>
+<h4 id="Count-Min的运用"><a href="#Count-Min的运用" class="headerlink" title="Count-Min的运用"></a>Count-Min的运用</h4><blockquote>
+<p>Count-Min sketches are best suited for handling a slight inflation of frequency.</p>
+<p>The sketches are very good for tracking which items exceed a given popularity threshold, however. In particular, while the size of a Bloom filter must remain proportional to the size of the input it is representing, a Count-Min sketch can be much more compressive: its size can be considered to be independent of the input size, depending instead on the desired accuracy guarantee only.</p>
+</blockquote>
+<p>以上的论述中提到，Count-Min的大小和输入的数据规模可以无关，而是由需要的准确率保证来决定的。具体地，假定准确率保证为$\varepsilon$，则我们只需要一个sketch size为$1/\varepsilon$大小的Count-Min即可，并不会改变数据处理的特性。</p>
+<p>Count-Min主要用于各类items的频数的统计的场景，例如twitter中统计转发的网站的数量，或者通讯网络中统计哪些服务器URL是最为热门的，等等。</p>
+<h3 id="HyperLogLog-HLL"><a href="#HyperLogLog-HLL" class="headerlink" title="HyperLogLog (HLL)"></a>HyperLogLog (HLL)</h3><p>HLL是解决distinct counting或者基数计数（cardinality counting）的重要技术。随着被count对象的增加（集合变大），space会不断增长，判断集合元素是否冗余的代价也会增大。即便使用BF也会造成空间的线性增加，在需要保证一定准确率的条件下。这一方法的思想是通过hash函数使得重复的item被同等对待。</p>
+<p>HLL是基于LogLog Counting (LLC)来实现的，LLC的步骤<sup id="fnref:8"><a href="#fn:8" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://www.yuque.com/abser/aboutme/nfx0a4.](https://www.yuque.com/abser/aboutme/nfx0a4)
+">[8]</span></a></sup>：</p>
+<ol>
+<li>通过hash函数计算输入值对应的比特串（相同值的比特串相同）</li>
+<li>比特串的低$t$位对应的数字用来找到数组$S$中对应的位置$i$（这个类似于依靠低$t$位来设置不同的分桶，以各分桶的计数综合决定结果以降低偏差）</li>
+<li>$t+1$位开始找到第一个1出现的位置$k$，将$k$记入数组$S_i$位置（第一个1出现的位置表明了）</li>
+<li>基于数组$S$记录的所有数据的统计值，计算整体的基数值，计算公式可以简单表示为：$\hat{n} = f(S)$</li>
+</ol>
+<p>假定一个元素经过hash后得到长度为$L$的bit串，由于元素是服从均匀分布的，则其每一位为1或者为0的概率都为0.5。在这一情况下，我们忽略$L/2$的0位，则我们可以把最大的1出现的位置，令为$\rho$，用于估算所有hash后不同元素的基数，即为$2^\rho$。一个关于抛硬币的数学例子可以参见<sup id="fnref:8"><a href="#fn:8" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://www.yuque.com/abser/aboutme/nfx0a4.](https://www.yuque.com/abser/aboutme/nfx0a4)
+">[8]</span></a></sup>。</p>
+<blockquote>
+<p>Apply a hash function g to each item i, with the same distribution: g maps items to j with probability $2^{−j}$ (say, by taking the number of leading zero bits in the binary expansion of a uniform hash value).</p>
+</blockquote>
+<h4 id="假设和理论"><a href="#假设和理论" class="headerlink" title="假设和理论"></a>假设和理论</h4><p>在使用LLC之前需要选取一个哈希函数$H$应用于所有元素，然后对哈希值进行基数估计。$H$必须满足如下条件（定性的）<sup id="fnref:8"><a href="#fn:8" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://www.yuque.com/abser/aboutme/nfx0a4.](https://www.yuque.com/abser/aboutme/nfx0a4)
+">[8]</span></a></sup>：</p>
+<ol>
+<li>$H$的结果具有很好的均匀性，也就是说无论原始集合元素的值分布如何，其哈希结果的值几乎服从均匀分布（完全服从均匀分布是不可能的，但是很多哈希函数可以生成几乎服从均匀分布的结果，这里我们忽略这种理论上的差异，认为哈希结果就是服从均匀分布）。</li>
+<li>$H$的碰撞几乎可以忽略不计。也就是说我们认为对于不同的原始值，其哈希结果相同的概率非常小以至于可以忽略不计。</li>
+<li>$H$的哈希结果是固定长度的。</li>
+</ol>
+<p>如果直接使用上面的单一估计量进行基数估计，会由于偶然性而存在较大误差。因此，LLC采用了分桶平均的思想来消减误差。具体来说，就是将哈希空间平均分成$m$份，每份称之为一个桶（bucket）。对于每一个元素，其哈希值的一部分比特作为桶编号。桶编号相同的元素被分配到同一个桶，在进行基数估计时，首先计算每个桶内元素最大的第一个1的位置，设为$M[i]$，然后对这$m$个值取平均后再进行估计，这相当于物理试验中经常使用的多次试验取平均的做法，可以有效消减因偶然性带来的误差。</p>
+<p>HLL的基本思想是在LLC的基础上做改进：一个改进是使用调和平均数（harmonic mean）替代几何平均数。注意LLC是对各个桶取算数平均数，而算数平均数最终被应用到2的指数上，所以总体来看LLC取得是几何平均数。调和平均数的优点是，克服数据的倾斜带来的影响（例如分桶后出现了很多空桶）。多个使用HLL统计出的基数值可以融合<sup id="fnref:9"><a href="#fn:9" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://cn.kyligence.io/blog/count-distinct-hyperloglog/.](https://cn.kyligence.io/blog/count-distinct-hyperloglog/)
+">[9]</span></a></sup>。</p>
+<h4 id="HLL的运用"><a href="#HLL的运用" class="headerlink" title="HLL的运用"></a>HLL的运用</h4><blockquote>
+<p>One example of HLL’s use is in tracking the viewership of online advertising. Across many websites and different advertisements, trillions of view<br>events may occur every day. Advertisers are interested in the number of “uniques”: how many different people (or rather, browsing devices) have been<br>exposed to the content.</p>
+<p>Use of HLL sketches allows this kind of query to be answered directly by combining the two sketches rather than trawling through the full data.</p>
+</blockquote>
+<p>HLL还可以用于分析log这种复杂的流，以及对社交网络中用户交互的分布进行去重的统计等。</p>
+<h3 id="其他（进阶）DS技术"><a href="#其他（进阶）DS技术" class="headerlink" title="其他（进阶）DS技术"></a>其他（进阶）DS技术</h3><p>典型的一个DS技术是对于数据特别是复杂的稀疏的张量数据进行维度降低（dimensionality reduction），例如PCA。当然，PCA的问题可能是计算复杂，要找到对应的特征向量。</p>
+<p>另一个进阶的DS技术是randomized numerical linear algebra （given a matrix, one first compresses it to a much smaller matrix by multiplying it by a (usually) random matrix with certain properties），简单而言是通过对矩阵进行sketch来降低线性代数计算的代价，比如在矩阵乘法中找到左边矩阵的更小的行表示和右边矩阵的更小的列的表示。一般而言，这类技术也可以在大规模实体上取得不错效果，对于小矩阵实体的效果要差一些。再比如说回归问题中，要最小化代价$||\mathbf{A}\mathbf{x} - \mathbf{b}||$，可以考虑对$\mathbf{A}$进行sketch。一个survey可以参考<sup id="fnref:10"><a href="#fn:10" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Sketching as a tool for numerical linear algebra.](https://arxiv.org/abs/1411.4357)
+">[10]</span></a></sup>。</p>
+<p>对图和几何数据的DS技术也被提出。例如，可以对图中结点的邻接信息进行sketch，从而把connectivity和spanning tree的信息给有效提取。这意味着图中很多的信息可以被舍弃。</p>
+<p>对于几何数据，DS可和clustering进行挂钩，即对数据进行聚类后保留数据的总体结构信息，保留对整体数据密度分布的关键信息。</p>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3394486.3406480">Data Sketching for Real Time Analytics: Theory and Practice.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=WUOYVIL_-vg">https://www.youtube.com/watch?v=WUOYVIL_-vg.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3080008">https://dl.acm.org/doi/10.1145/3080008.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://blog.huoding.com/2020/06/22/825">https://blog.huoding.com/2020/06/22/825.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html">http://pages.cs.wisc.edu/~cao/papers/summary-cache/node8.html.</a><a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1136056">https://cloud.tencent.com/developer/article/1136056.</a><a href="#fnref:6" rev="footnote"> ↩</a></span></li><li id="fn:7"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">7.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/43263751">https://zhuanlan.zhihu.com/p/43263751.</a><a href="#fnref:7" rev="footnote"> ↩</a></span></li><li id="fn:8"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">8.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://www.yuque.com/abser/aboutme/nfx0a4">https://www.yuque.com/abser/aboutme/nfx0a4.</a><a href="#fnref:8" rev="footnote"> ↩</a></span></li><li id="fn:9"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">9.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://cn.kyligence.io/blog/count-distinct-hyperloglog/">https://cn.kyligence.io/blog/count-distinct-hyperloglog/.</a><a href="#fnref:9" rev="footnote"> ↩</a></span></li><li id="fn:10"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">10.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1411.4357">Sketching as a tool for numerical linear algebra.</a><a href="#fnref:10" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/Data%20Sketching%E7%AC%94%E8%AE%B0-Quantiles/" data-toggle="tooltip" data-placement="left"
+                     title="Data Sketching笔记 - Quantiles">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E7%AB%A5%E8%AF%9D%E5%9B%BD%E6%96%B0%E6%97%852/" data-toggle="tooltip" data-placement="top"
+                     title="童话国新旅(II) - 用电与用网">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DS%E6%96%B9%E6%B3%95"><span class="toc-text">DS方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E9%87%87%E6%A0%B7"><span class="toc-text">简单采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">布隆过滤器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-text">布隆过滤器的删除操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E8%BF%90%E7%94%A8"><span class="toc-text">布隆过滤器的运用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Count-Min-Sketch"><span class="toc-text">Count-Min Sketch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Count-Min%E7%9A%84%E8%BF%90%E7%94%A8"><span class="toc-text">Count-Min的运用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HyperLogLog-HLL"><span class="toc-text">HyperLogLog (HLL)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E5%92%8C%E7%90%86%E8%AE%BA"><span class="toc-text">假设和理论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HLL%E7%9A%84%E8%BF%90%E7%94%A8"><span class="toc-text">HLL的运用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%EF%BC%88%E8%BF%9B%E9%98%B6%EF%BC%89DS%E6%8A%80%E6%9C%AF"><span class="toc-text">其他（进阶）DS技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

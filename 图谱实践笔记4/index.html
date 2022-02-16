@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/图谱实践笔记4/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        图谱实践笔记4 - Jena实训｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/graphs.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>图谱实践笔记4 - Jena实训</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Mar 29, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: Mar 31, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#KG"
+                                 title="KG">KG</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#RDF"
+                                 title="RDF">RDF</a>
+                              
+                              <a class="tag" href="/blog/tags/#Jena"
+                                 title="Jena">Jena</a>
+                              
+                              <a class="tag" href="/blog/tags/#Java"
+                                 title="Java">Java</a>
+                              
+                              <a class="tag" href="/blog/tags/#TURTLE"
+                                 title="TURTLE">TURTLE</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">1k words in total, 5 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>图谱实践笔记第四篇：Jena实训，生成所需的subgraph</p>
+</blockquote>
+<h3 id="读取RDF文件"><a href="#读取RDF文件" class="headerlink" title="读取RDF文件"></a>读取RDF文件</h3><p>Jena 2.10引入了RDF I/O technology (RIOT) 技术。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RDFDataMgr</td>
+<td>Main set of functions to read and load models and datasets</td>
+</tr>
+<tr>
+<td>StreamRDF</td>
+<td>处理parser的输出</td>
+</tr>
+<tr>
+<td>RDFParser</td>
+<td>详细设置一个parser</td>
+</tr>
+<tr>
+<td>StreamManager</td>
+<td>处理输入流的打开</td>
+</tr>
+<tr>
+<td>RDFLanguages</td>
+<td>语言注册</td>
+</tr>
+<tr>
+<td>RDFParserRegistry</td>
+<td>parser工厂注册</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可以处理TURTLE、TTL、NTRIPLES、N3、RDFJSON等多种输入语言格式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Model</span> <span class="variable">model</span> <span class="operator">=</span> ModelFactory.createDefaultModel() ;</span><br><span class="line">model.read(<span class="string">&quot;data.ttl&quot;</span>) ;</span><br><span class="line"><span class="comment">// If the syntax is not as the file extension, a language can be declared</span></span><br><span class="line">model.read(<span class="string">&quot;data.foo&quot;</span>, <span class="string">&quot;TURTLE&quot;</span>) ;</span><br></pre></td></tr></table></figure>
+<p>使用RDFDataMgr的方法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a model and read into it from file</span></span><br><span class="line"><span class="comment">// &quot;data.ttl&quot; assumed to be Turtle.</span></span><br><span class="line"><span class="type">Model</span> <span class="variable">model</span> <span class="operator">=</span> RDFDataMgr.loadModel(<span class="string">&quot;data.ttl&quot;</span>) ;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a dataset and read into it from file</span></span><br><span class="line"><span class="comment">// &quot;data.trig&quot; assumed to be TriG.</span></span><br><span class="line"><span class="type">Dataset</span> <span class="variable">dataset</span> <span class="operator">=</span> RDFDataMgr.loadDataset(<span class="string">&quot;data.trig&quot;</span>) ;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read into an existing Model</span></span><br><span class="line">RDFDataMgr.read(model, <span class="string">&quot;data2.ttl&quot;</span>) ;</span><br></pre></td></tr></table></figure>
+<p>使用RDFParser的方法如下，可以定义一些异常处理和语言格式设置等：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// The parsers will do the necessary character set conversion.  </span></span><br><span class="line"><span class="keyword">try</span> (<span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;data.some.unusual.extension&quot;</span>)) &#123;</span><br><span class="line">     RDFParser.create()</span><br><span class="line">    .source(in)</span><br><span class="line">    .lang(RDFLanguages.TRIG)</span><br><span class="line">    .errorHandler(ErrorHandlerFactory.errorHandlerStrict)</span><br><span class="line">    .base(<span class="string">&quot;http://example/base&quot;</span>)</span><br><span class="line">    .parse(noWhere);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将Query内容输出成TTL格式"><a href="#将Query内容输出成TTL格式" class="headerlink" title="将Query内容输出成TTL格式"></a>将Query内容输出成TTL格式</h3><p>我们将<a href="/图谱实践笔记3">上一篇</a>中的查询结果进行改成，直接输入到TTL格式中。这样做的目的，是为了能够让Jena在其他程序中直接读取TTL文件，而生成需要的model。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Query</span> <span class="variable">query</span> <span class="operator">=</span> QueryFactory.create(queryString);</span><br><span class="line"><span class="type">QueryExecution</span> <span class="variable">qExec</span> <span class="operator">=</span> QueryExecutionFactory.create(query, model);</span><br><span class="line"><span class="comment">//QueryExecution qExec = QueryExecutionFactory.create(queryString, model);</span></span><br><span class="line">System.out.println(<span class="string">&quot;Start execute query&quot;</span>);</span><br><span class="line"><span class="comment">//Iterator&lt;Triple&gt; rs = qExec.execConstructTriples();</span></span><br><span class="line"><span class="type">ResultSet</span> <span class="variable">results</span> <span class="operator">=</span> qExec.execSelect();</span><br><span class="line">List&lt;QuerySolution&gt; solutions = ResultSetFormatter.toList(results);</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; solutions.size(); i++)&#123;</span><br><span class="line">    RDFNode objectNode= solutions.get(i).get(<span class="string">&quot;?object&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">uri</span> <span class="operator">=</span> objectNode.asResource().getURI();</span><br><span class="line">    <span class="type">String</span> <span class="variable">localName</span> <span class="operator">=</span> uri.substring(<span class="number">35</span>).replace(<span class="string">&quot;/&quot;</span>, <span class="string">&quot;u0001&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&quot;&quot;</span>.equals(localName) || localName == <span class="literal">null</span>)&#123;</span><br><span class="line">      count++;</span><br><span class="line">      localName = <span class="string">&quot;BlankNode_&quot;</span> + count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">File</span> <span class="variable">newFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(output + localName + <span class="string">&quot;.ttl&quot;</span>);</span><br><span class="line"><span class="type">FileWriter</span> <span class="variable">fw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileWriter</span>(newFile);</span><br><span class="line"><span class="type">BufferedWriter</span> <span class="variable">bw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(fw);</span><br><span class="line"><span class="comment">// the first query, find all statements starting with objectNode</span></span><br><span class="line"><span class="type">Model</span> <span class="variable">model1</span> <span class="operator">=</span> model.listStatements(objectNode.asResource(), <span class="literal">null</span>, (RDFNode) <span class="literal">null</span>).toModel();</span><br><span class="line"><span class="comment">// the second query, find all statements ending with objectNode, an add operation is used for the two models</span></span><br><span class="line"><span class="type">Model</span> <span class="variable">model2</span> <span class="operator">=</span> model1.add(model.listStatements(<span class="literal">null</span>, <span class="literal">null</span>, objectNode).toModel());</span><br><span class="line"><span class="comment">// write to files</span></span><br><span class="line">model2.write(bw, <span class="string">&quot;TURTLE&quot;</span>);</span><br><span class="line">bw.close();</span><br><span class="line">fw.close();</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(<span class="string">&quot;Finish writing to file&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;Final count:&quot;</span> + solutions.size());</span><br><span class="line">dataset.close();</span><br></pre></td></tr></table></figure>
+<p>通过上述步骤，我们十分简单地将数据构造成了标准的TTL格式，下面是一个示例，描述的是2000_UEFA_Cup_Final_riots这个实体的关系，包括left relation和right relation。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;http://yago-knowledge.org/resource/Arsenal_firm&gt;</span><br><span class="line">      &lt;http://yago-knowledge.org/resource/linksTo&gt;</span><br><span class="line">              &lt;http://yago-knowledge.org/resource/2000_UEFA_Cup_Final_riots&gt; .</span><br><span class="line"></span><br><span class="line">&lt;http://yago-knowledge.org/resource/2013-14_Arsenal_F.C._season&gt;</span><br><span class="line">      &lt;http://yago-knowledge.org/resource/linksTo&gt;</span><br><span class="line">              &lt;http://yago-knowledge.org/resource/2000_UEFA_Cup_Final_riots&gt; .</span><br><span class="line"></span><br><span class="line">&lt;http://yago-knowledge.org/resource/2000_UEFA_Cup_Final_riots&gt;</span><br><span class="line">      a       &lt;http://www.w3.org/2002/07/owl#Thing&gt; , &lt;http://yago-knowledge.org/resource/wordnet_action_100037396&gt; , &lt;http://yago-knowledge.org/resource/wikicat_Events&gt; , &lt;http://yago-knowledge.org/resource/wordnet_aggression_100964569&gt; , &lt;http://yago-knowledge.org/resource/wikicat_Sports_riots&gt; , &lt;http://yago-knowledge.org/resource/wordnet_conflict_100958896&gt; , &lt;http://yago-knowledge.org/resource/wordnet_riot_101170502&gt; , &lt;http://yago-knowledge.org/resource/wikicat_2000_events&gt; , &lt;http://yago-knowledge.org/resource/wordnet_act_100030358&gt; , &lt;http://yago-knowledge.org/resource/yagoPermanentlyLocatedEntity&gt; , &lt;http://yago-knowledge.org/resource/wordnet_psychological_feature_100023100&gt; , &lt;http://yago-knowledge.org/resource/wikicat_2000_riots&gt; , &lt;http://yago-knowledge.org/resource/wikicat_2000s_events&gt; , &lt;http://yago-knowledge.org/resource/wordnet_violence_100965404&gt; , &lt;http://yago-knowledge.org/resource/wikicat_May_events&gt; , &lt;http://yago-knowledge.org/resource/wordnet_group_action_101080366&gt; , &lt;http://yago-knowledge.org/resource/wordnet_abstraction_100002137&gt; , &lt;http://yago-knowledge.org/resource/wikicat_Riots&gt; , &lt;http://yago-knowledge.org/resource/wordnet_event_100029378&gt; , &lt;http://yago-knowledge.org/resource/wikicat_Riots_and_civil_disorder_in_Denmark&gt; , &lt;http://yago-knowledge.org/resource/wikicat_May_2000_events&gt; ;</span><br></pre></td></tr></table></figure>
+<h3 id="重新读入TTL文件到Jena"><a href="#重新读入TTL文件到Jena" class="headerlink" title="重新读入TTL文件到Jena"></a>重新读入TTL文件到Jena</h3><p>在有了上述文件后，我们也可以调用model的read方法来重新读入TTL文件，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(inputDictionary);</span><br><span class="line">        File[] fs = file.listFiles();</span><br><span class="line">        model = ModelFactory.createDefaultModel(); <span class="comment">// creates an in-memory Jena Model</span></span><br><span class="line">        <span class="keyword">for</span>(File f: fs)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!f.isDirectory())&#123;</span><br><span class="line"><span class="comment">//                System.out.println(f);</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(f.getAbsolutePath());</span><br><span class="line">                    RIOT.init();</span><br><span class="line">                    System.out.println(f.getAbsolutePath());</span><br><span class="line">                    model.read(in, <span class="literal">null</span>, <span class="string">&quot;TURTLE&quot;</span>);</span><br><span class="line">                    System.out.println(model.listStatements().toList().size());</span><br><span class="line"><span class="comment">//                    System.out.println(&quot;\n---- Turtle ----&quot;);</span></span><br><span class="line"><span class="comment">//                    model.write(System.out, &quot;TURTLE&quot;);</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>注意，上述的读取是增量模式，也就是说读取多个文件不会形成覆盖，而是update。</p>
+<p>有了这个model，我们可以重新执行各种类型的query，来得到想要的结果了。</p>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://jena.apache.org/documentation/io/rdf-input.html">https://jena.apache.org/documentation/io/rdf-input.html</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B05/" data-toggle="tooltip" data-placement="left"
+                     title="图谱实践笔记5 - OpenKE">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02_1/" data-toggle="tooltip" data-placement="top"
+                     title="图谱实践笔记2番外篇 - SPARQL by Example">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96RDF%E6%96%87%E4%BB%B6"><span class="toc-text">读取RDF文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86Query%E5%86%85%E5%AE%B9%E8%BE%93%E5%87%BA%E6%88%90TTL%E6%A0%BC%E5%BC%8F"><span class="toc-text">将Query内容输出成TTL格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E8%AF%BB%E5%85%A5TTL%E6%96%87%E4%BB%B6%E5%88%B0Jena"><span class="toc-text">重新读入TTL文件到Jena</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

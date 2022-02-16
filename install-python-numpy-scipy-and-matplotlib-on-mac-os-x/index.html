@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        Install Python, NumPy, SciPy, and Matplotlib on Mac OS X｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/drops.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Copied Elsewhere</span>
+                               <span class="meta-item">Date: May 30, 2013</span>
+                               
+                                 <span class="meta-item">Updated On: May 13, 2019</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#操作备忘"
+                                 title="操作备忘">操作备忘</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#工具"
+                                 title="工具">工具</a>
+                              
+                              <a class="tag" href="/blog/tags/#Mac OS"
+                                 title="Mac OS">Mac OS</a>
+                              
+                              <a class="tag" href="/blog/tags/#Matplotlib"
+                                 title="Matplotlib">Matplotlib</a>
+                              
+                              <a class="tag" href="/blog/tags/#Python"
+                                 title="Python">Python</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">708 words in total, 4 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong>Update: These instructions are over a year old, though they may still work for you. See the <a target="_blank" rel="noopener" href="http://penandpants.com/install-python/" title="Install Python">“Install Python”</a> page for the most recent instructions.</strong></p>
+<p>A bit ago a friend and I both had fresh Mac OS X Lion installs so I helped him set up his computers with a scientific Python setup and did mine at the same time.</p>
+<p>These instructions are for Lion but should work on Snow Leopard or Mountain Lion without much trouble. On Snow Leopard you won’t install Xcode via the App Store, you’ll have to download it from Apple.</p>
+<p>After I’d helped my friend I found <a target="_blank" rel="noopener" href="http://www.thisisthegreenroom.com/2011/installing-python-numpy-scipy-matplotlib-and-ipython-on-lion/">this blog post</a> describing a procedure pretty much the same as below.</p>
+<p>Update: If doing all the stuff below doesn’t seem like your cup of tea, it’s also possible to install Python, NumPy, SciPy, and matplotlib using double-click binary installers (resulting in a much less flexible installation), <a target="_blank" rel="noopener" href="http://penandpants.com/2012/03/01/install-python-2/">see this post</a> to learn how.</p>
+<h1 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h1><p>You will need Apple’s developer tools in order to compile Python and the other installs. On Lion you can install <a target="_blank" rel="noopener" href="https://developer.apple.com/xcode/">Xcode from the App Store</a>, on Snow Leopard you’ll have to get an older Xcode from <a target="_blank" rel="noopener" href="http://developer.apple.com/downloads">developer.apple.com</a>.</p>
+<p>I use the Xcode editor because I like its syntax highlighting, code completion, and organizer. However, I use hardly any of its features and unless you’re an iOS or Mac developer you probably won’t either. If you prefer another editor it’s possible to get only the libraries and compilers that you need with the <a target="_blank" rel="noopener" href="http://developer.apple.com/downloads">Command Line Tools for Xcode</a>. (You’ll need a free Apple ID.) (See also <a target="_blank" rel="noopener" href="http://www.kennethreitz.com/xcode-gcc-and-homebrew.html">http://www.kennethreitz.com/xcode-gcc-and-homebrew.html</a>.)</p>
+<h1 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h1><p><a target="_blank" rel="noopener" href="http://mxcl.github.com/homebrew/">Homebrew</a> is an excellent package manager for Mac OS X that can install a <a target="_blank" rel="noopener" href="https://github.com/mxcl/homebrew/tree/master/Library/Formula">large number of packages</a>. To install it simply launch a terminal and enter</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e &quot;$(curl -fsSkL raw.github.com/mxcl/homebrew/go)&quot;</span><br></pre></td></tr></table></figure>
+<p>Homebrew installs things to <code>/usr/local/</code> so you don’t need <code>sudo</code> permissions. To add Homebrew installed executables and Python scripts to your path you’ll want to add the following line to your <code>.profile</code> (or <code>.bash_profile</code>) file:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/bin:/usr/local/share/python:$PATH</span><br></pre></td></tr></table></figure></p>
+<p>Normal executables go in <code>/usr/local/bin/</code> and Python scripts installed by Homebrew go in<code>/usr/local/share/python/</code>.</p>
+<p>See <a target="_blank" rel="noopener" href="https://github.com/mxcl/homebrew/wiki/The-brew-command">https://github.com/mxcl/homebrew/wiki/The-brew-command</a> or type <code>brew help</code> or <code>man brew</code>for more info on Homebrew.</p>
+<h1 id="Install-Python"><a href="#Install-Python" class="headerlink" title="Install Python"></a>Install <a target="_blank" rel="noopener" href="http://www.python.org/">Python</a></h1><p>Now that you’ve got Homebrew installing Python is simple:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install python</span><br></pre></td></tr></table></figure><br>Homebrew will install a couple of packages required by Python and then Python itself. Don’t be surprised if this takes a couple minutes.</p>
+<p><strong>Important: You should close your terminal and open a fresh one right now so that it has the updated PATH from the previous section.</strong> Otherwise you run the risk of executing the wrong scripts during the rest of these instructions.</p>
+<p>At this point you should be able to get a fresh terminal and type</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
+<p>and see</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/python</span><br></pre></td></tr></table></figure>
+<p>Homebrew is for installing system packages and tools; for managing Python add-ons we want<a target="_blank" rel="noopener" href="http://pypi.python.org/pypi/pip">pip</a>. Luckily easy_install, another Python package manager is installed by Homebrew and we can use it to install pip:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">easy_install pip</span><br></pre></td></tr></table></figure></p>
+<h1 id="Install-NumPy"><a href="#Install-NumPy" class="headerlink" title="Install NumPy"></a>Install <a target="_blank" rel="noopener" href="http://www.scipy.org/">NumPy</a></h1><p>Use pip to install NumPy:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install numpy</span><br></pre></td></tr></table></figure></p>
+<p>This should install NumPy 1.6.1 (as of Feb. 2012).</p>
+<h1 id="Install-SciPy"><a href="#Install-SciPy" class="headerlink" title="Install SciPy"></a>Install <a target="_blank" rel="noopener" href="http://www.scipy.org/">SciPy</a></h1><p>We need gfortran to compile SciPy but it is not included with the other Xcode tools. Luckily, Homebrew can help us out again:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install gfortran</span><br></pre></td></tr></table></figure></p>
+<p>When that’s done it’s a cinch to install SciPy:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install scipy</span><br></pre></td></tr></table></figure></p>
+<p>This should install SciPy 0.10.</p>
+<h1 id="Install-matplotlib"><a href="#Install-matplotlib" class="headerlink" title="Install matplotlib"></a>Install <a target="_blank" rel="noopener" href="http://matplotlib.sourceforge.net/">matplotlib</a></h1><p>To install matplotlib we need to revisit Homebrew one more time:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install pkg-config</span><br></pre></td></tr></table></figure>
+<p>And the usual pip command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install matplotlib</span><br></pre></td></tr></table></figure>
+<p>This should install matplotlib 1.2.0. If it doesn’t you can try installing from the matplotlib development repo:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install git+git://github.com/matplotlib/matplotlib.git</span><br></pre></td></tr></table></figure>
+<p>Congratulations! You should now have the basics of a scientific Python installation that’s easy to manage and upgrade using Homebrew and pip. Fire up Python and make sure things worked. The following should work in Python with no errors:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import numpy</span><br><span class="line">import scipy</span><br><span class="line">import matplotlib</span><br></pre></td></tr></table></figure>
+
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/HistCite%E4%BB%8B%E7%BB%8D/" data-toggle="tooltip" data-placement="left"
+                     title="HistCite介绍">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/" data-toggle="tooltip" data-placement="top"
+                     title="LSH那些事儿 (IV): p-stable LSH">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+  <br>
+
+  
+  <!-- livere begin-->
+  <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjM1MC8xMjg4NQ">
+      <script type="text/javascript" defer>
+          (function(d, s) {
+              var j, e = d.getElementsByTagName(s)[0];
+
+              if (typeof LivereTower === 'function') { return; }
+
+              j = d.createElement(s);
+              j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+              j.async = true;
+              e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+      </script>
+      <noscript> To show LiveRe comment, please use JavaScript</noscript>
+  </div>
+  <!-- livere end -->
+  
+
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Xcode"><span class="toc-number">1.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Homebrew"><span class="toc-number">2.</span> <span class="toc-text">Homebrew</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-Python"><span class="toc-number">3.</span> <span class="toc-text">Install Python</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-NumPy"><span class="toc-number">4.</span> <span class="toc-text">Install NumPy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-SciPy"><span class="toc-number">5.</span> <span class="toc-text">Install SciPy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-matplotlib"><span class="toc-number">6.</span> <span class="toc-text">Install matplotlib</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

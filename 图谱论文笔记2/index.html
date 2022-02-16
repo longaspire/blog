@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Huan Li">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/图谱论文笔记2/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="Little Stone" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        图谱论文笔记2 - ComplEx｜Little Stone - Huan Li&#39;s Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/post_cover_images/graphs.jpg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>图谱论文笔记2 - ComplEx</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Huan Li</span>
+                               <span class="meta-item">Date: Jul 6, 2020</span>
+                               
+                                 <span class="meta-item">Updated On: Jul 7, 2020</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#KG"
+                                 title="KG">KG</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#KG Embedding"
+                                 title="KG Embedding">KG Embedding</a>
+                              
+                              <a class="tag" href="/blog/tags/#Complex Embeddings"
+                                 title="Complex Embeddings">Complex Embeddings</a>
+                              
+                              <a class="tag" href="/blog/tags/#Dot Product"
+                                 title="Dot Product">Dot Product</a>
+                              
+                              <a class="tag" href="/blog/tags/#Hermitian"
+                                 title="Hermitian">Hermitian</a>
+                              
+                              <a class="tag" href="/blog/tags/#Factorization"
+                                 title="Factorization">Factorization</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">1.1k words in total, 4 minutes required.</span>
+          <hr>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>图谱论文笔记：Théo Trouillon, Johannes Welbl, Sebastian Riedel, Éric Gaussier, Guillaume Bouchard. “Complex Embeddings for Simple Link Prediction”. ICML 2016.</p>
+</blockquote>
+<p>基于latent factorization来解决link prediction问题。（low-rank factorization或embeddings被用于KG completion问题）</p>
+<ul>
+<li>low-rank factorization： 将观测到的张量/矩阵分解为多个低秩的embedding matrices的相乘，使得数据库中每个entity或relation都有固定维度的vector表达；</li>
+</ul>
+<p>内积（dot product）： scale well；可处理对称性（symmetry）和自反性（reflexivity）；然而对于不对称的关系的处理能力不够；</p>
+<p>complex valued embeddings:  The composition of complex embeddings can handle a large variety of binary relations, among them <em>symmetric</em> and <em>antisymmetric</em> relations.</p>
+<p>在复数空间中，内积操作通常被称之为<code>Hermitian dot product</code><sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://zhuanlan.zhihu.com/p/43612010](https://zhuanlan.zhihu.com/p/43612010).
+">[1]</span></a></sup>，亦称为半线性（sesquilinear）内积，因其引入了共轭转置(conjugate-transpose)。<br>由此，Hermite内积不再对称，根据entity的位序而有所不同。</p>
+<h3 id="矩阵分解，内积和Embedding表达"><a href="#矩阵分解，内积和Embedding表达" class="headerlink" title="矩阵分解，内积和Embedding表达"></a>矩阵分解，内积和Embedding表达</h3><p>通常而言，我们可以用一个$n \times n$的邻接矩阵来表示KG中$n$个实体在某个关系上的boolean关系。这个矩阵成为关系矩阵</p>
+<p>由此，我们可以将这个矩阵$M$分解为两个矩阵的相乘$X=UV^\mathsf{T}$，此处$U$和$V$都是$n \times K$的矩阵，$K$是embedding的长度。我们可以看到，此时的假定是每个实体在作为head和tail时各有一个embedding，分别在$U$和$V$中。</p>
+<p>为了使得head和tail拥有统一的embedding表达，内积被提出使用，即$X=EWE^{-1}$。这里，为了使得$E^{-1} = E^\mathsf{T}$，需要保证$E$是<strong>正交</strong>的。</p>
+<p>ComplEx将每个embedding表达为一个复数，即embedding $x \in \mathbb{C}^K$包含实数部分$Re(x) \in \mathbb{C}^K$和虚数部分$Im(x) \in \mathbb{C}^K$。</p>
+<h4 id="Hermitian内积"><a href="#Hermitian内积" class="headerlink" title="Hermitian内积"></a>Hermitian内积</h4><script type="math/tex; mode=display">
+\langle u, v \rangle = \bar{u}^\mathsf{T} v</script><p>在上式中，$u$和$v$是两个复数； $\bar(u) = Re(u) - iIm(u)$即取$u$的<strong>共轭</strong>。</p>
+<h4 id="复数空间下的矩阵分解"><a href="#复数空间下的矩阵分解" class="headerlink" title="复数空间下的矩阵分解"></a>复数空间下的矩阵分解</h4><script type="math/tex; mode=display">
+X = EW\bar{E}^\mathsf{T}</script><p>上式中，$W \in \mathbb{C}^{n \times n}$是降序奇异值的对角矩阵；$E \in \mathbb{C}^{n \times n}$是特征向量的一个酉矩阵 (Unitary matrix - 酉矩阵的逆矩阵，就是其共轭转置)，$\bar{E}$表示它的复数共轭。</p>
+<p>在ComplEx中，对于矩阵$X$的分解仅投影到实数部分，即</p>
+<script type="math/tex; mode=display">
+X = Re(EW\bar{E}^\mathsf{T})</script><p>最终，$E$的每一行代表一个entity，它的tail和head的复数表达互为共轭。</p>
+<h3 id="关系矩阵分解和link-prediction"><a href="#关系矩阵分解和link-prediction" class="headerlink" title="关系矩阵分解和link prediction"></a>关系矩阵分解和link prediction</h3><p>link prediction问题可以建模为从一个带有噪声的观测关系矩阵中恢复完全的形态。这里假设是矩阵具有low sign-rank。</p>
+<p>通过强制指定low-rank $K \ll n$在$EW\bar{E}^\mathsf{T}$上，$\text{diag}{W}$只有前$K$个值非零。这样能够得到$K$维的embedding表达。给定任意两个entity $s$和$o$，他们的关系得分可以预测为</p>
+<script type="math/tex; mode=display">
+X_{so} = Re(e_s^\mathsf{T}W\bar{e}_o)</script><h3 id="扩展到多元关系上"><a href="#扩展到多元关系上" class="headerlink" title="扩展到多元关系上"></a>扩展到多元关系上</h3><p>上述理论的叙述是在单一的relation matrix上进行的，我们对此进行multi-relational data的扩展。</p>
+<p>给定关系的集合$R$和实体的集合$E$，我们通过下列的概率公式来推断一个关系是否成立：</p>
+<script type="math/tex; mode=display">
+P(\mathbf{Y}_{rso} = 1) = \sigma(\phi(r,s,o;\Theta))</script><p>上式中，$r \in R$是一个关系，$s, o \in E$是head和tail entities；$\phi$是scoring function，$\Theta$是对应的参数。</p>
+<p>假定观测的训练数据包含true和false的facts，如$\{\mathbf{Y}_{rso}\} \in \{ -1, 1 \}$。</p>
+<p>ComplEx中的scoring function定义如下</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\phi(r,s,o;\Theta) & = Re(\langle w_r, e_s, \bar{e}_o \rangle) \\
+& = Re(\sum_{k=1}^K w_{rk} e_{sk} \bar{e}_{ok}) \\
+& = \langle Re(w_r), Re(e_s), Re(e_o) \rangle \\
+& + \langle Re(w_r), Im(e_s), Im(e_o) \rangle \\
+& + \langle Im(w_r), Re(e_s), Im(e_o) \rangle \\
+& - \langle Im(w_r), Im(e_s), Re(e_o) \rangle
+\end{aligned}</script><p>此处$w_r \in \mathbb{C}^K$表示关系$r$的复数embedding。</p>
+<p>这个公式提供了两种view，其中一种类似于DistMult，但是引入了复数共轭形式；另一种将其建模为Re和Im两个部分，但是在实现上全部可以用实数来表示，不需要使用虚数。</p>
+<p>当一个关系是完全非对称是，Re部分完全为0；相反，则Im部分完全为0。</p>
+<h3 id="训练目标函数"><a href="#训练目标函数" class="headerlink" title="训练目标函数"></a>训练目标函数</h3><p>link prediction中的loss function定义在log-likelihood上加上L2正规项，如下</p>
+<script type="math/tex; mode=display">
+\min_{\Theta} \sum_{r(s,o) \in \Omega} log(1 + \exp(-\mathbf{Y}_{rso}\phi(s, r, o; \Theta))) + \lambda ||\Theta||^2_2</script><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/43612010">https://zhuanlan.zhihu.com/p/43612010</a>.<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E5%9B%BE%E8%B0%B1%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B03/" data-toggle="tooltip" data-placement="left"
+                     title="图谱论文笔记3 - RotatE">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/%E5%9B%BE%E8%B0%B1%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/" data-toggle="tooltip" data-placement="top"
+                     title="图谱论文笔记1 - 表征、构建与应用">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%EF%BC%8C%E5%86%85%E7%A7%AF%E5%92%8CEmbedding%E8%A1%A8%E8%BE%BE"><span class="toc-number">1.</span> <span class="toc-text">矩阵分解，内积和Embedding表达</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hermitian%E5%86%85%E7%A7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">Hermitian内积</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E6%95%B0%E7%A9%BA%E9%97%B4%E4%B8%8B%E7%9A%84%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">复数空间下的矩阵分解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E5%92%8Clink-prediction"><span class="toc-number">2.</span> <span class="toc-text">关系矩阵分解和link prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%88%B0%E5%A4%9A%E5%85%83%E5%85%B3%E7%B3%BB%E4%B8%8A"><span class="toc-number">3.</span> <span class="toc-text">扩展到多元关系上</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">训练目标函数</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a target="_blank" href="https://www.linkedin.com/in/lihuancs">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            Huan Li. All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                125.6k <b>Words</b>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>
