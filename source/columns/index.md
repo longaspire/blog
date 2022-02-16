@@ -78,7 +78,7 @@ project:
 -
 	"title": "OpenWRT学习随录"
 	"date": "2015.07"
-	"img_link": /blog/img/northernlights-sisimiut-lake.jpg
+	"img_link": /blog/img/Subtle-Prism.svg
 	"project_link": /blog/categories/#OpenWRT学习随录
 	"button-text": "View"
 	"use":
