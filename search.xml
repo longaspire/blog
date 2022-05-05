@@ -185,55 +185,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HistCite介绍</title>
-    <url>/blog/HistCite%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>对于科研工作者来说，除了掌握快速的收集信息和有效管理信息的能力之外，还需要有一定的信息分析能力。譬如，检索某个研究方向，结果文献有上千篇，此时我们该如何对待这些文献？精炼检索条件很可能会导致有价值的文献被排除在外。在交叉科学盛行的今天，如果想了解其它领域的进展情况，由于缺乏相应的专业知识，如何判断哪些文献是有重要参考价值的文献？这些问题的解决都需要我们具备一定的文献信息分析能力。</p>
-</blockquote>
-<p>有人说，在WOS里按照引用次数排序，引用次数最多的必定参加价值更大，其实不然，后面会有解释。</p>
-<p>我所知的文献信息分析软件有基于引文的分析软件histcite，基于内容分析的refviz. omniviz. Tda等，还有分析研究前沿的citespace等。</p>
-<p>这里先简要介绍一下引文分析软件histcite它的功能和用法。</p>
-<p>histcite＝history of cite，意味引文历史，或者叫引文图谱分析软件。该软件系sci的发明人加菲尔德开发，能够用图示的方式展示某一领域不同文献之间的关系。可以快速帮助我们绘制出一个领域的发展历史，定位出该领域的重要文献，以及最新的重要文献。</p>
-<p>软件的试用非常简单，但如何从软件给出的图谱中得出有价值的信息，以及不同图谱展示的内在含义，需要我们不断揣摩和理解。</p>
-<p>下面先介绍一下如何使用软件；然后介绍一下软件里涉及的一些概念。</p>
-<h3 id="1-软件使用"><a href="#1-软件使用" class="headerlink" title="1. 软件使用"></a>1. 软件使用</h3><ol>
-<li><p>从histcite网站下载软件，安装之后，点击histcite图标即可开启软件；软件打开后的窗口类似IE的界面；</p>
-</li>
-<li><p>数据的获取；histcite目前用于分析的文献信息只能来源于web of science数据库；在wos 数据库进行检索后，在页面的底端选择需要导出的数据记录，由于wos目前只支持每次导出500条记录，如果检索结果超过500条需要分多次导出。选择导出的文献记录之后，第二步，一定要选择输出全记录，并且要包含引文信息；第三步将需要的文献保存成文本文件。一般来说，如果文献记录少于500条，分析的意义不是很大。合适的数据量个人认为在几百到几千条记录之间比较合适。</p>
-</li>
-<li><p>从file菜单下点击add file，导入上述保存的数据；如果有多个文本文件，可以重复执行导入；</p>
-</li>
-<li><p>数据导入后，软件会自动进行分析。初学者可以不去追究各种按钮的含义。在tool菜单下，选择graph maker，然后在新的界面点击左上角的make graph 按钮。软件会根据默认的条件作出一张引文关系图来，来展示当前数据库中重要文献之间的关联。</p>
-</li>
-<li><p>作出图之后，理解图谱才是关键。一般默认会画出30篇文献之间的关联。图上有30个圆圈，每个圆圈表示一片文献，中间有个数字，是这篇文献在数据库中的需要。圆圈的大小表示引用次数的多少，圆圈越大表示受关注越多。不同圆圈之间有箭头相连，箭头表示文献之间的引用关系。多数情况下，你会看到最上面有一个圆圈较大，并有很多箭头指向这篇文章。那么这篇文章很可能就是这个领域的开山之作。</p>
-</li>
-</ol>
-<h3 id="2-软件功能和基本概念"><a href="#2-软件功能和基本概念" class="headerlink" title="2. 软件功能和基本概念"></a>2. 软件功能和基本概念</h3><p>将数据导入到软件之后，文献会自动排列在软件的主界面。文献的排序方式可以按日期，可以按杂志或按作者进行排序。</p>
-<p>文献记录的上方还有一些蓝色字体的按钮。这些词都是可以点击的，并进行相应分析。如点击authors，软件会列出所有作者，并将每位作者的文献数. 引用次数等信息列出来。这些命令较容易理解，不多做介绍。</p>
-<p>在默认窗口的右侧，有LCS、GCS、LCR、CR。下面分别解释一下这几个功能。</p>
-<ul>
-<li><strong>GCS</strong>是global citation score，即引用次数，也就是你咋web of science网站上看到的引用次数。如果你点击GCS，软件会按照GCS进行排序，此时的结果与你在wos网站按被引频次排序的结果是一样的。</li>
-<li><strong>CR</strong>是cited references，即文章引用的参考文献数量。如果某篇文献引用了50篇参考文献，则CR为50。这个数据通常能帮我们初步判断一下某篇文献是一般论文还是综述。</li>
-<li><strong>LCS</strong>和<strong>LCR</strong>是histcite里比较重要的两个参数。<strong>LCS</strong>是local citation score的简写，即本地引用次数。</li>
-<li>与gcs相对应，LCS是某篇文章在当前数据库中被应用的次数。所以LCS一定是小于或等于GCS的。</li>
-</ul>
-<p>一篇文章GCS很高，说明被全球科学家关注较多。但是如果一篇GCS很高，而LCS很小，说明这种关注主要来自与你不是同一领域的科学家。此时，这篇文献对你的参考意义可能不大。举个离子，2003年发表在nature上的两篇文章P1 (GCS:580,LCS:12) 和 P2 (GCS:36,LCS：24)。第一篇文章gcs很高，lcs很低，说明关注这篇文章的绝大部分作者与你关注的方向不同。而第二篇文章经gcs较低，但LCS比第一批要高，即很多引用p2的文章都在当前数据库，也即与你的研究方向相关。所以，p1、p2相比，p2应该更贴近你的研究方向，参考价值更大。</p>
-<p>在第一部分的介绍中，make graph时，默认是按LCS排序的，也可以选择按gcs排序。你可以比较一下这两者的差异，一般LCS作图，得到的关联较丰富，而gcs作图往往文献之间没什么关联。这就回答了上面开始提出的一个问题，为什么按引用频次排序往往不是很有参考价值的原因。</p>
-<p>LCR与CR对应是local cited references，是指某篇文献引用的所有文献中，有多少篇文献在当前数据库中。如果最近有两篇文章，p1 p2都引用了30篇参考文献，其中p1引用的30篇文献中有20篇在当前数据库，p2只有2篇文献在当前数据库。此时，p1相对更有参考价值，因为它引用了大量和你的研究相关的文献。</p>
-<p>根据LCS可以快速定位一个领域的经典文献，LCR可以快速找出最新的文献中哪些是和自己研究方向最相关的文章。</p>
-<blockquote>
-<p>引文有些不规范导致引文分析结果偏差，这里暂不做讨论。感兴趣的朋友可以参考引文相关的理论文献或书籍。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>科研笔记</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
-        <tag>文献管理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LSH那些事儿 (I): 总览</title>
     <url>/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF1/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-一开始"><a href="#1-一开始" class="headerlink" title="1. 一开始"></a>1. 一开始</h2><p>先从wiki上头截取一段话:</p>
@@ -1044,52 +995,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Install Python, NumPy, SciPy, and Matplotlib on Mac OS X</title>
-    <url>/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><strong>Update: These instructions are over a year old, though they may still work for you. See the <a href="http://penandpants.com/install-python/" title="Install Python">“Install Python”</a> page for the most recent instructions.</strong></p>
-<p>A bit ago a friend and I both had fresh Mac OS X Lion installs so I helped him set up his computers with a scientific Python setup and did mine at the same time.</p>
-<p>These instructions are for Lion but should work on Snow Leopard or Mountain Lion without much trouble. On Snow Leopard you won’t install Xcode via the App Store, you’ll have to download it from Apple.</p>
-<p>After I’d helped my friend I found <a href="http://www.thisisthegreenroom.com/2011/installing-python-numpy-scipy-matplotlib-and-ipython-on-lion/">this blog post</a> describing a procedure pretty much the same as below.</p>
-<p>Update: If doing all the stuff below doesn’t seem like your cup of tea, it’s also possible to install Python, NumPy, SciPy, and matplotlib using double-click binary installers (resulting in a much less flexible installation), <a href="http://penandpants.com/2012/03/01/install-python-2/">see this post</a> to learn how.</p>
-<h1 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h1><p>You will need Apple’s developer tools in order to compile Python and the other installs. On Lion you can install <a href="https://developer.apple.com/xcode/">Xcode from the App Store</a>, on Snow Leopard you’ll have to get an older Xcode from <a href="http://developer.apple.com/downloads">developer.apple.com</a>.</p>
-<p>I use the Xcode editor because I like its syntax highlighting, code completion, and organizer. However, I use hardly any of its features and unless you’re an iOS or Mac developer you probably won’t either. If you prefer another editor it’s possible to get only the libraries and compilers that you need with the <a href="http://developer.apple.com/downloads">Command Line Tools for Xcode</a>. (You’ll need a free Apple ID.) (See also <a href="http://www.kennethreitz.com/xcode-gcc-and-homebrew.html">http://www.kennethreitz.com/xcode-gcc-and-homebrew.html</a>.)</p>
-<h1 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h1><p><a href="http://mxcl.github.com/homebrew/">Homebrew</a> is an excellent package manager for Mac OS X that can install a <a href="https://github.com/mxcl/homebrew/tree/master/Library/Formula">large number of packages</a>. To install it simply launch a terminal and enter</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ruby -e &quot;$(curl -fsSkL raw.github.com/mxcl/homebrew/go)&quot;</span><br></pre></td></tr></table></figure>
-<p>Homebrew installs things to <code>/usr/local/</code> so you don’t need <code>sudo</code> permissions. To add Homebrew installed executables and Python scripts to your path you’ll want to add the following line to your <code>.profile</code> (or <code>.bash_profile</code>) file:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export PATH=/usr/local/bin:/usr/local/share/python:$PATH</span><br></pre></td></tr></table></figure></p>
-<p>Normal executables go in <code>/usr/local/bin/</code> and Python scripts installed by Homebrew go in<code>/usr/local/share/python/</code>.</p>
-<p>See <a href="https://github.com/mxcl/homebrew/wiki/The-brew-command">https://github.com/mxcl/homebrew/wiki/The-brew-command</a> or type <code>brew help</code> or <code>man brew</code>for more info on Homebrew.</p>
-<h1 id="Install-Python"><a href="#Install-Python" class="headerlink" title="Install Python"></a>Install <a href="http://www.python.org/">Python</a></h1><p>Now that you’ve got Homebrew installing Python is simple:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install python</span><br></pre></td></tr></table></figure><br>Homebrew will install a couple of packages required by Python and then Python itself. Don’t be surprised if this takes a couple minutes.</p>
-<p><strong>Important: You should close your terminal and open a fresh one right now so that it has the updated PATH from the previous section.</strong> Otherwise you run the risk of executing the wrong scripts during the rest of these instructions.</p>
-<p>At this point you should be able to get a fresh terminal and type</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">which python</span><br></pre></td></tr></table></figure>
-<p>and see</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/usr/local/bin/python</span><br></pre></td></tr></table></figure>
-<p>Homebrew is for installing system packages and tools; for managing Python add-ons we want<a href="http://pypi.python.org/pypi/pip">pip</a>. Luckily easy_install, another Python package manager is installed by Homebrew and we can use it to install pip:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">easy_install pip</span><br></pre></td></tr></table></figure></p>
-<h1 id="Install-NumPy"><a href="#Install-NumPy" class="headerlink" title="Install NumPy"></a>Install <a href="http://www.scipy.org/">NumPy</a></h1><p>Use pip to install NumPy:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install numpy</span><br></pre></td></tr></table></figure></p>
-<p>This should install NumPy 1.6.1 (as of Feb. 2012).</p>
-<h1 id="Install-SciPy"><a href="#Install-SciPy" class="headerlink" title="Install SciPy"></a>Install <a href="http://www.scipy.org/">SciPy</a></h1><p>We need gfortran to compile SciPy but it is not included with the other Xcode tools. Luckily, Homebrew can help us out again:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install gfortran</span><br></pre></td></tr></table></figure></p>
-<p>When that’s done it’s a cinch to install SciPy:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install scipy</span><br></pre></td></tr></table></figure></p>
-<p>This should install SciPy 0.10.</p>
-<h1 id="Install-matplotlib"><a href="#Install-matplotlib" class="headerlink" title="Install matplotlib"></a>Install <a href="http://matplotlib.sourceforge.net/">matplotlib</a></h1><p>To install matplotlib we need to revisit Homebrew one more time:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install pkg-config</span><br></pre></td></tr></table></figure>
-<p>And the usual pip command:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install matplotlib</span><br></pre></td></tr></table></figure>
-<p>This should install matplotlib 1.2.0. If it doesn’t you can try installing from the matplotlib development repo:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install git+git://github.com/matplotlib/matplotlib.git</span><br></pre></td></tr></table></figure>
-<p>Congratulations! You should now have the basics of a scientific Python installation that’s easy to manage and upgrade using Homebrew and pip. Fire up Python and make sure things worked. The following should work in Python with no errors:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import numpy</span><br><span class="line">import scipy</span><br><span class="line">import matplotlib</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>操作备忘</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
-        <tag>Mac OS</tag>
-        <tag>Matplotlib</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Introduction to Latex</title>
     <url>/blog/introduction-to-latex/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -1382,23 +1287,6 @@
         <tag>概率推断</tag>
         <tag>Unrolling</tag>
         <tag>参数学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>博士论文 | 致谢</title>
-    <url>/blog/%E5%8D%9A%E5%A3%AB%E8%AE%BA%E6%96%87%E8%87%B4%E8%B0%A2/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><p><br>初，余于蜀修计算之术学，习毕，始觉学之浩渺，而复拜于浙滨求是园。窗间过马，历之六载，恳恳悱悱，略有体悟，故表一文，以概所学。忆之昔时，余虽不器，然受教于师长，蒙益于同学，踉之跄之，至今时而小立。余非矫作之徒，惟感怀此恩，喻情造文，以是铭谢。</p>
-<p><p><br>吾师陈刚教授，博知鸿才，德识兼具。虽务重少暇，亦常拨冗授业，传道释惑，忱忱数言，使我弟子之辈顿开茅塞，垂教之恩，常铭于心。吾师寿黎但教授，睿智渊学，修业严谨。先生不以余愚钝，诱之谆谆，期之殷殷，言传身教，凝其心血，使余得窥科学之殿堂，乃有今日之寸进。吾师陈珂教授，识人善诱，宽厚谦和。因其材而施其教，悉其惑而解其忧。先生知余之困顿，常衔担虑，教诲之情，无时或忘。余尝游学在外，幸拜吾师陆华教授。陆子不止授业解惑，更教研究之大道，于研孜孜不怠，于究一丝不苟，常施弟子珠玑，当字字推敲苦心孤诣，余由是相形甚惭，耳濡目染，方知细节显文章、微处见大德，每念及此，铭感五内。吾师门固本，有伍赛教授予以点拨，亦获益匪浅。余求学以来，沐浩浩师德、楷楷学风，今学业虽竟，受之训导当裨及一生。</p>
-<p><p><br>砥砺岂必多，一壁胜万珉。余有少年英才之益友同力协契。余之长曰王振华、周显锞、朱珠、骆歆远、毛旷、张超、彭湃、顾晓玲等数贤；余之同窗曰赵王军、王俊俏、李梦雯、邝昌浪、唐思、刘博文、何平、庞志飞、陈鸿翔、柴一平、常鹏飞、张之宣、李邦鹏、于志超、陈欣、王凌阳、赵萍、喻影、史飞超、张嘉伟、孔玲玲、俞佳炳、王俊福、陈钦况等数贤。余求索之中屡有不济，兄歆远、湃，姊晓玲，或悉心指引，或相与分忧，此热肠挚助，不胜感激。</p>
-<p><p><br>余年十六时，意气风发，咸有不顺，恃之，常效昔贤抒怀抱利器之感；后经大考受挫，始寡欢，欲奋起而历重疾，又寡言，至此判若二人。余每遇彷徨，心潮低抑，欲投笔言弃之时，余父母常良言规劝、宽言相藉，使余反躬自省，愈挫愈起，终不至半途而废、徒增悔恨。余妻静洋，知吾志，亦知吾苦楚，余每及蹙眉踌步、失意落魄之际，当缄然以待，而后从容开释。余寒窗数载，妻持家经营，未有片怨。余有一子既周，皆父母与妻扶持，余亦未有杯水之劳矣。为人子，未尽孝悌而蒙厚爱；为人夫，未问冷暖而得谅恤。落笔至此，涕零感激，亦羞愧难当，书尽辞藻，不足陈情之万一。</p>
-<p><p><br>余今年二十又七，为昔时当已立于天地，而今始足稷下未有一绩。然漫漫强健之路，焉得无坎坷羁绊？吾幸得良师益友、至亲佳侣相伴，当信步高歌、谈笑相对。余素仰苏子东坡，读其文，常有小悟，惟据其金句以自勉，曰莫听穿林打叶声，何妨吟啸且徐行。</p>
-<p><p><p><p><p><p><p><p><p><br><strong>门下生 李环</strong><br><strong>如月夜疾书于陋居沉风斋</strong></p>
-]]></content>
-      <categories>
-        <category>文字</category>
-      </categories>
-      <tags>
-        <tag>致谢</tag>
       </tags>
   </entry>
   <entry>
@@ -2742,12 +2630,17 @@ L = - \log\sigma(\gamma - d_r(\mathbf{h}, \mathbf{t})) - \sum_{i = 1}^{n} p(h'_i
 <p>1914年的六月，在萨拉热窝的哈布斯堡王公斐迪南胸口被一发子弹射穿。打着奥匈帝国复仇的旗帜，新兴的科技强国德意志，在卢森堡比利时沿线放响了进逼巴黎的枪炮，尔后又在东普鲁士和俄国人短兵相接。同盟和协约两大阵营站定，四年多的纠缠卷走了1600万人的生命，最后时刻德国人没有咬牙死磕这场双方都孤注一掷的赌局。法国人把愤怒填进了凡尔赛和约，在德意志人心中埋下了仇恨的种子，直到20年后在贡比涅的火车上身份互换快意恩仇。英法的金融地位退散，欧洲碎成了一地人造的玻璃渣，而大西洋彼岸的生产巨人美国转势把美元做成了市场风向标。沙皇的俄罗斯人心向背，马克思的理想在红色革命中发芽和绽放。日本人借机接手了胶州湾和山东半岛的话事权，东方的新青年举起了义旗寻求出路，民族自强的辩驳掷地有声。</p>
 <p>1453年夏天和1914年夏天，想必是必然中的偶然。暗流涌动的背后，那个时代的人都能看到谁在蠢蠢欲动。然而这些事情后续影响的绵延，恐怕身在其中的人无从想象。</p>
 <p>我们现在是不是就处在这样一个类似的夏天？</p>
-<p>我也问自己，但我也告诉自己，这不是我能解答也不是我可能想得清楚或可以验证的问题。就像某位人民作家所说，我们不过是时代尘埃下的一个小小个体，呵呵。</p>
-<p>这疫情下的世间百态，嬉笑怒骂还是看得不够。我看着懂王每天一条快乐小贴士，我看着这世界秩序维护者们如泼妇骂街喋喋不休，我看着有人总站圣母角度看待问题，我看着每个人都想着护着自己的蛋糕生怕别人的肮脏口水粘到了奶油。老范大人说“先天下之忧而忧，后天下之乐而乐”，我是读圣贤书长大的，我可是看不太懂这天下了。</p>
-<p>来丹麦整整一年，该是要好好总结。这一年的所得这一年的所失，都要仔细列一列，聊一聊，吹一吹。本是有理想的人，奋斗是要和价值观协同的，不是？</p>
-<p>怕是现在也没啥心情，写出来莫不是成了小人常戚戚，夹带自己的际遇当私货。不如，做一个话不多的狠人——生死看淡，不服就干。</p>
-<p>开了个好头，本想写个激情澎湃的文章，不知道哪里溜出来的糟糕情绪搅黄了这一切，就此画个遗憾的句点吧。</p>
-<p>那些让人敬仰的神殿，只在无知的人心中灵验。</p>
+<!-- 我也问自己，但我也告诉自己，这不是我能解答也不是我可能想得清楚或可以验证的问题。就像某位人民作家所说，我们不过是时代尘埃下的一个小小个体，呵呵。
+
+这疫情下的世间百态，嬉笑怒骂还是看得不够。我看着懂王每天一条快乐小贴士，我看着这世界秩序维护者们如泼妇骂街喋喋不休，我看着有人总站圣母角度看待问题，我看着每个人都想着护着自己的蛋糕生怕别人的肮脏口水粘到了奶油。老范大人说“先天下之忧而忧，后天下之乐而乐”，我是读圣贤书长大的，我可是看不太懂这天下了。
+
+来丹麦整整一年，该是要好好总结。这一年的所得这一年的所失，都要仔细列一列，聊一聊，吹一吹。本是有理想的人，奋斗是要和价值观协同的，不是？
+
+怕是现在也没啥心情，写出来莫不是成了小人常戚戚，夹带自己的际遇当私货。不如，做一个话不多的狠人——生死看淡，不服就干。
+
+开了个好头，本想写个激情澎湃的文章，不知道哪里溜出来的糟糕情绪搅黄了这一切，就此画个遗憾的句点吧。
+
+那些让人敬仰的神殿，只在无知的人心中灵验。 -->
 ]]></content>
       <categories>
         <category>丹麦见闻</category>
@@ -3128,6 +3021,23 @@ L = - \log\sigma(\gamma - d_r(\mathbf{h}, \mathbf{t})) - \sum_{i = 1}^{n} p(h'_i
       </tags>
   </entry>
   <entry>
+    <title>致谢</title>
+    <url>/blog/%E8%87%B4%E8%B0%A2/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><p><br>初，余于蜀修计算之术学，习毕，始觉学之浩渺，而复拜于浙滨求是园。窗间过马，历之六载，恳恳悱悱，略有体悟，故表一文，以概所学。忆之昔时，余虽不器，然受教于师长，蒙益于同学，踉之跄之，至今时而小立。余非矫作之徒，惟感怀此恩，喻情造文，以是铭谢。</p>
+<p><p><br>吾师□□□教授，博知鸿才，德识兼具。虽务重少暇，亦常拨冗授业，传道释惑，忱忱数言，使我弟子之辈顿开茅塞，垂教之恩，常铭于心。吾师□□□教授，睿智渊学，修业严谨。先生不以余愚钝，诱之谆谆，期之殷殷，言传身教，凝其心血，使余得窥科学之殿堂，乃有今日之寸进。吾师□□□教授，识人善诱，宽厚谦和。因其材而施其教，悉其惑而解其忧。先生知余之困顿，常衔担虑，教诲之情，无时或忘。余尝游学在外，幸拜吾师□□□教授。□子不止授业解惑，更教研究之大道，于研孜孜不怠，于究一丝不苟，常施弟子珠玑，当字字推敲苦心孤诣，余由是相形甚惭，耳濡目染，方知细节显文章、微处见大德，每念及此，铭感五内。吾师门固本，有□□□教授予以点拨，亦获益匪浅。余求学以来，沐浩浩师德、楷楷学风，今学业虽竟，受之训导当裨及一生。</p>
+<p><p><br>砥砺岂必多，一壁胜万珉。余有少年英才之益友同力协契。余之长曰□□□等数贤；余之同窗曰□□□等数贤。余求索之中屡有不济，兄□□□，姊□□□，或悉心指引，或相与分忧，此热肠挚助，不胜感激。</p>
+<p><p><br>余年十六时，意气风发，咸有不顺，恃之，常效昔贤抒怀抱利器之感；后经大考受挫，始寡欢，欲奋起而历重疾，又寡言，至此判若二人。余每遇彷徨，心潮低抑，欲投笔言弃之时，余父母常良言规劝、宽言相藉，使余反躬自省，愈挫愈起，终不至半途而废、徒增悔恨。余妻□□□，知吾志，亦知吾苦楚，余每及蹙眉踌步、失意落魄之际，当缄然以待，而后从容开释。余寒窗数载，妻持家经营，未有片怨。余有一子□□□，皆父母与妻扶持，余亦未有杯水之劳矣。为人子，未尽孝悌而蒙厚爱；为人夫，未问冷暖而得谅恤。落笔至此，涕零感激，亦羞愧难当，书尽辞藻，不足陈情之万一。</p>
+<p><p><br>余今年二十又七，为昔时当已立于天地，而今始足稷下未有一绩。然漫漫强健之路，焉得无坎坷羁绊？吾幸得良师益友、至亲佳侣相伴，当信步高歌、谈笑相对。余素仰苏子东坡，读其文，常有小悟，惟据其金句以自勉，曰莫听穿林打叶声，何妨吟啸且徐行。</p>
+<p><p><p><p><p><p><p><p><p><br><strong>门下生 □□□</strong><br><strong>如月夜疾书于陋居沉风斋</strong></p>
+]]></content>
+      <categories>
+        <category>文字</category>
+      </categories>
+      <tags>
+        <tag>致谢</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>词 · 七首</title>
     <url>/blog/%E8%AF%8D/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><p><br>词七阙，<br>皆为少年听歌雨楼之作，<br>至今十年已逾。</p>
@@ -3153,12 +3063,11 @@ L = - \log\sigma(\gamma - d_r(\mathbf{h}, \mathbf{t})) - \sum_{i = 1}^{n} p(h'_i
       </tags>
   </entry>
   <entry>
-    <title>律诗 · 五首</title>
+    <title>律诗</title>
     <url>/blog/%E8%AF%97/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><p><br>时年十六七，<br>未感彷徨，<br>但有俯仰天地之想。</p>
-<p><p><p><p><p><br><strong>■自嘲</strong><br>日日年年学堂内，<br>未晓鸟雀声何啾。<br>入云高殿何所似？<br>阻隔青山如困囚。<br>作诗且需诗境好，<br>填词更得词源幽。<br>先人常绘奇异风，<br>我靠冬秋叹烦忧。</p>
+<p><p><p><p><p></p>
 <p><p><p><p><p><br><strong>■峨眉夜宿有感</strong><br>半轮峨眉影入流，<br>默倚冷杉不知秋。<br>拂叶焉作飘然客，<br>难言此楼胜彼楼。</p>
-<p><p><p><p><p><br><strong>■园春</strong><br>寻园流水润花开，<br>春柳新雨心无载。<br>不伐因其墙底长，<br>故而认之遮轩台。<br>今日翠色虽低小，<br>有朝此举可抒怀。<br>栋梁绝非出一处，<br>磨难亦可成妙才。</p>
 <p><p><p><p><p><br><strong>■暮行</strong><br>快马浮雕青穹北，<br>指染缈尘黑龙嘴。<br>萧萧暮雨沉风落，<br>戎衣不过溅溅水。</p>
 <p><p><p><p><p><br><strong>■浅风</strong><br>古鸢齐天翅激扬，<br>湖光芷影抑蕾昂。<br>踏破中原五百关，<br>风吟二月始未长。</p>
 ]]></content>

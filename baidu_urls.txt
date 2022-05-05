@@ -2,11 +2,11 @@ https://longaspire.github.io/blog/Data%20Sketching%E7%AC%94%E8%AE%B0-Quantiles/
 https://longaspire.github.io/blog/Data%20Sketching%E7%AC%94%E8%AE%B0/
 https://longaspire.github.io/blog/%E7%AB%A5%E8%AF%9D%E5%9B%BD%E6%96%B0%E6%97%852/
 https://longaspire.github.io/blog/%E7%AB%A5%E8%AF%9D%E5%9B%BD%E6%96%B0%E6%97%851/
+https://longaspire.github.io/blog/%E7%98%9F%E7%96%AB%E7%8B%82%E6%83%B3%E6%9B%B2/
+https://longaspire.github.io/blog/PCA_RPCA/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B03/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B02/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/
-https://longaspire.github.io/blog/%E7%98%9F%E7%96%AB%E7%8B%82%E6%83%B3%E6%9B%B2/
-https://longaspire.github.io/blog/PCA_RPCA/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B05/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B04/
 https://longaspire.github.io/blog/%E5%9B%BE%E8%B0%B1%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B02_1/
@@ -20,7 +20,7 @@ https://longaspire.github.io/blog/%E7%BB%88%E6%9E%81%E7%AE%97%E6%B3%95%E8%AF%BB%
 https://longaspire.github.io/blog/Latex%E4%B9%A6%E5%86%99%E8%AF%AF%E5%8C%BA/
 https://longaspire.github.io/blog/%E8%AF%8D/
 https://longaspire.github.io/blog/%E8%AF%97/
-https://longaspire.github.io/blog/%E5%8D%9A%E5%A3%AB%E8%AE%BA%E6%96%87%E8%87%B4%E8%B0%A2/
+https://longaspire.github.io/blog/%E8%87%B4%E8%B0%A2/
 https://longaspire.github.io/blog/trips/
 https://longaspire.github.io/blog/%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2/
 https://longaspire.github.io/blog/vita/
@@ -44,7 +44,7 @@ https://longaspire.github.io/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%
 https://longaspire.github.io/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%873/
 https://longaspire.github.io/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%872/
 https://longaspire.github.io/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%871/
-https://longaspire.github.io/blog/HistCite%E4%BB%8B%E7%BB%8D/
-https://longaspire.github.io/blog/install-python-numpy-scipy-and-matplotlib-on-mac-os-x/
 https://longaspire.github.io/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/
 https://longaspire.github.io/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF3/
+https://longaspire.github.io/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF2/
+https://longaspire.github.io/blog/%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%BA%A6%E9%87%8F%E7%AC%94%E8%AE%B0/
