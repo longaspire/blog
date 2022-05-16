@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Data Sketching笔记 - Quantiles</title>
-    <url>/blog/Data%20Sketching%E7%AC%94%E8%AE%B0-Quantiles/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本文是对于分位数（Quantiles）计算方法的总结，主要基于Data Sketching技术。</p>
-</blockquote>
-<h2 id="计算分位数"><a href="#计算分位数" class="headerlink" title="计算分位数"></a>计算分位数</h2><p>Quantiles的计算非常基础，被认为是和sum、max、top-k、count-distinct一样十分基础的数据操作。Quantiles是分布的一种近似表达，许多分布的相似度可以通过对比它们的quantiles进行对比，这就是Kolmogorov-Smirnov Divergence（和KL散度相比，KS散度可以被视为一种对称距离，一些讨论可见<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.](https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance)
-">[1]</span></a></sup>）。</p>
-<p>给出Quantiles的一般定义：</p>
-<blockquote>
-<p>给定一个包含$n$个元素的有序的multi(set) $S$，$\phi$-quantile ($0 &lt; \phi &lt; 1$) 是在$S$中排名为第 $\left \lfloor \phi n \right \rfloor$ 小的元素。</p>
-</blockquote>
-<p>由于实际上输入数据本身容易存在误差，因此在计算Quantiles往往允许一定的误差率$\varepsilon$，我们定义</p>
-<blockquote>
-<p>一个$\varepsilon$-approximate $\phi$-quantile的排名在$(\phi - \varepsilon)n$和$(\phi + \varepsilon)n$之间。</p>
-</blockquote>
-<h2 id="算法分类"><a href="#算法分类" class="headerlink" title="算法分类"></a>算法分类</h2><p>文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Quantiles over data streams: An experimental study.](https://dl.acm.org/doi/abs/10.1145/2463676.2465312)
-">[2]</span></a></sup>对算法分类从三个方面进行了叙述：</p>
-<ol>
-<li>turnstile vs. cash register：前者允许插入和删除一个元素，而后者只允许插入；</li>
-<li>comparison vs. fixed universe：对于前者，算法只能维护一组它已经观测到的元素并从中计算quantiles不能“创造”一个新的元素作为quantiles。对于后者，元素可能认为是1到$u$之间的所有可枚举整数。comparison算法可被运用到fixed universe，但反之则不行。comparison算法可以在很多场景下适用，例如变长的字符串、用户自定义类型等等；</li>
-<li>deterministic vs. randomized：在randomized的算法中，允许以一定概率出现那些超过了误差率$\varepsilon$的分位数计算结果。通常，这个概率值会被设置成一个常量。</li>
-</ol>
-<h2 id="Cash-Register算法"><a href="#Cash-Register算法" class="headerlink" title="Cash Register算法"></a>Cash Register算法</h2><h3 id="Greenwald-Khanna算法"><a href="#Greenwald-Khanna算法" class="headerlink" title="Greenwald-Khanna算法"></a>Greenwald-Khanna算法</h3><p>GK算法的sketch可以记为$S(n)$，它是一个排序元组对应所有观测数据的一个有代表的子集。其当中的每个元素$v \in S(n)$，我们需要能获知其对应的implicit bound，即其对于所有观测点而言的最大可能和最小可能的rank，记为$rmin(v)$和$rmax(v)$。实际上，$S(n)$中的每个元素的存储是一个三元组$(v_i, g_i, \Delta_i)$，包含：</p>
-<ol>
-<li>$v_i$是数据流中实际出现的值；</li>
-<li>$g_i = rmin(v_i) - rmin(v_{i-1})$；</li>
-<li>$\Delta_i = rmax(v_i) - rmin(v_i)$.</li>
-</ol>
-<p>其中，$g_i$和排列的上一个元素相关，$\Delta_i$只和当前元素$v_i$相关。</p>
-<p>上述数据结构保证我们能够恢复$S(n)$中的每个元素的最大和最小可能rank，比如</p>
-<ol>
-<li>$rmin(v_i) = \sum_{j \leq i} g_j$ （相对于第一个元素的最小可能排名）</li>
-<li>$rmax(v_i) = \sum_{j \leq i} g_j + \Delta_i = \sum_{j \leq i} (g_j + \Delta_j)$</li>
-</ol>
-<p>$S(n)$在构建中需要满足以下两个条件：</p>
-<ol>
-<li>$\sum_{j \leq i} g_j \leq r(v_i) + 1 \leq \sum_{j \leq i} g_j + \Delta_i $ （该条件定义了排名的上界和下界）</li>
-<li>对任意元素$v_i$而言，$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （证明参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
-">[4]</span></a></sup>）</li>
-</ol>
-<p>对于当前最大的元素和最小的元素（当$i = 0$或者$i = n-1$的时候），他们的最大排名和最小排名是一样的，即$\Delta_i = 0$。</p>
-<p>此外，$g_i + \Delta_i - 1$是$v_{i-1}$和$v_i$之间最多可能出现的元素的个数，要求$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （上述条件2）是为了保证从$\varepsilon n$到任意一个$\phi n$之间至少有一个元素。</p>
-<p>关于GK算法的insert、delete、compress和get rank的算法，可以参考<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.](https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/)
-">[3]</span></a></sup><sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
-">[4]</span></a></sup>的解读。</p>
-<h3 id="Q-Digest算法"><a href="#Q-Digest算法" class="headerlink" title="Q-Digest算法"></a>Q-Digest算法</h3><p>Q-Digest （Quantile Digest）可以看成是一个叶结点是值本身的二叉树。其通过设置压缩比将fixed universe的数值在index上进行索引。</p>
-<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance">https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://dl.acm.org/doi/abs/10.1145/2463676.2465312">Quantiles over data streams: An experimental study.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/">https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://blog.csdn.net/matrix_zzl/article/details/78641264">https://blog.csdn.net/matrix_zzl/article/details/78641264.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>]]></content>
-      <categories>
-        <category>Data Sketching笔记</category>
-      </categories>
-      <tags>
-        <tag>概率</tag>
-        <tag>Sketch</tag>
-        <tag>分位数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AR + V-SLAM的学习资料汇总</title>
     <url>/blog/AR+V-SLAM%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="1-一开始"><a href="#1-一开始" class="headerlink" title="1. 一开始"></a>1. 一开始</h2><p>说到AR，现在往往要说起来SLAM (Simultaneous Localization and Mapping)，这两者之间是什么关系呢，可能会困扰很多的初学者。且先看点定义~</p>
@@ -182,6 +125,63 @@
         <tag>定位技术</tag>
         <tag>SLAM</tag>
         <tag>SfM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Data Sketching笔记 - Quantiles</title>
+    <url>/blog/Data%20Sketching%E7%AC%94%E8%AE%B0-Quantiles/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是对于分位数（Quantiles）计算方法的总结，主要基于Data Sketching技术。</p>
+</blockquote>
+<h2 id="计算分位数"><a href="#计算分位数" class="headerlink" title="计算分位数"></a>计算分位数</h2><p>Quantiles的计算非常基础，被认为是和sum、max、top-k、count-distinct一样十分基础的数据操作。Quantiles是分布的一种近似表达，许多分布的相似度可以通过对比它们的quantiles进行对比，这就是Kolmogorov-Smirnov Divergence（和KL散度相比，KS散度可以被视为一种对称距离，一些讨论可见<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.](https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance)
+">[1]</span></a></sup>）。</p>
+<p>给出Quantiles的一般定义：</p>
+<blockquote>
+<p>给定一个包含$n$个元素的有序的multi(set) $S$，$\phi$-quantile ($0 &lt; \phi &lt; 1$) 是在$S$中排名为第 $\left \lfloor \phi n \right \rfloor$ 小的元素。</p>
+</blockquote>
+<p>由于实际上输入数据本身容易存在误差，因此在计算Quantiles往往允许一定的误差率$\varepsilon$，我们定义</p>
+<blockquote>
+<p>一个$\varepsilon$-approximate $\phi$-quantile的排名在$(\phi - \varepsilon)n$和$(\phi + \varepsilon)n$之间。</p>
+</blockquote>
+<h2 id="算法分类"><a href="#算法分类" class="headerlink" title="算法分类"></a>算法分类</h2><p>文献<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Quantiles over data streams: An experimental study.](https://dl.acm.org/doi/abs/10.1145/2463676.2465312)
+">[2]</span></a></sup>对算法分类从三个方面进行了叙述：</p>
+<ol>
+<li>turnstile vs. cash register：前者允许插入和删除一个元素，而后者只允许插入；</li>
+<li>comparison vs. fixed universe：对于前者，算法只能维护一组它已经观测到的元素并从中计算quantiles不能“创造”一个新的元素作为quantiles。对于后者，元素可能认为是1到$u$之间的所有可枚举整数。comparison算法可被运用到fixed universe，但反之则不行。comparison算法可以在很多场景下适用，例如变长的字符串、用户自定义类型等等；</li>
+<li>deterministic vs. randomized：在randomized的算法中，允许以一定概率出现那些超过了误差率$\varepsilon$的分位数计算结果。通常，这个概率值会被设置成一个常量。</li>
+</ol>
+<h2 id="Cash-Register算法"><a href="#Cash-Register算法" class="headerlink" title="Cash Register算法"></a>Cash Register算法</h2><h3 id="Greenwald-Khanna算法"><a href="#Greenwald-Khanna算法" class="headerlink" title="Greenwald-Khanna算法"></a>Greenwald-Khanna算法</h3><p>GK算法的sketch可以记为$S(n)$，它是一个排序元组对应所有观测数据的一个有代表的子集。其当中的每个元素$v \in S(n)$，我们需要能获知其对应的implicit bound，即其对于所有观测点而言的最大可能和最小可能的rank，记为$rmin(v)$和$rmax(v)$。实际上，$S(n)$中的每个元素的存储是一个三元组$(v_i, g_i, \Delta_i)$，包含：</p>
+<ol>
+<li>$v_i$是数据流中实际出现的值；</li>
+<li>$g_i = rmin(v_i) - rmin(v_{i-1})$；</li>
+<li>$\Delta_i = rmax(v_i) - rmin(v_i)$.</li>
+</ol>
+<p>其中，$g_i$和排列的上一个元素相关，$\Delta_i$只和当前元素$v_i$相关。</p>
+<p>上述数据结构保证我们能够恢复$S(n)$中的每个元素的最大和最小可能rank，比如</p>
+<ol>
+<li>$rmin(v_i) = \sum_{j \leq i} g_j$ （相对于第一个元素的最小可能排名）</li>
+<li>$rmax(v_i) = \sum_{j \leq i} g_j + \Delta_i = \sum_{j \leq i} (g_j + \Delta_j)$</li>
+</ol>
+<p>$S(n)$在构建中需要满足以下两个条件：</p>
+<ol>
+<li>$\sum_{j \leq i} g_j \leq r(v_i) + 1 \leq \sum_{j \leq i} g_j + \Delta_i $ （该条件定义了排名的上界和下界）</li>
+<li>对任意元素$v_i$而言，$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （证明参见<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
+">[4]</span></a></sup>）</li>
+</ol>
+<p>对于当前最大的元素和最小的元素（当$i = 0$或者$i = n-1$的时候），他们的最大排名和最小排名是一样的，即$\Delta_i = 0$。</p>
+<p>此外，$g_i + \Delta_i - 1$是$v_{i-1}$和$v_i$之间最多可能出现的元素的个数，要求$g_i + \Delta_i \leq \left \lfloor 2\varepsilon n \right \rfloor$ （上述条件2）是为了保证从$\varepsilon n$到任意一个$\phi n$之间至少有一个元素。</p>
+<p>关于GK算法的insert、delete、compress和get rank的算法，可以参考<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.](https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/)
+">[3]</span></a></sup><sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/matrix_zzl/article/details/78641264.](https://blog.csdn.net/matrix_zzl/article/details/78641264)
+">[4]</span></a></sup>的解读。</p>
+<h3 id="Q-Digest算法"><a href="#Q-Digest算法" class="headerlink" title="Q-Digest算法"></a>Q-Digest算法</h3><p>Q-Digest （Quantile Digest）可以看成是一个叶结点是值本身的二叉树。其通过设置压缩比将fixed universe的数值在index上进行索引。</p>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance">https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance.</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://dl.acm.org/doi/abs/10.1145/2463676.2465312">Quantiles over data streams: An experimental study.</a><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/">https://papercruncher.wordpress.com/2010/03/02/stream-algorithms-order-statistics/.</a><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a href="https://blog.csdn.net/matrix_zzl/article/details/78641264">https://blog.csdn.net/matrix_zzl/article/details/78641264.</a><a href="#fnref:4" rev="footnote"> ↩</a></span></li></ol></div></div>]]></content>
+      <categories>
+        <category>Data Sketching笔记</category>
+      </categories>
+      <tags>
+        <tag>概率</tag>
+        <tag>Sketch</tag>
+        <tag>分位数</tag>
       </tags>
   </entry>
   <entry>
@@ -633,6 +633,127 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenWRT学习随录 (III): OpenWRT运行C</title>
+    <url>/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%953/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>这一篇开始，我要开始实践一下内容，选择的是Ubuntu 12.04 和 Mac OS X Yosemite，参考教程来自于<a href="http://wiki.openwrt.org/doc/howto/buildroot.exigence">OpenWRT WIKI</a>。必须使用非ROOT用户操作，如果使用ROOT进行操作的话，会提示检查失败，Checking ‘non-root’…failed。 另外温馨提示，目录不能含有空格。</p>
+</blockquote>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><p>安装依赖包和一些utilties。</p>
+<h4 id="1-1-在Linux上"><a href="#1-1-在Linux上" class="headerlink" title="1.1 在Linux上"></a>1.1 在Linux上</h4><p>首先要安装git来下载OpenWRT的源码，以及build tools来完成交叉编译过程</p>
+<blockquote>
+<p>sudo apt-get update<br>sudo apt-get install git-core build-essential libssl-dev libncurses5-dev unzip</p>
+</blockquote>
+<p>linux操作系统上面开发程序， 光有了gcc 是不行的，它还需要 build-essential软件包用于提供编译程序必须软件包的列表信息。也就是说，编译程序有了这个软件包，它才知道头文件在哪，才知道库函数在哪，还会下载依赖的软件包 ，最后才组成一个开发环境。</p>
+<p>当然，除了git，也许下载代码也需要subversion（svn）或者mercurial，这样可以同样把这两个包装上</p>
+<blockquote>
+<p>sudo apt-get install subversion mercurial</p>
+</blockquote>
+<p>为了以防万一，这里有一个及其完整的command：</p>
+<blockquote>
+<p>sudo apt-get install g++ libncurses5-dev zlib1g-dev bison flex unzip autoconf gawk make gettext binutils patch bzip2 libz-dev asciidoc subversion build-essential qemu-user git libssl-dev libssl0.9.8</p>
+</blockquote>
+<h4 id="1-2-在Mac-OSX上"><a href="#1-2-在Mac-OSX上" class="headerlink" title="1.2 在Mac OSX上"></a>1.2 在Mac OSX上</h4><p>首先，在Mac OSX上，首先先安装编译工具Xcode command line tools或者Xcode，可以从Mac App Store上得到</p>
+<p>然后，安装<a href="http://brew.sh/">homebrew</a>，一条ruby脚本：</p>
+<blockquote>
+<p>ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”</p>
+</blockquote>
+<p>再次，为homebrew添加一个repository：</p>
+<blockquote>
+<p>brew tap homebrew/dupes</p>
+</blockquote>
+<p>再次，安装依赖包coreutils findutils gawk gnu-getopt gnu-tar grep wget：</p>
+<blockquote>
+<p>brew install coreutils findutils gawk gnu-getopt gnu-tar grep wget</p>
+</blockquote>
+<p>由于gnu-getopt是keg-only的，强制链接：</p>
+<blockquote>
+<p>brew ln gnu-getopt —force</p>
+</blockquote>
+<p>最后，给.bash_profile写入以下：</p>
+<blockquote>
+<p>PATH=”/usr/local/opt/coreutils/libexec/gnubin:$PATH”</p>
+</blockquote>
+<p>以上完成了，还是不够的，究其缘由就是前面提到，必须需要一个Case-sensetive的FS，而Mac OS X，则是一个Case-insensitive的文件系统，<a href="http://wiki.openwrt.org/easy.build.macosx">这里</a>给出了解决方案，从Mac上的HDD上分割一块20g，取名叫做OpenWrt.dmg，然后挂载：</p>
+<blockquote>
+<p>hdiutil create -size 20g -fs “Case-sensitive HFS+” -volname OpenWrt OpenWrt.dmg<br>hdiutil attach OpenWrt.dmg</p>
+</blockquote>
+<p>那么接下来，打开所在目录，并且以下操作都在其中完成。</p>
+<blockquote>
+<p>cd /Volumes/OpenWrt<br>mkdir openwrt</p>
+</blockquote>
+<h3 id="2-git源代码"><a href="#2-git源代码" class="headerlink" title="2. git源代码"></a>2. git源代码</h3><p>一条指令</p>
+<blockquote>
+<p>git clone git://git.openwrt.org/openwrt.git</p>
+</blockquote>
+<p>完成之后，可以在当前目录下发现一个新的目录openwrt，这个就是OpenWRT Buildroot的构建目录，其中，OpenWRT toolchain “OpenWrt Buildroot”被包含在其中。</p>
+<h3 id="3-更新和安装所有可用的feeds"><a href="#3-更新和安装所有可用的feeds" class="headerlink" title="3. 更新和安装所有可用的feeds"></a>3. 更新和安装所有可用的feeds</h3><p>feeds即一些具有共同位置的软件包的打包集合，feeds可以放在远程服务器上，也可以放在本地文件系统里，可以通过一个url获取到。</p>
+<blockquote>
+<p>cd openwrt<br>  ./scripts/feeds update -a<br>  ./scripts/feeds install -a</p>
+</blockquote>
+<h3 id="4-make得到一个configuration-menu"><a href="#4-make得到一个configuration-menu" class="headerlink" title="4. make得到一个configuration menu"></a>4. make得到一个configuration menu</h3><p>指令3选1，普遍选择最后一个：</p>
+<blockquote>
+<p>make defconfig<br>make prereq<br>make menuconfig</p>
+</blockquote>
+<h3 id="5-按照需求选择自己需要make的内容"><a href="#5-按照需求选择自己需要make的内容" class="headerlink" title="5.按照需求选择自己需要make的内容"></a>5.按照需求选择自己需要make的内容</h3><ul>
+<li>Target system：可以选择对应的处理器芯片</li>
+<li>SubTarget选：择具体的板子型号</li>
+<li>如果需要其他内容，则可以加入其他软件包一起编译</li>
+</ul>
+<p>然后键入这个命令就开始编译：</p>
+<blockquote>
+<p>make V=99</p>
+</blockquote>
+<p>如果使用的机器是多核处理器，可以执行下面命令使用多线程编译：</p>
+<blockquote>
+<p>make –j2 V=99</p>
+</blockquote>
+<p>上面是一个双核的例子，切记不要直接使用make –j V=99，这是无数线程编译，可能导致宕机。这一步需要花费数小时，甚至可能因为各种原因被迫重新开始。</p>
+<h3 id="6-编译完成"><a href="#6-编译完成" class="headerlink" title="6. 编译完成"></a>6. 编译完成</h3><p>如果能过顺利通过上述步骤到达这里，那么首先恭喜，可以检查一下，从staging_dir这个目录下发现三个子目录:</p>
+<blockquote>
+<p>host<br>target-xxx_xxxxxxx<br>toolchain-xxx_xxxxxx</p>
+</blockquote>
+<p>这个时候，我们需要修改下系统路径：</p>
+<blockquote>
+<p>sudo vim /etc/profile</p>
+</blockquote>
+<p>在最后加入需要设置变量的shell语句：</p>
+<blockquote>
+<p>export STAGING_DIR=(your_dir)/(openwrt_dir)/staging_dir/toolchain-xxx_xxxxx<br>export PATH=$PATH:$STAGING_DIR/bin</p>
+</blockquote>
+<p>编辑保存退出后，restart，变量生效。</p>
+<p>your_dir就是所在目录，注意MAC OS X下经过分区后，your_dir就是/Volumes/OpenWrt，而openwrt_dir就是之下建立的文件目录，比如openwrt/</p>
+<h3 id="7-写一个-hello-world"><a href="#7-写一个-hello-world" class="headerlink" title="7. 写一个 hello world"></a>7. 写一个 hello world</h3><blockquote>
+<p>sudo vim hello.c</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello!!!!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译，使用指令</p>
+<blockquote>
+<p>mips-openwrt-linux-gcc hello.c -o hello.o -static</p>
+</blockquote>
+<p>如果不指定PATH，也可以这样</p>
+<blockquote>
+<p>(your_dir)/(openwrt_dir)/staging_dir/toolchain-xxx_xxxxx/bin/mips-openwrt-linux-gcc hello.c -o hello.o -static</p>
+</blockquote>
+<p>编译到此完成。</p>
+<h3 id="8-上传-执行"><a href="#8-上传-执行" class="headerlink" title="8. 上传 执行"></a>8. 上传 执行</h3><p>代码可以上传到openwrt的路由器上执行，scp过去：</p>
+<blockquote>
+<p>sudo scp hello.o 192.168.1.1:hello.o</p>
+</blockquote>
+<p>ssh到路由器上</p>
+<blockquote>
+<p>sudo ssh 192.168.1.1<br>cd ~<br>./hello.o</p>
+</blockquote>
+<p>得到运行结果，那么简单的SDK环境已经搭建完毕。</p>
+]]></content>
+      <categories>
+        <category>OpenWRT学习随录</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenWRT学习随录 (IV): iw</title>
     <url>/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%954/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -871,127 +992,6 @@
       <tags>
         <tag>PCA</tag>
         <tag>RPCA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenWRT学习随录 (III): OpenWRT运行C</title>
-    <url>/blog/OpenWRT%E5%AD%A6%E4%B9%A0%E9%9A%8F%E5%BD%953/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>这一篇开始，我要开始实践一下内容，选择的是Ubuntu 12.04 和 Mac OS X Yosemite，参考教程来自于<a href="http://wiki.openwrt.org/doc/howto/buildroot.exigence">OpenWRT WIKI</a>。必须使用非ROOT用户操作，如果使用ROOT进行操作的话，会提示检查失败，Checking ‘non-root’…failed。 另外温馨提示，目录不能含有空格。</p>
-</blockquote>
-<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><p>安装依赖包和一些utilties。</p>
-<h4 id="1-1-在Linux上"><a href="#1-1-在Linux上" class="headerlink" title="1.1 在Linux上"></a>1.1 在Linux上</h4><p>首先要安装git来下载OpenWRT的源码，以及build tools来完成交叉编译过程</p>
-<blockquote>
-<p>sudo apt-get update<br>sudo apt-get install git-core build-essential libssl-dev libncurses5-dev unzip</p>
-</blockquote>
-<p>linux操作系统上面开发程序， 光有了gcc 是不行的，它还需要 build-essential软件包用于提供编译程序必须软件包的列表信息。也就是说，编译程序有了这个软件包，它才知道头文件在哪，才知道库函数在哪，还会下载依赖的软件包 ，最后才组成一个开发环境。</p>
-<p>当然，除了git，也许下载代码也需要subversion（svn）或者mercurial，这样可以同样把这两个包装上</p>
-<blockquote>
-<p>sudo apt-get install subversion mercurial</p>
-</blockquote>
-<p>为了以防万一，这里有一个及其完整的command：</p>
-<blockquote>
-<p>sudo apt-get install g++ libncurses5-dev zlib1g-dev bison flex unzip autoconf gawk make gettext binutils patch bzip2 libz-dev asciidoc subversion build-essential qemu-user git libssl-dev libssl0.9.8</p>
-</blockquote>
-<h4 id="1-2-在Mac-OSX上"><a href="#1-2-在Mac-OSX上" class="headerlink" title="1.2 在Mac OSX上"></a>1.2 在Mac OSX上</h4><p>首先，在Mac OSX上，首先先安装编译工具Xcode command line tools或者Xcode，可以从Mac App Store上得到</p>
-<p>然后，安装<a href="http://brew.sh/">homebrew</a>，一条ruby脚本：</p>
-<blockquote>
-<p>ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”</p>
-</blockquote>
-<p>再次，为homebrew添加一个repository：</p>
-<blockquote>
-<p>brew tap homebrew/dupes</p>
-</blockquote>
-<p>再次，安装依赖包coreutils findutils gawk gnu-getopt gnu-tar grep wget：</p>
-<blockquote>
-<p>brew install coreutils findutils gawk gnu-getopt gnu-tar grep wget</p>
-</blockquote>
-<p>由于gnu-getopt是keg-only的，强制链接：</p>
-<blockquote>
-<p>brew ln gnu-getopt —force</p>
-</blockquote>
-<p>最后，给.bash_profile写入以下：</p>
-<blockquote>
-<p>PATH=”/usr/local/opt/coreutils/libexec/gnubin:$PATH”</p>
-</blockquote>
-<p>以上完成了，还是不够的，究其缘由就是前面提到，必须需要一个Case-sensetive的FS，而Mac OS X，则是一个Case-insensitive的文件系统，<a href="http://wiki.openwrt.org/easy.build.macosx">这里</a>给出了解决方案，从Mac上的HDD上分割一块20g，取名叫做OpenWrt.dmg，然后挂载：</p>
-<blockquote>
-<p>hdiutil create -size 20g -fs “Case-sensitive HFS+” -volname OpenWrt OpenWrt.dmg<br>hdiutil attach OpenWrt.dmg</p>
-</blockquote>
-<p>那么接下来，打开所在目录，并且以下操作都在其中完成。</p>
-<blockquote>
-<p>cd /Volumes/OpenWrt<br>mkdir openwrt</p>
-</blockquote>
-<h3 id="2-git源代码"><a href="#2-git源代码" class="headerlink" title="2. git源代码"></a>2. git源代码</h3><p>一条指令</p>
-<blockquote>
-<p>git clone git://git.openwrt.org/openwrt.git</p>
-</blockquote>
-<p>完成之后，可以在当前目录下发现一个新的目录openwrt，这个就是OpenWRT Buildroot的构建目录，其中，OpenWRT toolchain “OpenWrt Buildroot”被包含在其中。</p>
-<h3 id="3-更新和安装所有可用的feeds"><a href="#3-更新和安装所有可用的feeds" class="headerlink" title="3. 更新和安装所有可用的feeds"></a>3. 更新和安装所有可用的feeds</h3><p>feeds即一些具有共同位置的软件包的打包集合，feeds可以放在远程服务器上，也可以放在本地文件系统里，可以通过一个url获取到。</p>
-<blockquote>
-<p>cd openwrt<br>  ./scripts/feeds update -a<br>  ./scripts/feeds install -a</p>
-</blockquote>
-<h3 id="4-make得到一个configuration-menu"><a href="#4-make得到一个configuration-menu" class="headerlink" title="4. make得到一个configuration menu"></a>4. make得到一个configuration menu</h3><p>指令3选1，普遍选择最后一个：</p>
-<blockquote>
-<p>make defconfig<br>make prereq<br>make menuconfig</p>
-</blockquote>
-<h3 id="5-按照需求选择自己需要make的内容"><a href="#5-按照需求选择自己需要make的内容" class="headerlink" title="5.按照需求选择自己需要make的内容"></a>5.按照需求选择自己需要make的内容</h3><ul>
-<li>Target system：可以选择对应的处理器芯片</li>
-<li>SubTarget选：择具体的板子型号</li>
-<li>如果需要其他内容，则可以加入其他软件包一起编译</li>
-</ul>
-<p>然后键入这个命令就开始编译：</p>
-<blockquote>
-<p>make V=99</p>
-</blockquote>
-<p>如果使用的机器是多核处理器，可以执行下面命令使用多线程编译：</p>
-<blockquote>
-<p>make –j2 V=99</p>
-</blockquote>
-<p>上面是一个双核的例子，切记不要直接使用make –j V=99，这是无数线程编译，可能导致宕机。这一步需要花费数小时，甚至可能因为各种原因被迫重新开始。</p>
-<h3 id="6-编译完成"><a href="#6-编译完成" class="headerlink" title="6. 编译完成"></a>6. 编译完成</h3><p>如果能过顺利通过上述步骤到达这里，那么首先恭喜，可以检查一下，从staging_dir这个目录下发现三个子目录:</p>
-<blockquote>
-<p>host<br>target-xxx_xxxxxxx<br>toolchain-xxx_xxxxxx</p>
-</blockquote>
-<p>这个时候，我们需要修改下系统路径：</p>
-<blockquote>
-<p>sudo vim /etc/profile</p>
-</blockquote>
-<p>在最后加入需要设置变量的shell语句：</p>
-<blockquote>
-<p>export STAGING_DIR=(your_dir)/(openwrt_dir)/staging_dir/toolchain-xxx_xxxxx<br>export PATH=$PATH:$STAGING_DIR/bin</p>
-</blockquote>
-<p>编辑保存退出后，restart，变量生效。</p>
-<p>your_dir就是所在目录，注意MAC OS X下经过分区后，your_dir就是/Volumes/OpenWrt，而openwrt_dir就是之下建立的文件目录，比如openwrt/</p>
-<h3 id="7-写一个-hello-world"><a href="#7-写一个-hello-world" class="headerlink" title="7. 写一个 hello world"></a>7. 写一个 hello world</h3><blockquote>
-<p>sudo vim hello.c</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello!!!!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译，使用指令</p>
-<blockquote>
-<p>mips-openwrt-linux-gcc hello.c -o hello.o -static</p>
-</blockquote>
-<p>如果不指定PATH，也可以这样</p>
-<blockquote>
-<p>(your_dir)/(openwrt_dir)/staging_dir/toolchain-xxx_xxxxx/bin/mips-openwrt-linux-gcc hello.c -o hello.o -static</p>
-</blockquote>
-<p>编译到此完成。</p>
-<h3 id="8-上传-执行"><a href="#8-上传-执行" class="headerlink" title="8. 上传 执行"></a>8. 上传 执行</h3><p>代码可以上传到openwrt的路由器上执行，scp过去：</p>
-<blockquote>
-<p>sudo scp hello.o 192.168.1.1:hello.o</p>
-</blockquote>
-<p>ssh到路由器上</p>
-<blockquote>
-<p>sudo ssh 192.168.1.1<br>cd ~<br>./hello.o</p>
-</blockquote>
-<p>得到运行结果，那么简单的SDK环境已经搭建完毕。</p>
-]]></content>
-      <categories>
-        <category>OpenWRT学习随录</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线</tag>
       </tags>
   </entry>
   <entry>
@@ -2354,6 +2354,41 @@ L = - \log\sigma(\gamma - d_r(\mathbf{h}, \mathbf{t})) - \sum_{i = 1}^{n} p(h'_i
       </tags>
   </entry>
   <entry>
+    <title>大嘴李和童话镇 (III): 11-15</title>
+    <url>/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%873/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>到达传说中的奥尔堡市已经12小时，与室友相见、收拾房间还有倒时差的第一觉、步行去触及这异样的风景、走进超市买到电话卡，每一件事都在高速连贯的持续进行，而我打鸡血的状态依旧保持很好，拿到电话卡，超市里买点早餐，走出超市的第一件事，就是拨通电话给系里的导师（好吧~我们就亲切地将他缩写为L老师），现在，我的任务是要去访问参观接下来这段时间的place of working。</p>
+</blockquote>
+<h3 id="11-Cassiopeia-计算机系美美的别称"><a href="#11-Cassiopeia-计算机系美美的别称" class="headerlink" title="11. Cassiopeia - 计算机系美美的别称"></a>11. Cassiopeia - 计算机系美美的别称</h3><p>我承认我的单词储备不足以让我认识这个单词，亦或是我在天文或其他知识上的匮乏，当“Cassiopeia”第一次出现在系里秘书给我发来的employment letter时，我忍不住去翻了翻字典。看完解释后无疑出现了更大的疑问：仙后座和计算机科学究竟有着怎样的特殊关系，除了都以C字母开头之外？我不禁又想问，蓝翔究竟和挖掘技术有着怎样密不可分的关联？</p>
+<p>这个问题至今依然没有遇到人给我合理解释，但无疑“仙后座”这么一个美美又充满幻想的词汇，的确可以用以代称我眼中看到的奥尔堡大学计算机系。</p>
+<h3 id="12-绿地红砖"><a href="#12-绿地红砖" class="headerlink" title="12. 绿地红砖"></a>12. 绿地红砖</h3><p>给L老师拨通了电话，他对我这鸡血的状态挺惊讶的，劝我回去休息 →_→ 哥这么勤恳的人自然是非要到系里去瞅瞅。根据老师给的指导，加之谷歌地图为辅助，我把自己领上了道~这道可不是一般的道呀，简直就是华容道，这种鲁迅先生笔下“溜达的人多了，就溜达出来的路”在奥尔堡各处皆可见到。当然，视野却是极好的，左手边是一片广袤的小麦田，右手边是一片圈起的草地，几只咩咩咩在里头啃得正欢。忍不住要模仿一下赵忠祥老师：在奥尔堡大学内部，种植业、畜牧业以及人类科学研究事业实现了毫无违和的和谐共生，令我心生赞叹。</p>
+<p>L老师给系里大楼（实际上就两层）的描述是：一幢红色的楼房，四周都是草地。不去看不知道，这描述提取了最为明显的特征，它出现在你面前的姿态如此惬意和优雅，在阳光静静照耀的早晨，透过晨光出现在你的眼中，绿地红砖，这里就是Cassiopeia - House of Computer Science.</p>
+<p><img src="20140912_90624_IMG_2032.jpg" alt="Cassiopeia 仙后座"><span class="image-caption-center">Cassiopeia 仙后座</span></p>
+<h3 id="13-打入内部"><a href="#13-打入内部" class="headerlink" title="13. 打入内部"></a>13. 打入内部</h3><p><img src="20140928_101759_IMG_2085.jpg" alt="门禁入口"><span class="image-caption-center">门禁入口</span></p>
+<p>大门口遇上来接我的L老师，寒暄了一会儿，他领我去“保卫科”（这个描述应该比较到位）取了办公室钥匙和校卡，随后我们穿过走廊向我的办公室走去，我抬头左右环视这幢双层建筑，中心地带的摆设看上去好似一家咖啡厅，无论是吧台还是各类面包水果无疑告诉你这是用餐地点（准确说法为 Central Canteen 中心小卖部，掏钱买东西边聊边吃的地方），而四周则如同星型网络结构，各个研究小组各自有一个Cluster，比如Machine Intelligence就在咱们Database &amp; Programming Technologies（DPT）的旁边，各个Cluster就有一个独立的门进入，内部又有一番风景，不同Cluster的配色也不同，DPT内就是清新的海蓝门框。不同的Cluster内也有各自的小厨房（kitchenetter，内部有咖啡机、烤箱、微波、冰箱等），方便员工的日常用餐。</p>
+<p><img src="20141005_101613_IMG_2115.jpg" alt="小厨房的咖啡机和冰箱"><span class="image-caption-center">小厨房的咖啡机和冰箱</span></p>
+<p>说话间，我就走到了我的办公室，就在小厨房的转角后面，真是方便呀~不过因为提前达到的原因，这间办公室还是空空如许，一位大叔正在安装桌子椅子，随后，跟着L老师与同样前来交流的山西小伙Jinpeng，系里的两位中国老师Y老师、X老师见面，Jinpeng又热心领我出外前去办理各种证件，如此般般真是期待入驻自己的新办公室。</p>
+<h3 id="14-专享的十个平方"><a href="#14-专享的十个平方" class="headerlink" title="14. 专享的十个平方"></a>14. 专享的十个平方</h3><p>真正开启新的办公环境之旅是第二天的早晨，虽然阳光不再充裕，不能渲染我的激动心情，但是这独享的十个平方让我甚为点赞，作为一个研究室内定位的博士生，我此时发出了由衷的感慨，这地方真是太适合做实验了！这房间布局、这走廊结构那简直就是活脱脱的floorplan呀！打开办公室的门，透过两扇百叶窗，是蓝天白云红墙绿地，光栅打在身后的白板上，宽大的办公桌舒适的座椅，顶部悬挂的灯具烘出暖黄的光晕，在这种条件下怎么忍心不好好工作！？简直怒斥这种环境！我把系里发的指南用大头钉固定在墙上，打开笔记本，开始了农民伯伯一天的劳作。</p>
+<p><img src="20140911_133811_IMG_1992.jpg" alt="组内的大厅"><span class="image-caption-center">组内的大厅</span><br><img src="20140912_141318_IMG_2003.jpg" alt="我的办公环境"><span class="image-caption-center">我的办公环境</span><br><img src="20140912_141310_IMG_2002.jpg" alt="开始劳作"><span class="image-caption-center">开始劳作</span></p>
+<h3 id="15-打印室"><a href="#15-打印室" class="headerlink" title="15. 打印室"></a>15. 打印室</h3><p>与L老师详谈了接下来给我安排的任务，接下来的时间里，要读几篇论文来熟悉下新的研究，这个时候免不了使用打印机（这回不是挖掘机了），问题就来了，打印室到底哪家有？这个问题提给L老师，自然不是中国山东找那啥。打印室与小厨房一样，每一个cluster内都有。</p>
+<p><img src="20140912_145641_IMG_2031.jpg" alt="DPT内部的打印室"><span class="image-caption-center">DPT内部的打印室</span></p>
+<p>打印室……也用不着这样嘛，foosball就不说了，墙上还贴了一张纸条，号称桌上足球终极挑战赛，上头有各种比分记录，看来大家平常玩得挺开心。</p>
+<p>和PP师兄聊天，他问我，打印机出来的印刷质量是不是很可观，我想可能是之前NUS使用高端纸张的原因，AAU打出来的papers和咱们实验室没有什么太大区别。不过学校提供的统一打印机服务也是高端不已，校内所有打印机实现了网络资源共享，并且提供随身打服务，可以根据IP找到物理位置最近的打印机取货，设置打印机的教程那也叫一个详细至极，StepByStep，我外婆要是懂英文都能搞定吧~</p>
+<p>当然，最赞的是各种共享的办公用品，笔记本、便签纸、签字笔（都是pilot）、尺子、胶水等等等等，随取随用。</p>
+<p>最后借机谈谈系里的门禁系统吧，周末以及工作日的早晨8点前下午4点后，想进入大楼需要刷校卡并输入pin码。而拿到手的钥匙是有不同权限的，比如楼内的工作人员的一把钥匙可以打开所有的房门，我的这一把钥匙则可以同时打开我们DPT组的大门、我办公室的门，以及DPT内打印室的门，真是方便简单。</p>
+<p><a href="/blog/大嘴李和童话镇4"><strong>【连载继续】</strong></a></p>
+<blockquote>
+<p>下期预告：介绍完了令人心情愉悦的办公环境，下一期的节目将由新浪著名美食编辑洋圈圈独家冠名播出，带你一起走进丹麦的各大超市，了解这儿的柴米油盐酱醋茶，告诉你舌尖上的奥尔堡该如何炼就。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>丹麦见闻</category>
+      </categories>
+      <tags>
+        <tag>奥尔堡大学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大嘴李和童话镇 (II): 6-10</title>
     <url>/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%872/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
@@ -2388,41 +2423,6 @@ L = - \log\sigma(\gamma - d_r(\mathbf{h}, \mathbf{t})) - \sum_{i = 1}^{n} p(h'_i
       <tags>
         <tag>货币</tag>
         <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>大嘴李和童话镇 (III): 11-15</title>
-    <url>/blog/%E5%A4%A7%E5%98%B4%E6%9D%8E%E5%92%8C%E7%AB%A5%E8%AF%9D%E9%95%873/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>到达传说中的奥尔堡市已经12小时，与室友相见、收拾房间还有倒时差的第一觉、步行去触及这异样的风景、走进超市买到电话卡，每一件事都在高速连贯的持续进行，而我打鸡血的状态依旧保持很好，拿到电话卡，超市里买点早餐，走出超市的第一件事，就是拨通电话给系里的导师（好吧~我们就亲切地将他缩写为L老师），现在，我的任务是要去访问参观接下来这段时间的place of working。</p>
-</blockquote>
-<h3 id="11-Cassiopeia-计算机系美美的别称"><a href="#11-Cassiopeia-计算机系美美的别称" class="headerlink" title="11. Cassiopeia - 计算机系美美的别称"></a>11. Cassiopeia - 计算机系美美的别称</h3><p>我承认我的单词储备不足以让我认识这个单词，亦或是我在天文或其他知识上的匮乏，当“Cassiopeia”第一次出现在系里秘书给我发来的employment letter时，我忍不住去翻了翻字典。看完解释后无疑出现了更大的疑问：仙后座和计算机科学究竟有着怎样的特殊关系，除了都以C字母开头之外？我不禁又想问，蓝翔究竟和挖掘技术有着怎样密不可分的关联？</p>
-<p>这个问题至今依然没有遇到人给我合理解释，但无疑“仙后座”这么一个美美又充满幻想的词汇，的确可以用以代称我眼中看到的奥尔堡大学计算机系。</p>
-<h3 id="12-绿地红砖"><a href="#12-绿地红砖" class="headerlink" title="12. 绿地红砖"></a>12. 绿地红砖</h3><p>给L老师拨通了电话，他对我这鸡血的状态挺惊讶的，劝我回去休息 →_→ 哥这么勤恳的人自然是非要到系里去瞅瞅。根据老师给的指导，加之谷歌地图为辅助，我把自己领上了道~这道可不是一般的道呀，简直就是华容道，这种鲁迅先生笔下“溜达的人多了，就溜达出来的路”在奥尔堡各处皆可见到。当然，视野却是极好的，左手边是一片广袤的小麦田，右手边是一片圈起的草地，几只咩咩咩在里头啃得正欢。忍不住要模仿一下赵忠祥老师：在奥尔堡大学内部，种植业、畜牧业以及人类科学研究事业实现了毫无违和的和谐共生，令我心生赞叹。</p>
-<p>L老师给系里大楼（实际上就两层）的描述是：一幢红色的楼房，四周都是草地。不去看不知道，这描述提取了最为明显的特征，它出现在你面前的姿态如此惬意和优雅，在阳光静静照耀的早晨，透过晨光出现在你的眼中，绿地红砖，这里就是Cassiopeia - House of Computer Science.</p>
-<p><img src="20140912_90624_IMG_2032.jpg" alt="Cassiopeia 仙后座"><span class="image-caption-center">Cassiopeia 仙后座</span></p>
-<h3 id="13-打入内部"><a href="#13-打入内部" class="headerlink" title="13. 打入内部"></a>13. 打入内部</h3><p><img src="20140928_101759_IMG_2085.jpg" alt="门禁入口"><span class="image-caption-center">门禁入口</span></p>
-<p>大门口遇上来接我的L老师，寒暄了一会儿，他领我去“保卫科”（这个描述应该比较到位）取了办公室钥匙和校卡，随后我们穿过走廊向我的办公室走去，我抬头左右环视这幢双层建筑，中心地带的摆设看上去好似一家咖啡厅，无论是吧台还是各类面包水果无疑告诉你这是用餐地点（准确说法为 Central Canteen 中心小卖部，掏钱买东西边聊边吃的地方），而四周则如同星型网络结构，各个研究小组各自有一个Cluster，比如Machine Intelligence就在咱们Database &amp; Programming Technologies（DPT）的旁边，各个Cluster就有一个独立的门进入，内部又有一番风景，不同Cluster的配色也不同，DPT内就是清新的海蓝门框。不同的Cluster内也有各自的小厨房（kitchenetter，内部有咖啡机、烤箱、微波、冰箱等），方便员工的日常用餐。</p>
-<p><img src="20141005_101613_IMG_2115.jpg" alt="小厨房的咖啡机和冰箱"><span class="image-caption-center">小厨房的咖啡机和冰箱</span></p>
-<p>说话间，我就走到了我的办公室，就在小厨房的转角后面，真是方便呀~不过因为提前达到的原因，这间办公室还是空空如许，一位大叔正在安装桌子椅子，随后，跟着L老师与同样前来交流的山西小伙Jinpeng，系里的两位中国老师Y老师、X老师见面，Jinpeng又热心领我出外前去办理各种证件，如此般般真是期待入驻自己的新办公室。</p>
-<h3 id="14-专享的十个平方"><a href="#14-专享的十个平方" class="headerlink" title="14. 专享的十个平方"></a>14. 专享的十个平方</h3><p>真正开启新的办公环境之旅是第二天的早晨，虽然阳光不再充裕，不能渲染我的激动心情，但是这独享的十个平方让我甚为点赞，作为一个研究室内定位的博士生，我此时发出了由衷的感慨，这地方真是太适合做实验了！这房间布局、这走廊结构那简直就是活脱脱的floorplan呀！打开办公室的门，透过两扇百叶窗，是蓝天白云红墙绿地，光栅打在身后的白板上，宽大的办公桌舒适的座椅，顶部悬挂的灯具烘出暖黄的光晕，在这种条件下怎么忍心不好好工作！？简直怒斥这种环境！我把系里发的指南用大头钉固定在墙上，打开笔记本，开始了农民伯伯一天的劳作。</p>
-<p><img src="20140911_133811_IMG_1992.jpg" alt="组内的大厅"><span class="image-caption-center">组内的大厅</span><br><img src="20140912_141318_IMG_2003.jpg" alt="我的办公环境"><span class="image-caption-center">我的办公环境</span><br><img src="20140912_141310_IMG_2002.jpg" alt="开始劳作"><span class="image-caption-center">开始劳作</span></p>
-<h3 id="15-打印室"><a href="#15-打印室" class="headerlink" title="15. 打印室"></a>15. 打印室</h3><p>与L老师详谈了接下来给我安排的任务，接下来的时间里，要读几篇论文来熟悉下新的研究，这个时候免不了使用打印机（这回不是挖掘机了），问题就来了，打印室到底哪家有？这个问题提给L老师，自然不是中国山东找那啥。打印室与小厨房一样，每一个cluster内都有。</p>
-<p><img src="20140912_145641_IMG_2031.jpg" alt="DPT内部的打印室"><span class="image-caption-center">DPT内部的打印室</span></p>
-<p>打印室……也用不着这样嘛，foosball就不说了，墙上还贴了一张纸条，号称桌上足球终极挑战赛，上头有各种比分记录，看来大家平常玩得挺开心。</p>
-<p>和PP师兄聊天，他问我，打印机出来的印刷质量是不是很可观，我想可能是之前NUS使用高端纸张的原因，AAU打出来的papers和咱们实验室没有什么太大区别。不过学校提供的统一打印机服务也是高端不已，校内所有打印机实现了网络资源共享，并且提供随身打服务，可以根据IP找到物理位置最近的打印机取货，设置打印机的教程那也叫一个详细至极，StepByStep，我外婆要是懂英文都能搞定吧~</p>
-<p>当然，最赞的是各种共享的办公用品，笔记本、便签纸、签字笔（都是pilot）、尺子、胶水等等等等，随取随用。</p>
-<p>最后借机谈谈系里的门禁系统吧，周末以及工作日的早晨8点前下午4点后，想进入大楼需要刷校卡并输入pin码。而拿到手的钥匙是有不同权限的，比如楼内的工作人员的一把钥匙可以打开所有的房门，我的这一把钥匙则可以同时打开我们DPT组的大门、我办公室的门，以及DPT内打印室的门，真是方便简单。</p>
-<p><a href="/blog/大嘴李和童话镇4"><strong>【连载继续】</strong></a></p>
-<blockquote>
-<p>下期预告：介绍完了令人心情愉悦的办公环境，下一期的节目将由新浪著名美食编辑洋圈圈独家冠名播出，带你一起走进丹麦的各大超市，了解这儿的柴米油盐酱醋茶，告诉你舌尖上的奥尔堡该如何炼就。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>丹麦见闻</category>
-      </categories>
-      <tags>
-        <tag>奥尔堡大学</tag>
       </tags>
   </entry>
   <entry>
