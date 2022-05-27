@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout.ejs-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is the site where Steven posts his thoughts, ideas and feelings">
+    <meta name="author" content="Steven">
+    <meta name="keyword" content="Computer Science, Travel Notes, Ideas and Thoughts">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="canonical" href="https://longaspire.github.io/blog/blog/经典聚类笔记1/">
+    <link rel="shortcut icon" href="/blog/img/rockrms.png">
+    <link rel="alternate" type="application/atom+xml" title="YOLO" href="/atom.xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/blog/js/search.js"></script>
+
+    <title>
+        
+        [ICDE07] Continuous Distributed Clustering｜YOLO - A Blog You Only Look Once
+        
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+    
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+      
+<link rel="stylesheet" href="/blog/css/highlight.css">
+
+    
+
+    
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    
+      <meta name="google-site-verification" content="Q9_p57DiEwLUAkG7RSWhWgytI3usFEsDzkR3UMn-RW8" />
+    
+
+    
+
+    
+
+
+    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    
+<!-- <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-118875263-1', 'auto');
+    ga('send', 'pageview');
+</script> -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118875263-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118875263-1');
+</script>
+
+
+
+
+<script>
+    var _baId = '1b4f92eae37686bebfce091cc112ca85';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/blog/css/prism-solarizedlight.css" type="text/css">
+<link rel="stylesheet" href="/blog/css/prism-line-numbers.css" type="text/css"></head>
+
+<style>
+    header.intro-header {
+        background-image: url('/blog/img/Subtle-Prism.svg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<header>
+  <nav class="navbar navbar-default header-navbar" id="nav-top" data-ispost = "true" data-istags="false" data-ishome = "false" >
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" aria-expanded="false"  data-target="#website_navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand animated pulse">
+          <a class="brand-logo" href="/blog/">
+                <img src="/blog/img/banner.png?h=350&amp;auto=compress&amp;cs=tinysrgb" />
+          </a>
+        </span>
+      </div>
+
+      <div class="collapse navbar-collapse" id="website_navbar">
+          <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/blog/">home</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/the-milestone-2018/">about</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/categories/">categories</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/columns/">columns</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/archives/">archives</a>
+                </li>
+              
+                <li>
+                  <a href="/blog/tags/">tags</a>
+                </li>
+              
+          </ul>
+      </div>
+  </nav>
+
+
+  
+    <style>
+       .intro-header {
+          background-image: url('/blog/img/Subtle-Prism.svg');
+      }
+    </style>
+
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                    <div class="site-heading">
+                        <h1>[ICDE07] Continuous Distributed Clustering</h1>
+                        
+                        
+
+                        
+                          <span class="meta">
+                               <span class="meta-item">Author: Steven</span>
+                               <span class="meta-item">Date: May 22, 2022</span>
+                               
+                                 <span class="meta-item">Updated On: May 26, 2022</span>
+                               
+                          </span>
+                          <div class="tags text-center">
+                              Categories: 
+                              <a class="tag" href="/blog/categories/#经典聚类笔记"
+                                 title="经典聚类笔记">经典聚类笔记</a>
+                              
+                          </div>
+                          <div class="tags text-center">
+                              Tags: 
+                              <a class="tag" href="/blog/tags/#聚类"
+                                 title="聚类">聚类</a>
+                              
+                              <a class="tag" href="/blog/tags/#分布式"
+                                 title="分布式">分布式</a>
+                              
+                              <a class="tag" href="/blog/tags/#K-Centers"
+                                 title="K-Centers">K-Centers</a>
+                              
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <script>
+  var $toggle = document.querySelector('.navbar-toggle');
+  var $navbar = document.querySelector('#website_navbar');
+  var $collapse = document.querySelector('.navbar-collapse');
+
+  $toggle.addEventListener('click', handleMagic)
+  function handleMagic(e){
+      if ($navbar.className.indexOf('in') > 0) {
+      // CLOSE
+          $navbar.className = "collapse navbar-collapse";
+          // wait until animation end.
+          setTimeout(function(){
+              // prevent frequently toggle
+              if($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = "0px"
+              }
+          },00)
+      }else{
+          $collapse.style.height = "auto"
+          $navbar.className += " in";
+      }
+  }
+  </script>
+
+</header>
+
+
+<!-- Main Content -->
+<!-- post.ejs -->
+<article>
+    <div class="container">
+      <div class="col-lg-8 col-lg-offset-1 col-sm-9">
+          
+          <span class="post-count">2k words in total, 8 minutes required.</span>
+          
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>Cormode, Graham, S. Muthukrishnan, and Wei Zhuang. “Conquering the Divide: Continuous Clustering of Distributed Data Streams.” In 2007 IEEE 23rd International Conference on Data Engineering, 1036–45, 2007. <a target="_blank" rel="noopener" href="https://doi.org/10.1109/ICDE.2007.368962">https://doi.org/10.1109/ICDE.2007.368962</a>.</p>
+</blockquote>
+<h2 id="1-聚类的概念"><a href="#1-聚类的概念" class="headerlink" title="1. 聚类的概念"></a>1. 聚类的概念</h2><p>老生常谈的聚类 (clustering) 问题，在学界有150年以上的历史，在各类数据科学和工程问题中有广泛应用。</p>
+<p>简单讲，聚类就是把数据集合划入到不相交的子集中，使子集内的点相似，而跨子集的点不相似。精确形式化定义的聚类问题被认为是NP-hard的<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="T. Feder and D. H. Greene. Optimal algorithms for approximate clustering. In STOC, 1988.
+">[1]</span></a></sup>。因而，大部分算法，如K-means，DBSCAN，BIRCH等，都致力于得到实践中良好的聚类结果。</p>
+<p>此外，一些工作研究的是聚类优化中的近似保证 (guaranteed approximation)，针对的聚类优化准则也不同，比如</p>
+<ul>
+<li>k-center (minimizing the maximum radius/diameter of any cluster)： radius即聚类内点到聚类中心的距离，diameter即聚类内最大的两点间距离</li>
+<li>k-median (minimizing the sum of distances from each point to its cluster center)</li>
+</ul>
+<p>这篇文章主要针对k-center的场景，并且假定discrete clustering，即center必须来自于数据集，而不是度量空间下生成的任意点 (被称之为continuous clustering)。 针对于k-center，radius和diameter这两个优化目标是紧密相关的，这是因为后者最多是前者的两倍。</p>
+<h2 id="2-集中式算法"><a href="#2-集中式算法" class="headerlink" title="2. 集中式算法"></a>2. 集中式算法</h2><p>这里主要关注的是guaranteed $\alpha$-approximation算法，即cost (损失) 是最优解的$\alpha$倍。</p>
+<h3 id="2-1-Furthest-Point-Algorithm"><a href="#2-1-Furthest-Point-Algorithm" class="headerlink" title="2.1 Furthest Point Algorithm"></a>2.1 Furthest Point Algorithm</h3><p>思想比较简单，需要$k$轮，每一轮选择一个点$p$为center，这个点到现有所有centers的距离是候选中最大的。<br>如第$i+1$轮，</p>
+<script type="math/tex; mode=display">
+c_{i+1} = \arg\max_{p \in P}\min_{c \in C_i} d(p,c)</script><p>$k$轮后，得到的结果针对于最优结果是2-factor approximation。</p>
+<blockquote>
+<p>证明：假设多进行一个$k+1$轮，得到$k+1$个点，它们间最短距离为$D$，则最优聚类结果的diameter至少为$D$ (两个距离为$D$的点在最优结果中必会出现在一个cluster中)。而之前得到的$k$轮后的聚类结果，保证了radius为$D$，即diameter最大为$2D$。因此，approximation factor为2。</p>
+</blockquote>
+<p>这个算法的复杂度为$O(kn)$，$n$为点的总数，相当于每一轮都要扫一下候选集内的点。</p>
+<h3 id="2-2-Parallel-Guessing-Algorithm"><a href="#2-2-Parallel-Guessing-Algorithm" class="headerlink" title="2.2 Parallel Guessing Algorithm"></a>2.2 Parallel Guessing Algorithm</h3><p>该算法相对于Furthest Point，提供相对更差的approximation factor $2+\epsilon$，但提高了计算效率，只需要one pass。</p>
+<p>思想如下，假定$R$为最优结果的radius的下界，先随机加入一个点，随后扫描点集合，如果一个点$p$的距离</p>
+<script type="math/tex; mode=display">r_p = \min_{c \in C} d(p,c)</script><p>比最优radius $R$要大，则把该点选为center。</p>
+<p>由于$R$是未知的，采取multiple guesses，令 $R$ 为 $(1 + \epsilon/2)$, $(1 + \epsilon/2)^2$, $(1 + \epsilon/2)^3$, …，并将guesses并行运行。</p>
+<p>Parallel Guessing Algorithm提供$2+\epsilon$的approximation factor，其存储点数最多为$O(k/\epsilon \log \Delta)$，其中$\Delta$为集合中两点最远距离和最近距离的比值。</p>
+<blockquote>
+<p>证明：当猜测的$R &lt; R_{opt}$时，会产生多于$k$个centers。当$R \geq 2 R_{opt}$时，会产生最多$k$个centers。而$R_{opt} \leq R &lt; 2 R_{opt}$ 则都有可能。随着每个guess是前一个guess的$(1 + \epsilon/2)$倍，不断放大，我们知道我们的guess不可能超过$2 R_{opt} (1 + \epsilon/2)$，则我们找到的radius必最多是最优解的$(2 + \epsilon)$倍。<br><br/><br>由于guess的数量不会超过$O(\log_{1 + \epsilon/2} \Delta) = O(1/\epsilon \log \Delta)$，因为小于最小距离和大于最大距离是不需要guess的，这时候只需要按照$1 + \epsilon/2$的倍数来放大，最大guess的数量就按照log来计算。每个guess最多保存$k$个点，则总共需要保存$O(k/\epsilon \log \Delta)$个点。每个新的点被处理时，需要进行$O(k/\epsilon \log \Delta)$个比较。</p>
+</blockquote>
+<p>这个算法是one pass的，所以适合流场景，并且存储和点数量无关。它的性能会受到点到达顺序的影响，但是$2+\epsilon$的approximation是始终成立的。</p>
+<h3 id="2-3-Merging-Clusterings"><a href="#2-3-Merging-Clusterings" class="headerlink" title="2.3 Merging Clusterings"></a>2.3 Merging Clusterings</h3><p>直接对clustering结果进行clustering的approximation满足以下：</p>
+<p>令点集$P$的可相交子集为$\{ P_1, \ldots, P_m \}$，得到的$\alpha$-approximation k-centers集合为$\{ C_1, \ldots, C_m \}$。<br>对$C_i$的union进行$\beta$-approximation clustering，则其得到的k-centers是$P$上最优结果的 $(\alpha+\beta)$-approximation。</p>
+<blockquote>
+<p>证明： 令$R_P$和$R_C$为各自数据集上的最优聚类的radius，则有</p>
+<script type="math/tex; mode=display">
+d(p, C(p)) \leq d(p, C_i(p)) + d(C_i(p) + C(p)) \leq \alpha R_P + \beta R_C \leq (\alpha+\beta) R_P</script><p>$R_C \leq R_P$一直成立因为$C_i$的并是$P$的子集。</p>
+</blockquote>
+<h2 id="3-Continuous-Distributed-Clustering"><a href="#3-Continuous-Distributed-Clustering" class="headerlink" title="3. Continuous Distributed Clustering"></a>3. Continuous Distributed Clustering</h2><h3 id="3-1-Merging-Local-Solutions"><a href="#3-1-Merging-Local-Solutions" class="headerlink" title="3.1 Merging Local Solutions"></a>3.1 Merging Local Solutions</h3><p>该算法思路为，每个remote site对本地点进行聚类，只在必要时进行更新。</p>
+<h4 id="3-1-1-Local-FP-Furthest-Point"><a href="#3-1-1-Local-FP-Furthest-Point" class="headerlink" title="3.1.1 Local FP (Furthest Point)"></a>3.1.1 Local FP (Furthest Point)</h4><p>site $i$ 以 $R_i$来维护聚类，当一个新点满足$d(C(p), p) \leq (1+\epsilon/2)R_i$，则最大的approximation为$2+\epsilon$，只需要把点合并到最近的$C(p)$。否则，需要reclustering，这时所有的点需要保存。每次reclustering会产生$O(k)$个点发送到centralized node。</p>
+<p>根据上节提到的Merging Clusterings，在centralized node上的approximation为$2+(2+\epsilon)$。</p>
+<p>由于最终要merge，可以考虑以global和所有local models的最大radius来延迟reclustering的时机，但这需要对最大radius进行广播。</p>
+<h4 id="3-1-2-Local-PG-Parallel-Guessing"><a href="#3-1-2-Local-PG-Parallel-Guessing" class="headerlink" title="3.1.2 Local PG (Parallel Guessing)"></a>3.1.2 Local PG (Parallel Guessing)</h4><p>site $i$ 以 最小的、生成不超过$k$个cluster的$R_i$来维护聚类。当$R_i$不再能满足新的到达点时，放大当前的$R_i$到$(1+\epsilon/2)$倍，并且和centralized进行通信。如果当前的guess少于$k$个centers并且出现了一个新的center，新的center会发送给centralized。同样，centralized node的approximation为$2+(2+\epsilon)$。</p>
+<p>Site的存储为$O(k/\epsilon \log \Delta)$，则总共的通讯开销为$O(k m/\epsilon \log \Delta)$。</p>
+<h3 id="3-2-Maintaining-Global-Solutions"><a href="#3-2-Maintaining-Global-Solutions" class="headerlink" title="3.2 Maintaining Global Solutions"></a>3.2 Maintaining Global Solutions</h3><p>相比于remote site的方案，global方案有更低的approximation factor，即$2+\epsilon$。</p>
+<h4 id="3-2-1-Global-FP"><a href="#3-2-1-Global-FP" class="headerlink" title="3.2.1 Global FP"></a>3.2.1 Global FP</h4><p>coordinator负责广播到各个site信息，并计算谁是广播的点的真正的最远的点，并把这个点再次广播，共进行$k+1$轮，直到选择出$k$个centers。</p>
+<p>进入到monitoring phase，如果一个点打破了$R$的条件，则coordinator进行reclustering。每次reclustering需要发送$O(mk)$个点：remote site必须要保存每个input点以保证能持续进行reclustering。</p>
+<h4 id="3-2-2-Global-PG"><a href="#3-2-2-Global-PG" class="headerlink" title="3.2.2 Global PG"></a>3.2.2 Global PG</h4><p>coordinator和remote site都保持multiple guesses。当一个remote site观测到一个新点，不能被某个$R$满足时，这个点被发送到coordinator。 coordinator判定这个点$p$是否可以被加入到remote site当前$R$中。</p>
+<h3 id="3-3-Summary"><a href="#3-3-Summary" class="headerlink" title="3.3 Summary"></a>3.3 Summary</h3><p><img src="summary.png" alt="Summary"><span class="image-caption-center">Summary</span></p>
+<ul>
+<li>Global algorithms have better accuracy guarantees</li>
+<li>PG-based algorithms have smaller space requirements and communication guarantees</li>
+</ul>
+<h2 id="4-扩展"><a href="#4-扩展" class="headerlink" title="4. 扩展"></a>4. 扩展</h2><h3 id="4-1-Dynamic-Point-Sets"><a href="#4-1-Dynamic-Point-Sets" class="headerlink" title="4.1 Dynamic Point Sets"></a>4.1 Dynamic Point Sets</h3><p>考虑动态场景，即点可以加入也可以被删除。加入现在选出来的$k+1$个点都没有被删除，则cost不会下降。因此只需要检测是否有其中之一被删除，一旦如此，则需要进行recluster。</p>
+<p>一个移动的点则可以被看做是delete+reinsert。而sliding window的场景也类似。</p>
+<h3 id="4-2-Variable-Numbers-of-Clusters"><a href="#4-2-Variable-Numbers-of-Clusters" class="headerlink" title="4.2 Variable Numbers of Clusters"></a>4.2 Variable Numbers of Clusters</h3><p>针对FP算法，centralized端可以选择一个小于remote site的$k$的值，即$k’$。则其在处理时只需要保留前$k’$个centers。</p>
+<p>类似，针对PG算法，remote site可以选用更大的$k$来决定最好的guess，在有许多parallel guesses的情况下，centralized node可以用$k’$的guess来决定$k’$ centers。</p>
+<p>对于local算法，可以本地用$k$，centralized用$k’$。对于global算法，如上所示，可以从$k$个centers中选出需要的$k’$个。</p>
+<h3 id="4-3-1-center-in-Geometric-Spaces"><a href="#4-3-1-center-in-Geometric-Spaces" class="headerlink" title="4.3 1-center in Geometric Spaces"></a>4.3 1-center in Geometric Spaces</h3><p>1-center即求一个minimum enclosing ball。但是上述随机选择第一个点的方法的approximation太大了。这里的特殊优化建议参照原文，稍显复杂。</p>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">T. Feder and D. H. Greene. Optimal algorithms for approximate clustering. In STOC, 1988.<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
+          
+          <hr>
+          <ul class="pager no-print">
+              
+              <li class="previous">
+                  <a href="/blog/%E7%BB%8F%E5%85%B8%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%AC%94%E8%AE%B01/" data-toggle="tooltip" data-placement="left"
+                     title="[CSUR21] 异常检测方法、模型和分类 (I) - 总览">&larr; Previous Post</a>
+              </li>
+              
+              
+              <li class="next">
+                  <a href="/blog/Data%20Sketching%E7%AC%94%E8%AE%B0-Quantiles/" data-toggle="tooltip" data-placement="top"
+                     title="Data Sketching笔记 - Quantiles">Next Post&rarr;</a>
+              </li>
+              
+          </ul>
+          
+
+      </div>
+      
+  <div class="hidden-xs col-sm-3 toc-col">
+    <div class="toc-wrap">
+        Table of Contents
+        
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%81%9A%E7%B1%BB%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 聚类的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9B%86%E4%B8%AD%E5%BC%8F%E7%AE%97%E6%B3%95"><span class="toc-text">2. 集中式算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Furthest-Point-Algorithm"><span class="toc-text">2.1 Furthest Point Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Parallel-Guessing-Algorithm"><span class="toc-text">2.2 Parallel Guessing Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Merging-Clusterings"><span class="toc-text">2.3 Merging Clusterings</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Continuous-Distributed-Clustering"><span class="toc-text">3. Continuous Distributed Clustering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Merging-Local-Solutions"><span class="toc-text">3.1 Merging Local Solutions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-Local-FP-Furthest-Point"><span class="toc-text">3.1.1 Local FP (Furthest Point)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-Local-PG-Parallel-Guessing"><span class="toc-text">3.1.2 Local PG (Parallel Guessing)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Maintaining-Global-Solutions"><span class="toc-text">3.2 Maintaining Global Solutions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-Global-FP"><span class="toc-text">3.2.1 Global FP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-Global-PG"><span class="toc-text">3.2.2 Global PG</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Summary"><span class="toc-text">3.3 Summary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%89%A9%E5%B1%95"><span class="toc-text">4. 扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Dynamic-Point-Sets"><span class="toc-text">4.1 Dynamic Point Sets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Variable-Numbers-of-Clusters"><span class="toc-text">4.2 Variable Numbers of Clusters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1-center-in-Geometric-Spaces"><span class="toc-text">4.3 1-center in Geometric Spaces</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="toc-text">扩展阅读</span></a></li></ol>
+        
+    </div>
+  </div>
+
+
+    </div>
+</article>
+
+<!-- Footer -->
+<!-- footer.ejs -->
+<footer class="no-print">
+
+    <div class="text-center">
+
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+            <li>
+                <a target="_blank" href="https://github.com/longaspire">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+            
+
+            
+            <li>
+                <a href="mailto:longaspire@gmail.com" target="_blank">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                </a>
+            </li>
+            
+
+        </ul>
+        <div class="text-muted copyright">
+            &copy;
+            
+            2018 - 2022
+            
+            -
+            All rights reserved.
+            <br>
+            
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>
+            
+            
+            
+            | Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
+            <p>
+                <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
+                <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
+                128.1k <b>Words</b>
+            <div class="copyright-container">
+              <b>版权</b> 内容部分自摘抄，已尽量注明直/间接来源，如版权问题请告悉删除；内容可经注明来源后转载，限于非商业目的。
+            </div>
+        </div>
+
+        <div class="search-container">
+            <form class="site-search-form">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="text" id="local-search-input" class="st-search-input" placeholder="Search..."/>
+            </form>
+            <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+        <script type="text/javascript" id="local.search.active">
+            var inputArea = document.querySelector("#local-search-input");
+            inputArea.onclick = function () {
+                var root = "/blog/";
+                getSearchFile(root);
+                this.onclick = null
+            }
+            inputArea.onkeydown = function () {
+                if (event.keyCode == 13) return false
+            }
+        </script>
+
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/blog/js/main.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+            o.addEventListener('load', function (e) {
+                c(null, e);
+            }, false);
+        }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+</body>
+
+</html>

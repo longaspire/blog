@@ -23,7 +23,7 @@
 
     <title>
         
-        LSH那些事儿 (IV): p-stable LSH｜YOLO - A Blog You Only Look Once
+        LSH那些事儿 (IV): $p$-stable LSH｜YOLO - A Blog You Only Look Once
         
     </title>
 
@@ -187,7 +187,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>LSH那些事儿 (IV): p-stable LSH</h1>
+                        <h1>LSH那些事儿 (IV): $p$-stable LSH</h1>
                         
                         
 
@@ -196,7 +196,7 @@
                                <span class="meta-item">Author: Steven</span>
                                <span class="meta-item">Date: May 6, 2013</span>
                                
-                                 <span class="meta-item">Updated On: May 12, 2020</span>
+                                 <span class="meta-item">Updated On: May 27, 2022</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -261,71 +261,38 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">2.5k words in total, 10 minutes required.</span>
-          <hr>
+          <span class="post-count">1.3k words in total, 5 minutes required.</span>
           
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>LSH是用局部敏感的方法解决近似最近邻搜索的问题。在原始的LSH方法中，通过将原始空间嵌入到Hamming空间中，将$d$维空间转换成${d}’ = Cd$维的Hamming空间（C是指原始空间中点的坐标的最大值)，使用$(r,(1+e)r,1-r/{d}’,1-(1+e)r/{d}’)$-sensetive 哈希函数来解决$(r,e)$-Neighbor问题。</p>
-<p>  而后来提出的p-stable LSH算法中，不需要将原始空间嵌入到Hamming空间中，可以直接在欧几里得空间下进行局部敏感哈希运算。</p>
+<p><a href="../LSH那些事儿3/">上一篇</a>对LSH的哈希家族进行了介绍，本篇来介绍一下$p$-stable LSH。本篇内容摘抄自<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[https://blog.csdn.net/lskyne/article/details/8654455](https://blog.csdn.net/lskyne/article/details/8654455)
+">[1]</span></a></sup>。</p>
 </blockquote>
-<h3 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h3><p>p-stable LSH应用在d维$L_p$-norm下的欧几里得空间中，$0 &lt; p \leq 2$</p>
-<p>p-stable LSH是LSH的进化版本，要解决的问题相同，而使用的方法和应用环境不同。因此，下面重点介绍p-stable LSH的应用环境，对于LSH的细节参见<a target="_blank" rel="noopener" href="http://wp.me/p61l9A-1B">第一篇</a>。</p>
-<p>p-stable LSH使用的$(r,cr,p_1,p_2)$-sensetive哈希中，$c=1+e$，并且不失一般性，设$R=1$。下面的工作主要是确定在1（即$r$）和 c（即$cr$）下的$p_1$与$p_2$。</p>
-<h3 id="2-概念解释"><a href="#2-概念解释" class="headerlink" title="2. 概念解释"></a>2. 概念解释</h3><p>p-stable LSH之所以会叫这个名字，是因为该算法应用到p-stable distribution（p-稳定分布）的概念。下面给出的就是p-稳定分布的概念：</p>
-<blockquote>
-<p><strong>Definition 1</strong></p>
-<p>  一个分布$D$如果称为p-稳定分布，则对于任意n个实数$v_1, v_2, …, v_n$和符合$D$分布的n个独立同分布随机变量$X_1, X_2, …, X_n$，都存在一个$p \geq 0$，使得变量$\sum_i v_i X_i$和$\sum_{i} (|v_i|^p)^{1/p}X$(i.e.,$||v||_p X$) 具有相同的分布，此处$X$是一个符合$D$分布的随机变量。</p>
-</blockquote>
-<p>p-稳定分布不是具体的分布，而是满足某条件的分布族。</p>
-<blockquote>
-<ol>
-<li>Cauchy Distribution, defined by the density function$c(x) = \frac{1}{\pi} \frac{1}{1+x^2}$, is 1-stable.</li>
-<li>Gaussian Distribution, defined by the density function$g(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$, is 2-stable.</li>
-</ol>
-</blockquote>
-<p>p-stable分布有一个重要的应用，就是可以估计给定向量$v$在欧几里得空间p-norm下长度，记为$||v||_p$。</p>
-<p>方法是对于取定的d维向量$v$，从p-稳定分布中抽取d个随机变量组成d维向量$a$，计算$a$与$v$的点积$a \cdot v$（点积的概念是将向量对应位置的元素相乘后所有乘积之和）。</p>
-<p>根据p-stable的定义，由于$a \cdot v = \sum_{i} (|v_i|^p)^{\frac{1}{p}}X$(i.e.,$||v||_p X$)，具有相同的分布，此处$X$是一个符合$D$分布的随机变量。选取若干个向量$a$，计算多个$a \cdot v$的值，称为向量$v$的概略（sketch），利用$v$的“sketch”可以用来估算$||v||_p$的值。</p>
-<h3 id="3-局部敏感哈希函数"><a href="#3-局部敏感哈希函数" class="headerlink" title="3. 局部敏感哈希函数"></a>3. 局部敏感哈希函数</h3><p>在p-stable LSH中，$a$与$v$的点积$a \cdot v$不用来估计$||v||_p$的值，而是用来生成哈希函数族，且该哈希函数族是局部敏感的（即空间中距离较近的点映射后发生冲突的概率高，空间中距离较远的点映射后发生冲突的概率低）。</p>
-<p>大体方法是将一条直线分成等长且长度为r的若干段，给映射到同一段的点赋予相同的hash值，映射到不同段的点赋予不同的hash值。($a \cdot v_1 - a \cdot v_2$)是映射后的距离，而其值与$||v_1 - v_2||_p X$同分布，原始距离$||v_1 - v_2||_p$较小时，映射后的距离也小，因此使用点积来生成哈希函数族可以保持局部敏感性。</p>
+<h3 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h3><p>LSH是用局部敏感的方法解决近似最近邻搜索的问题。在原始的LSH方法中，通过将原始空间嵌入到Hamming空间中，将$d$维空间转换成${d}’ = Cd$维的Hamming空间 (C是指原始空间中点的坐标的最大值)，使用$(r,(1+e)r,1-r/{d}’,1-(1+e)r/{d}’)$-sensetive 哈希函数来解决$(r,e)$-Neighbor问题。</p>
+<p>而后来提出的$p$-stable LSH算法中，不需要将原始空间嵌入到Hamming空间中，可以直接在欧氏空间下进行局部敏感哈希运算。</p>
+<p>$p$-stable LSH应用在d维$L_p$-norm下的欧氏空间中，$0 &lt; p \leq 2$。</p>
+<p>$p$-stable LSH使用的$(r,cr,p_1,p_2)$-sensetive哈希中，$c=1+e$，下面的工作主要是确定在1 (即$r$) 和 c (即$cr$) 下的$p_1$与$p_2$。</p>
+<h3 id="2-概念解释"><a href="#2-概念解释" class="headerlink" title="2. 概念解释"></a>2. 概念解释</h3><p>$p$-稳定分布的概念：<br>一个分布$D$如果称为$p$-稳定分布，则对于任意$n$个实数$v_1, v_2, \ldots, v_n$和符合$D$分布的$n$个独立同分布随机变量$X_1, X_2, \ldots, X_n$，都存在一个$p \geq 0$，使得变量$\sum_i v_i X_i$和$\sum_{i} (|v_i|^p)^{1/p}X$ (i.e.,$||v||_p X$) 具有相同的分布，此处$X$是一个符合$D$分布的随机变量。</p>
+<p>$p$-稳定分布不是具体的分布，而是满足某条件的分布族。</p>
+<ul>
+<li>Cauchy Distribution, pdf为$c(x) = \frac{1}{\pi} \frac{1}{1+x^2}$, 1-stable.</li>
+<li>Gaussian Distribution, pdf为$g(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$, 2-stable.</li>
+</ul>
+<p>$p$-stable分布有一个重要的应用，就是可以估计给定向量$v$在欧氏空间$p$-norm下长度，记为$||v||_p$。</p>
+<p>方法是对于取定的d维向量$v$，从$p$-稳定分布中抽取d个随机变量组成d维向量$a$，计算$a$与$v$的点积$a \cdot v$。</p>
+<p>根据$p$-stable的定义，由于$a \cdot v = \sum_{i} (|v_i|^p)^{\frac{1}{p}}X$，具有相同的分布，此处$X$是一个符合$D$分布的随机变量。选取若干个向量$a$，计算多个$a \cdot v$的值，称为向量$v$的概略 (sketch) ，利用$v$的“sketch”可以用来估算$||v||_p$的值。</p>
+<h3 id="3-局部敏感哈希函数"><a href="#3-局部敏感哈希函数" class="headerlink" title="3. 局部敏感哈希函数"></a>3. 局部敏感哈希函数</h3><p>在$p$-stable LSH中，$a$与$v$的点积$a \cdot v$不用来估计$||v||_p$的值，<strong>而是用来生成哈希函数族</strong>，且该哈希函数族是局部敏感的 (即空间中距离较近的点映射后发生冲突的概率高，空间中距离较远的点映射后发生冲突的概率低) 。</p>
+<p>大体方法是将一条直线分成等长且长度为$r$的若干段，给映射到同一段的点赋予相同的hash值，映射到不同段的点赋予不同的hash值。($a \cdot v_1 - a \cdot v_2$)是映射后的距离，而其值与$||v_1 - v_2||_p X$同分布，原始距离$||v_1 - v_2||_p$较小时，映射后的距离也小，因此使用点积来生成哈希函数族可以保持局部敏感性。</p>
 <p>哈希函数族的形式为：</p>
-<blockquote>
-<p>$h_{a,b} = \left \lfloor \frac{a \cdot v + b}{r} \right \rfloor$</p>
-</blockquote>
-<p>其中b是(0,r)里的随机数，r为直线上分段的段长。哈希族中的函数根据$a$和$b$的不同建立函数索引。</p>
+<script type="math/tex; mode=display">
+h_{a,b} = \left \lfloor \frac{a \cdot v + b}{r} \right \rfloor</script><p>其中$b$是$(0,r)$里的随机数，$r$为直线上分段的段长。哈希族中的函数根据$a$和$b$的不同建立函数索引。</p>
 <p>从哈希函数族中随机选取一个哈希函数，现在估计两个向量$v_1$和$v_2$在该哈希函数下映射后发生冲突的概率。</p>
-<p>定义符合p-stable分布的随机变量绝对值的概率密度函数为$f_p(t)$。设$c=||v_1 - v_2||_p$，则$a \cdot v_1 - a \cdot v_2$与$cX$同分布，$X$为p-stable分布下的随机变量。给出概率的计算公式如下，之后会有详细分析。</p>
-<blockquote>
-<p>$p(c) = Pr_{a,b}[h_{a,b}(v_1) = h_{a,b}(v_2)] = \int_0^r \frac{1}{c}f_p(\frac{t}{c})(1-\frac{t}{r})dt$</p>
-</blockquote>
-<p>其中$|a \cdot v_1 - a \cdot v_2| = ||v_1 - v_2||_p|X| = c|X|$，$X$为p-stable分布下的随机变量，$|X|$的概率密度函数为$f_p(t)$。</p>
+<p>定义符合$p$-stable分布的随机变量绝对值的概率密度函数为$f_p(t)$。设$c=||v_1 - v_2||_p$，则$a \cdot v_1 - a \cdot v_2$与$cX$同分布，$X$为$p$-stable分布下的随机变量。给出概率的计算公式如下，之后会有详细分析。</p>
+<script type="math/tex; mode=display">
+p(c) = \mathsf{Pr}_{a,b}(h_{a,b}(v_1) = h_{a,b}(v_2))
+= \int_0^r \frac{1}{c}f_p(\frac{t}{c})(1-\frac{t}{r})\mathsf{d} t</script><p>其中$|a \cdot v_1 - a \cdot v_2| = ||v_1 - v_2||_p|X| = c|X|$，$X$为$p$-stable分布下的随机变量，$|X|$的概率密度函数为$f_p(t)$。</p>
 <p>若要向量$v_1$和$v_2$映射后发生冲突，需要满足如下条件：$v_1$和$v_2$通过与$a$进行点积运算分别映射到一段长度为r线段后，再通过加b运算，能使映射后的点在同一条线段上。</p>
-<h3 id="4-证明"><a href="#4-证明" class="headerlink" title="4. 证明"></a>4. 证明</h3><p>以下是对该概率公式正确性的证明</p>
-<p>设点$a \cdot v_1$在点M处，点$a \cdot v_2$在点N处，此处设N点在靠近Q的位置。</p>
-<h4 id="4-1-b对映射后点的影响"><a href="#4-1-b对映射后点的影响" class="headerlink" title="4.1 b对映射后点的影响"></a>4.1 b对映射后点的影响</h4><p>在加b后，因为$b \geq 0$，因此加b后点会后移。不失一般性，设$r=1$，则有以下两种情况：</p>
-<ol>
-<li>若映射到同一条线段上，不妨设为线段PQ（P为前端点，Q为后端点），设|MN|=t，|NQ|=m，则若要保证加b后点M和点N仍在同一条线段中，则要满足$0 \leq b \leq m$（此时加b后M,N仍在线段PQ中），或者$t+m \leq b &lt; r$（此时加b后点M,N落入下一条线段中）。</li>
-<li>若映射到不同线段上，但|MN| &lt; r（此时必在相邻线段中），不妨设相邻两条线段为PQ和QR，设|MQ|=m，则|QN|=t-m，则若要保证加b后点M和点N仍在同一条线段中，则要满足$m &lt; b &lt; r-(t-m)$。</li>
-</ol>
-<p><p>可以看到，不管是那种情况，b的取值范围都是r-t，而b是(0,r)内的随机数，因此取得满足条件b的概率是$(r-t)/r=1-t/r$。现在只需讨论向量$v_1$和$v_2$经过$a$的点积映射后的距离为t的概率（因为讨论b是设|MN|=t，即b是在向量映射后距离为t的情况下讨论的），即求$| a \cdot v_1 - a \cdot v_2 | = || v_1 - v_2||_p |X| = c|X| = t$的概率。</p>
-<h4 id="4-2-点积对映射后点的影响"><a href="#4-2-点积对映射后点的影响" class="headerlink" title="4.2 点积对映射后点的影响"></a>4.2 点积对映射后点的影响</h4><p>因为随机变量$|X|$的概率密度函数为$f_p(x)$，而这里要求的是$c|X| = t$的概率。</p>
-<p>在这里有一个误区，要注意的是，$c|X| = t$的概率并不是$Pr(|X|=t/c)=f_p(t/c)$，这是因为$|X|$是连续随机变量，不能通过某点的概率来生成其密度函数，虽然密度函数的意义是$f_p(x)=Pr(|X|=x)$，但反过来是不成立的。因此，要求$c|X|=t$的概率，只能通过密度函数的定义来解决。</p>
-<p>密度函数的大致定义是</p>
-<blockquote>
-<p>对于随机变量X的分布函数$F(x)$，如果存在函数$f(x)$，使得$F(x)$是$f(x)$在全部定义域内（一般就可取负无穷到正无穷，随机变量取不到的地方概率为0）的积分，那么$f(x)$就称为$X$的概率密度函数。</p>
-<p> $F(x) = Pr(X &lt; x)$，$f(x) = Pr(X = x)$。</p>
-</blockquote>
-<p>这里再强调一遍，对于连续型随机变量，第二个式子的反过来没有意义，因为连续型随机变量在某点的概率恒为0。而分布函数代表的是某段区域内概率之和，因此，第二个式子反过来推导是有意义的。</p>
-<p>因此，要求$c|X| = t$的概率，可用如下方法：设随机变量$Y=c|X|$，则原始问题转化成求$Y=t$的概率。</p>
-<p>设$|X|$的分布函数为$F_p(t)$，Y的分布函数为$G_p(t)$</p>
-<blockquote>
-<p>$G_p(t) = Pr(Y &lt; t) = Pr(c|X| &lt; t) = Pr(|X| &lt; t/c) = F_p(t/c)$</p>
-</blockquote>
-<p>因此，$c|X| = t$的概率为$G_p’(t) = F_p’(t/c) = 1/c \cdot f_p(t/c)$，这样，经过点积映射后，两向量在线上点的距离等于t的概率便求出来了。</p>
-<p>至此，我们得到了原始空间中的两个向量经过点积运算后映射到线段上的距离为t的概率以及在距离为t的前提下加b后能落在同一线段上的概率。因为如果两个向量经过点积后映射到线段上的距离大于r，且b是(0,r)上的随机数，因此这种情况下不论b取多少，两点都不可能落入同一条线段上。因此，t的取值范围是(0,r)。综上所述，该概率公式得证。</p>
-<p>在上概率公式中，对于给定的r，概率p(c)是关于c的单调递减函数。即，$c=||v_1 - v2||$越大，映射后发生冲突的概率就越小，这符合局部敏感哈希函数的要求。因此，所选取的哈希函数族是局部敏感哈希函数族，并且是$(r1,r2,p1,p2)$-敏感的，其中$p_1 = p(1)$，$p_2 = p(c)$，$r2/r1 = c$。$c &gt; 1$时，满足$p_1 &gt; p_2$，$r_1 &lt; r_2$。</p>
-<p>以上就是对p-stable LSH的讨论，它通过涉入稳定分布和点积的概念，实现了LSH算法在欧几里得空间下的直接应用，而不需要嵌入Hamming空间。p-stable LSH中，度量是欧几里得空间下的$L_p$准则，即向量$v_1$与$v_2$的距离定义为$||v_1 - v_2||_p$，然后通过设定的哈希函数将原始点映射到直线的等长线段上，每条线段便相当于一个哈希桶，与LSH方法类似，距离较近的点映射到同一哈希桶（线段）中的概率大，距离较远的点映射到同一哈希桶中的概率小，正好符合局部敏感的定义。</p>
-
+<h3 id="4-结语"><a href="#4-结语" class="headerlink" title="4. 结语"></a>4. 结语</h3><p>$p$-stable LSH通过稳定分布和点积的概念，实现了LSH算法在欧氏空间下的直接应用，而不需要嵌入Hamming空间。$p$-stable LSH中，度量是欧氏空间下的$L_p$准则，即向量$v_1$与$v_2$的距离定义为$||v_1 - v_2||_p$，然后通过设定的哈希函数将原始点映射到直线的等长线段上，每条线段便相当于一个哈希桶，与LSH方法类似，距离较近的点映射到同一哈希桶 (线段) 中的概率大，距离较远的点映射到同一哈希桶中的概率小，正好符合局部敏感的定义。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://blog.csdn.net/lskyne/article/details/8654455">https://blog.csdn.net/lskyne/article/details/8654455</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
           <ul class="pager no-print">
@@ -338,7 +305,7 @@
               
               <li class="next">
                   <a href="/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF3/" data-toggle="tooltip" data-placement="top"
-                     title="LSH那些事儿 (III): 理论基础">Next Post&rarr;</a>
+                     title="LSH那些事儿 (III): 哈希家族">Next Post&rarr;</a>
               </li>
               
           </ul>
@@ -350,7 +317,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A"><span class="toc-text">2. 概念解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B1%80%E9%83%A8%E6%95%8F%E6%84%9F%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-text">3. 局部敏感哈希函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AF%81%E6%98%8E"><span class="toc-text">4. 证明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-b%E5%AF%B9%E6%98%A0%E5%B0%84%E5%90%8E%E7%82%B9%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">4.1 b对映射后点的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E7%82%B9%E7%A7%AF%E5%AF%B9%E6%98%A0%E5%B0%84%E5%90%8E%E7%82%B9%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">4.2 点积对映射后点的影响</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A"><span class="toc-text">2. 概念解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B1%80%E9%83%A8%E6%95%8F%E6%84%9F%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-text">3. 局部敏感哈希函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%BB%93%E8%AF%AD"><span class="toc-text">4. 结语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
         
     </div>
   </div>
@@ -416,9 +383,9 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                122.4k <b>Words</b>
+                128.1k <b>Words</b>
             <div class="copyright-container">
-              <b>版权声明</b> 内容部分来自网络摘抄，已尽量注明直接或间接来源，仍无法俱到，如版权问题请告悉删除；原创内容可经注明来源后转载，仅限非商业目的。
+              <b>版权</b> 内容部分自摘抄，已尽量注明直/间接来源，如版权问题请告悉删除；内容可经注明来源后转载，限于非商业目的。
             </div>
         </div>
 

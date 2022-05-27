@@ -23,7 +23,7 @@
 
     <title>
         
-        LSH那些事儿 (III): 理论基础｜YOLO - A Blog You Only Look Once
+        LSH那些事儿 (III): 哈希家族｜YOLO - A Blog You Only Look Once
         
     </title>
 
@@ -187,7 +187,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                     <div class="site-heading">
-                        <h1>LSH那些事儿 (III): 理论基础</h1>
+                        <h1>LSH那些事儿 (III): 哈希家族</h1>
                         
                         
 
@@ -196,7 +196,7 @@
                                <span class="meta-item">Author: Steven</span>
                                <span class="meta-item">Date: Apr 26, 2013</span>
                                
-                                 <span class="meta-item">Updated On: May 12, 2020</span>
+                                 <span class="meta-item">Updated On: May 27, 2022</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -261,39 +261,37 @@
     <div class="container">
       <div class="col-lg-8 col-lg-offset-1 col-sm-9">
           
-          <span class="post-count">1.1k words in total, 4 minutes required.</span>
-          <hr>
+          <span class="post-count">1.2k words in total, 5 minutes required.</span>
           
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="1-关于距离"><a href="#1-关于距离" class="headerlink" title="1. 关于距离"></a>1. 关于距离</h3><p>两点之间的距离可以用两种方式来衡量，一是几何距离，二是非几何距离。很显然几何距离的定义满足下面的条件：</p>
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p><a href="../LSH那些事儿2/">上一篇</a>对LSH的形式化进行了说明，接下来我们对LSH的哈希家族进行阐述。</p>
+</blockquote>
+<h3 id="1-关于距离"><a href="#1-关于距离" class="headerlink" title="1. 关于距离"></a>1. 关于距离</h3><p>两点之间的距离可以用两种方式来衡量，一是几何距离，二是非几何距离。</p>
+<p>几何距离的定义满足下面的条件：</p>
 <ol>
-<li>$d(x,y) \geq 0$</li>
-<li>$d(x,y) = 0 ~\text{iff}~ x = y$</li>
-<li>$d(x,y) = d(y,x)$</li>
-<li>$d(x,y) \leq d(x,z) + d(z,y)$</li>
+<li>$d(\mathbf{x},\mathbf{y}) \geq 0$</li>
+<li>$d(\mathbf{x},\mathbf{y}) = 0 ~\text{iff}~ x = y$</li>
+<li>$d(\mathbf{x},\mathbf{y}) = d(y,x)$</li>
+<li>$d(\mathbf{x},\mathbf{y}) \leq d(x,z) + d(z,y)$<br>几何距离包括各类Norm等等。</li>
 </ol>
-<p>几何距离包括各类Norm等等。</p>
-<p>非几何距离用的就比较多了：</p>
+<p>非几何距离也用的就比较多:</p>
 <ol>
 <li>Jaccard距离：1减去Jaccad相似度</li>
 <li>余弦距离：两个向量之间的角度</li>
-<li>编辑距离（Edit distance）：将一个串变为另一个串需要的插入或删除次数</li>
-<li>海明距离（Hamming Distance）：Bit向量中不同位置的个数</li>
+<li>编辑距离 (Edit distance)：将一个串变为另一个串需要的插入或删除次数</li>
+<li>海明距离 (Hamming Distance)：0-1向量中不同位置的个数</li>
 </ol>
-<blockquote>
-<p>这里有一个重要的公理：三角形公理（Triangle Inequality），也就是距离的第四个性质。编辑距离$d(x,y) = |x| + |y| - 2|LCS(x,y)|$，其中LCS是longest common subsequence，称为最长公共子序列。</p>
-</blockquote>
+<p>这里有一个重要的公理：三角形公理 (Triangle Inequality) ，也就是几何距离的第四个性质。</p>
+<p>编辑距离$d(\mathbf{x},\mathbf{y}) = |x| + |y| - 2|LCS(\mathbf{x},\mathbf{y})|$，其中LCS是longest common subsequence，称为最长公共子序列。</p>
 <h3 id="2-LSH的核心思想"><a href="#2-LSH的核心思想" class="headerlink" title="2. LSH的核心思想"></a>2. LSH的核心思想</h3><p>LSH的一个核心思想就是两个元素哈希值相等的概率等于两个元素之间的相似度。</p>
-<p>下面介绍一个重要概念：Hash Family，哈希家族？不管怎么翻译，它指的是能够判断两个元素是否相等的Hash函数集合</p>
-<blockquote>
-<p>$h(x) = h(y)$</p>
-</blockquote>
-<p>LS Hash Family，局部敏感哈希家族的定义是满足下面两个条件的哈希函数家族：</p>
+<p>下面介绍一个重要概念：Hash Family，它指的是能够判断两个元素是否相等的Hash函数集合。</p>
+<script type="math/tex; mode=display">h(\mathbf{x}) = h(\mathbf{y})</script><p>LS Hash Family，局部敏感哈希家族的定义是满足下面两个条件的哈希函数家族：</p>
 <ol>
-<li>如果$d(x,y) &lt; d_1$，那么哈希家族$H$中的哈希函数$h$满足$h(x) = h(y)$的概率至少是$p_1$.</li>
-<li>如果$d(x,y) &gt; d_2$，那么哈希家族$H$中的哈希函数$h$满足$h(x) = h(y)$的概率至多是$p_2$.</li>
+<li>如果$d(\mathbf{x},\mathbf{y}) &lt; d_1$，那么哈希家族$H$中的哈希函数$h$满足$h(\mathbf{x}) = h(\mathbf{y})$的概率至少是$p_1$.</li>
+<li>如果$d(\mathbf{x},\mathbf{y}) &gt; d_2$，那么哈希家族$H$中的哈希函数$h$满足$h(\mathbf{x}) = h(\mathbf{y})$的概率至多是$p_2$.</li>
 </ol>
-<p>通俗来解释，就是如果$x$和$y$离得越近，$Pr[h(p)=h(q)]$就越大。如果$x$和$y$离得越远，$Pr[h(p)=h(q)]$就越小。我们把局部敏感哈希家族记为$(d_1,d_2,p_1,p_2)$-sensitive。</p>
-<p>那什么样的函数满足呢？Jaccard就是。我们令$S$为一个集合，$d$是Jaccard距离，有$Prob[h(x)=h(y)] = 1-d(x,y)$，我们就可以得到一个局部敏感哈希家族：</p>
+<p>通俗来解释，就是如果$\mathbf{x}$和$\mathbf{y}$离得越近，$\mathsf{Pr}(h(\mathbf{p})=h(\mathbf{q}))$就越大。如果$\mathbf{x}$和$\mathbf{y}$离得越远，$\mathsf{Pr}(h(\mathbf{p})=h(\mathbf{q}))$就越小。我们把局部敏感哈希家族记为$(d_1,d_2,p_1,p_2)$-sensitive。</p>
+<p>那什么样的函数满足呢？Jaccard就是。我们令$S$为一个集合，$d$是Jaccard距离，有$\mathsf{Pr}(h(\mathbf{x})=h(\mathbf{y})) = 1-d(\mathbf{x},\mathbf{y})$，我们就可以得到一个局部敏感哈希家族：</p>
 <blockquote>
 <p>$(1/3, 2/3, 2/3, 1/3)$-sensitive</p>
 </blockquote>
@@ -307,25 +305,27 @@
 </blockquote>
 <p>为了有更好的区分度，我们想让$p_1 \rightarrow p_2$的空间尽可能小，让$d_2-d_1$尽可能大。选择合适的参数，有类似于下面的S曲线：</p>
 <p><img src="15144243_L3JA.png" alt=""></p>
-<h3 id="3-两种哈希函数操作"><a href="#3-两种哈希函数操作" class="headerlink" title="3. 两种哈希函数操作"></a>3. 两种哈希函数操作</h3><p>定义两种哈希函数的操作：AND和OR。</p>
-<blockquote>
-<p><strong>AND 操作</strong></p>
-<p>  在局部敏感哈希家族$H$中选出$r$个哈希哈数，构成哈希家族$H’$。</p>
-<p>  对于$H’$家族中的$h = [h_1, …, h_r]$，$h(x) = h(y)$当且仅当对所有的$i$都满足$h_i(x)=h_i(y)$。这样得到的$H’$同样也是一个局部敏感哈希家族。</p>
-<p>  并且若源哈希家族是$(d_1,d_2,p_1,p_2)$-sensitive，新哈希家族$H’$也是$(d_1,d_2,{p_1}^r,{p_2}^r)$-sensitive的。</p>
-</blockquote>
-<p>.</p>
-<blockquote>
-<p><strong>OR 操作</strong></p>
-<p>  在局部敏感哈希家族$H$中选出$b$个哈希哈数，构成哈希家族$H’$。</p>
-<p>  对于$H’$家族中的$h = [h_1, …, h_b]$，$h(x) = h(y)$当且仅当存在一个$i$满足$h_i(x)=h_i(y)$。这样得到的$H’$同样也是一个局部敏感哈希家族。</p>
-<p>  并且若源哈希家族是$(d_1,d_2,p_1,p_2)$-sensitive，新哈希家族$H’$也是$(d_1,d_2,1-(1-p_1)^b,1-(1-p_2)^b)$-sensitive的。</p>
-</blockquote>
-<p>可以看出AND操作是降低了概率，但如果选取一个合适的$r$，可以使下限概率接近0，而上限概率没有多大影响。类似的，OR操作是增加了概率，但如果选择一个合适的$b$，可以使上限概率接近1，而下限概率没有多大影响。</p>
+<h3 id="3-两种哈希函数操作"><a href="#3-两种哈希函数操作" class="headerlink" title="3. 两种哈希函数操作"></a>3. 两种哈希函数操作</h3><h4 id="AND操作"><a href="#AND操作" class="headerlink" title="AND操作"></a>AND操作</h4><p>在局部敏感哈希家族$H$中选出$r$个哈希哈数，构成哈希家族$H’$。</p>
+<p>对于$H’$家族中的$h = [h_1, \ldots,  h_r]$，$h(\mathbf{x}) = h(\mathbf{y})$当且仅当对所有的$i$都满足$h_i(x)=h_i(y)$。这样得到的$H’$同样也是一个局部敏感哈希家族。</p>
+<p>并且若原有的哈希家族是$(d_1,d_2,p_1,p_2)$-sensitive，新哈希家族$H’$是$(d_1,d_2,{p_1}^r,{p_2}^r)$-sensitive的。</p>
+<h4 id="OR操作"><a href="#OR操作" class="headerlink" title="OR操作"></a>OR操作</h4><p>在局部敏感哈希家族$H$中选出$b$个哈希哈数，构成哈希家族$H’$。</p>
+<p>对于$H’$家族中的$h = [h_1, \ldots,  h_b]$，$h(\mathbf{x}) = h(\mathbf{y})$当且仅当存在一个$i$满足$h_i(x)=h_i(y)$。这样得到的$H’$同样也是一个局部敏感哈希家族。</p>
+<p>并且若原有的哈希家族是$(d_1,d_2,p_1,p_2)$-sensitive，新哈希家族$H’$是$(d_1,d_2,1-(1-p_1)^b,1-(1-p_2)^b)$-sensitive的。</p>
+<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><p>可以看出AND操作是降低了概率，但如果选取一个合适的$r$，可以使下限概率接近0，而上限概率没有多大影响。</p>
+<p>类似的，OR操作是增加了概率，但如果选择一个合适的$b$，可以使上限概率接近1，而下限概率没有多大影响。</p>
 <p>我们对AND操作和OR操作做级联：</p>
-<p>AND-OR，$1-(1-p^r)^b$</p>
-<p>OR-AND，$(1-(1-p)^b)^r$</p>
+<ul>
+<li>AND-OR，$1-(1-p^r)^b$</li>
+<li>OR-AND，$(1-(1-p)^b)^r$</li>
+</ul>
 <h3 id="4-调参"><a href="#4-调参" class="headerlink" title="4. 调参"></a>4. 调参</h3><p>现在我们选定$r = b = 4$，那么概率函数可以这么写</p>
+<div class="center">
+<style>
+table {
+margin: auto;
+border: 1px solid red
+}
+</style>
 <table>
 <thead>
 <tr>
@@ -368,8 +368,10 @@
 </tr>
 </tbody>
 </table>
+</div>
 
 <p>得到这样的S曲线之后，可以找到一个点t，满足$1-(1-t^r)^b = t$。在t点之后，概率快速上升，在t点之前，概率快速下降。根据需要的灵敏度，可以选择合适的上限概率和下限概率来满足应用需求。</p>
+<p><code>继续阅读系列</code><a href="../LSH那些事儿4/">下一篇</a>，将会对$p$-stable LSH进行说明。</p>
 
           
           <hr>
@@ -377,7 +379,7 @@
               
               <li class="previous">
                   <a href="/blog/LSH%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF4/" data-toggle="tooltip" data-placement="left"
-                     title="LSH那些事儿 (IV): p-stable LSH">&larr; Previous Post</a>
+                     title="LSH那些事儿 (IV): $p$-stable LSH">&larr; Previous Post</a>
               </li>
               
               
@@ -395,7 +397,7 @@
     <div class="toc-wrap">
         Table of Contents
         
-          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%B3%E4%BA%8E%E8%B7%9D%E7%A6%BB"><span class="toc-text">1. 关于距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-LSH%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-text">2. LSH的核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%A4%E7%A7%8D%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">3. 两种哈希函数操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%B0%83%E5%8F%82"><span class="toc-text">4. 调参</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%B3%E4%BA%8E%E8%B7%9D%E7%A6%BB"><span class="toc-text">1. 关于距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-LSH%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-text">2. LSH的核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%A4%E7%A7%8D%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">3. 两种哈希函数操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AND%E6%93%8D%E4%BD%9C"><span class="toc-text">AND操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OR%E6%93%8D%E4%BD%9C"><span class="toc-text">OR操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94"><span class="toc-text">对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%B0%83%E5%8F%82"><span class="toc-text">4. 调参</span></a></li></ol>
         
     </div>
   </div>
@@ -461,9 +463,9 @@
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                122.4k <b>Words</b>
+                128.1k <b>Words</b>
             <div class="copyright-container">
-              <b>版权声明</b> 内容部分来自网络摘抄，已尽量注明直接或间接来源，仍无法俱到，如版权问题请告悉删除；原创内容可经注明来源后转载，仅限非商业目的。
+              <b>版权</b> 内容部分自摘抄，已尽量注明直/间接来源，如版权问题请告悉删除；内容可经注明来源后转载，限于非商业目的。
             </div>
         </div>
 
