@@ -9,7 +9,6 @@ layout: layout
             <div class="text-center"><%- include('_third-party/share/add-this') %></div><hr>
           <% } %>
           <span class="post-count"><%= wordcount(page.content) %> words in total, <%= min2read(page.content) %> minutes required.</span>
-          <hr>
           <%- config["content_before_post"] %>
           <%- page.content %>
           <% if (config["content_after_post"]) { %>

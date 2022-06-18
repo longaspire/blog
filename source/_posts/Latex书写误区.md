@@ -7,7 +7,7 @@ tags:
   - "Latex"
 toc_number_disable: true
 draft: false
-comments: true
+comments: false
 date: 2018-05-14 19:29:49
 cover_img: /blog/post_cover_images/drops.jpg
 cover_img_from_root: true

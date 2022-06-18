@@ -2,14 +2,14 @@
 # Site Information Settings
 # ---------------------------------------------------------------
 # title can include HTML code.
-title: Little Stone
+title: YOLO
 description: This is the site where Steven posts his thoughts, ideas and feelings
-author: Huan Li
+author: Steven
 language: en
 timezone: Asia/Shanghai
 
 # custom Site settings
-SEOTitle: Little Stone - Huan Li's Blog
+SEOTitle: YOLO - A Blog You Only Look Once
 keyword: "Computer Science, Travel Notes, Ideas and Thoughts" # seo key words
 
 # your favicon png
@@ -35,7 +35,7 @@ footer:
   icon: user
 
   # If not defined, will be used `author` from Hexo main config.
-  copyright: Huan Li. All rights reserved.
+  copyright: All rights reserved.
   # -------------------------------------------------------------
   # Hexo link (Powered by Hexo).
   powered: true
@@ -84,7 +84,7 @@ email: longaspire@gmail.com
 github_username: longaspire
 twitter_username:
 facebook_username:
-linkedin_username: lihuancs
+linkedin_username:
 
 # ---------------------------------------------------------------
 # Sidebar settings
