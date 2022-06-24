@@ -196,7 +196,7 @@
                                <span class="meta-item">Author: Steven</span>
                                <span class="meta-item">Date: May 26, 2022</span>
                                
-                                 <span class="meta-item">Updated On: May 27, 2022</span>
+                                 <span class="meta-item">Updated On: Jun 6, 2022</span>
                                
                           </span>
                           <div class="tags text-center">
@@ -216,12 +216,6 @@
                               <a class="tag" href="/blog/tags/#异常检测"
                                  title="异常检测">异常检测</a>
                               
-                              <a class="tag" href="/blog/tags/#分布式计算"
-                                 title="分布式计算">分布式计算</a>
-                              
-                              <a class="tag" href="/blog/tags/#流计算"
-                                 title="流计算">流计算</a>
-                              
                               <a class="tag" href="/blog/tags/#最近邻"
                                  title="最近邻">最近邻</a>
                               
@@ -230,6 +224,9 @@
                               
                               <a class="tag" href="/blog/tags/#聚类"
                                  title="聚类">聚类</a>
+                              
+                              <a class="tag" href="/blog/tags/#LOF"
+                                 title="LOF">LOF</a>
                               
                           </div>
                         
@@ -278,15 +275,16 @@
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
 <p>Boukerche, Azzedine, Lining Zheng, and Omar Alfandi. “Outlier Detection: Methods, Models, and Classification.” ACM Computing Surveys 53, no. 3 (May 31, 2021): 1–37. <a target="_blank" rel="noopener" href="https://doi.org/10.1145/3381028">https://doi.org/10.1145/3381028</a>.</p>
 </blockquote>
-<p>文章较长，笔记分为多篇，<a href="../经典异常检测笔记3/">下一篇</a>。</p>
+<p>文章较长，笔记分为多篇，<a href="../经典异常检测笔记1/">上一篇</a>主要介绍了异常检测方法的概念和分类。</p>
 <p>近邻方法 (Proximity-based Approaches) 主要分为两种，基于最近邻 (Nearest-neighbor) 的和基于聚类 (clustering) 的。</p>
 <h2 id="1-最近邻方法"><a href="#1-最近邻方法" class="headerlink" title="1. 最近邻方法"></a>1. 最近邻方法</h2><p>Neighborhood有两类:</p>
 <ul>
-<li>k nearest neighbors (kNN)：kNN的传统abnormality定义为 k-th distance 或者 sum of top-k distances</li>
+<li>k nearest neighbors (kNN)：kNN的传统abnormality定义为 k-th distance 或者 sum of top-k distances，如<sup id="fnref:12"><a href="#fn:12" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="E. Knorr and R. Ng. Algorithms for Mining Distance-Based Outliers in Large Datasets. 1998. In VLDB, 392–403.
+">[12]</span></a></sup>，这些方法中，可以使用index如KD-tree，R-tree，X-tree等进行加速，复杂度可从$O(n^2 d)$下降到 $O(n \log n d)$，但是对于高维数据 ($d \gg 0$) 扩展性并不高</li>
 <li>a neighborhood within a pre-specified radius (density): 传统abnormality定义为近邻点的数量</li>
 </ul>
 <p>这些方法都是global的，考虑到不同区域变化的density，往往和real-life semantics有偏差。以下介绍一些local方法。</p>
-<h3 id="1-1-LOF-Local-outlier-factor"><a href="#1-1-LOF-Local-outlier-factor" class="headerlink" title="1.1 LOF (Local outlier factor)"></a>1.1 LOF (Local outlier factor)</h3><p>Local方法的代表是LOF<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, and Jörg Sander. 2000. LOF: Identifying density-based local outliers. In ACM Sigmod Record, Vol. 29. ACM, 93–104.
+<h3 id="1-1-LOF-Local-outlier-factor"><a href="#1-1-LOF-Local-outlier-factor" class="headerlink" title="1.1 LOF (Local outlier factor)"></a>1.1 LOF (Local outlier factor)</h3><p>Local方法的代表是LOF<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, and Jörg Sander. 2000. LOF: Identifying density-based local outliers. In ACM Sigmod Record, Vol. 29., 93–104.
 ">[1]</span></a></sup>，考虑了局部的各实例的density的比值 (The LOF score for a data instance is based on the average ratio of the instance’s neighbor’s density to that instance’s density)。</p>
 <p>首先计算给定点$p$的LRD (local reachability density)：</p>
 <script type="math/tex; mode=display">
@@ -299,10 +297,10 @@ LRD(p) = \big( \frac{\sum_{o \in N_k(p)} d_k(p,o)}{|N_k(p)|} \big)^{-1}</script>
 <script type="math/tex; mode=display">
 LOF(p) = 1/|N_k(p)| \sum_{o \in N_k(p)} LRD(o)/LRD(p)</script><p>由于通常outliers的neighbors的density会更大（即LRD更大），那么outliers的LOF也会更大。</p>
 <h3 id="1-2-LOF的延续和改进型"><a href="#1-2-LOF的延续和改进型" class="headerlink" title="1.2 LOF的延续和改进型"></a>1.2 LOF的延续和改进型</h3><p><img src="NN-outliers.png" alt="各LOF改进的最近邻方法一览"><span class="image-caption-center">各LOF改进的最近邻方法一览</span></p>
-<h4 id="1-2-1-Connectivity-based-Outlier-Factor-COF"><a href="#1-2-1-Connectivity-based-Outlier-Factor-COF" class="headerlink" title="1.2.1 Connectivity-based Outlier Factor (COF)"></a>1.2.1 Connectivity-based Outlier Factor (COF)</h4><p>为了解决非球形分布 (non-spherical distributions)，“链接距离” (chaining distance)，可以看作是连接k个邻居和数据实例本身的最短路径<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Jian Tang, Zhixiang Chen, AdaWai-Chee Fu, and DavidW. Cheung. 2002. Enhancing effectiveness of outlier detections for low density patterns. In Proceedings of the Pacific-Asia Conference on Knowledge Discovery and Data Mining. Springer, 535–548.
+<h4 id="1-2-1-Connectivity-based-Outlier-Factor-COF"><a href="#1-2-1-Connectivity-based-Outlier-Factor-COF" class="headerlink" title="1.2.1 Connectivity-based Outlier Factor (COF)"></a>1.2.1 Connectivity-based Outlier Factor (COF)</h4><p>为了解决非球形分布 (non-spherical distributions)，“链接距离” (chaining distance)，可以看作是连接k个邻居和数据实例本身的最短路径<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Jian Tang, Zhixiang Chen, AdaWai-Chee Fu, and David W. Cheung. 2002. Enhancing effectiveness of outlier detections for low density patterns. In PAKDD, 535–548.
 ">[2]</span></a></sup>。</p>
 <h4 id="1-2-2-Local-Correlation-Integral-LOCI"><a href="#1-2-2-Local-Correlation-Integral-LOCI" class="headerlink" title="1.2.2 Local Correlation Integral (LOCI)"></a>1.2.2 Local Correlation Integral (LOCI)</h4><ul>
-<li>对于数据点$p$，具有给定半径$r$的MDEF（Multi-Granularity Deviation Factor，多粒度偏差因子）<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Spiros Papadimitriou, Hiroyuki Kitagawa, Phillip B. Gibbons, and Christos Faloutsos. 2003. Loci: Fast outlier detection using the local correlation integral. In Proceedings 19th International Conference on Data Engineering 2003. IEEE, 315–326.
+<li>对于数据点$p$，具有给定半径$r$的MDEF（Multi-Granularity Deviation Factor，多粒度偏差因子）<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Spiros Papadimitriou, Hiroyuki Kitagawa, Phillip B. Gibbons, and Christos Faloutsos. 2003. Loci: Fast outlier detection using the local correlation integral. In ICDE, 315–326.
 ">[3]</span></a></sup>等于 1 减去$p$的局部密度与 $p$的$r$-邻域中点的平均局部密度之比。</li>
 <li>MDEF 表示数据点在局部密度方面偏离其邻居的程度。</li>
 <li>另一个相关的度量是 $\delta_{MDEF}$，它是$r$邻域中点的局部密度的标准偏差，由$r$-邻域中的平均局部密度归一化。</li>
@@ -310,18 +308,18 @@ LOF(p) = 1/|N_k(p)| \sum_{o \in N_k(p)} LRD(o)/LRD(p)</script><p>由于通常out
 <li>算法复杂度高，因此aLOCI使用空间划分网格来近似邻域，从而实现几乎线性的性能。</li>
 </ul>
 <h4 id="1-2-3-Influenced-Outlierness-INFLO"><a href="#1-2-3-Influenced-Outlierness-INFLO" class="headerlink" title="1.2.3 Influenced Outlierness (INFLO)"></a>1.2.3 Influenced Outlierness (INFLO)</h4><ul>
-<li>反向最近邻集 (reverse k-NN) 结合 k-NN 计算异常值分数<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Wen Jin, Anthony K. H. Tung, Jiawei Han, and Wei Wang. 2006. Ranking outliers using symmetric neighborhood relationship. In Proceedings of the Pacific-Asia Conference on Knowledge Discovery and Data Mining. Springer, 577– 593.
+<li>反向最近邻集 (reverse k-NN) 结合 k-NN 计算异常值分数<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Wen Jin, Anthony K. H. Tung, Jiawei Han, and Wei Wang. 2006. Ranking outliers using symmetric neighborhood relationship. In PAKDD, 577– 593.
 ">[4]</span></a></sup>。</li>
 <li>解决 LOF 的局限性，即 LOF 无法对具有显着不同密度的集群在边界上的实例进行适当评分 (参见下图，点$p$在稀疏和非稀疏的区域的边界上，使用LOF仅会考虑来自于非稀疏的区域的neighbors，从而产生很高的LOF，而INFLO会同时考虑reserse k-NN，从而得到更加合理的估算)</li>
 </ul>
 <p><img src="INFLO.png" alt="INFLO图示"><span class="image-caption-center">INFLO图示</span></p>
 <h4 id="1-2-4-Local-Outlier-Probability-LoOP"><a href="#1-2-4-Local-Outlier-Probability-LoOP" class="headerlink" title="1.2.4 Local Outlier Probability (LoOP)"></a>1.2.4 Local Outlier Probability (LoOP)</h4><ul>
-<li>输出一个概率，表明数据点是异常值的可能性<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Hans-Peter Kriegel, Peer Kröger, Erich Schubert, and Arthur Zimek. 2009. LoOP: Local outlier probabilities. In Proceedings of the 18th ACM Conference on Information and Knowledge Management. 1649–1652.
+<li>输出一个概率，表明数据点是异常值的可能性<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Hans-Peter Kriegel, Peer Kröger, Erich Schubert, and Arthur Zimek. 2009. LoOP: Local outlier probabilities. In CIKM, 1649–1652.
 ">[5]</span></a></sup>。</li>
 <li>LoOP 在计算数据点的局部密度的方式上与 LOF 不同。 假设数据点$p$位于其邻域的中心，到其 k-NN 的距离服从半高斯half-Gaussian分布 (距离始终为非负数)。</li>
 </ul>
 <h4 id="1-2-5-isolation-using-Nearest-Neighbour-Ensemble-iNNE"><a href="#1-2-5-isolation-using-Nearest-Neighbour-Ensemble-iNNE" class="headerlink" title="1.2.5 isolation using Nearest Neighbour Ensemble (iNNE)"></a>1.2.5 isolation using Nearest Neighbour Ensemble (iNNE)</h4><ul>
-<li>基于亚采样subsampling和集成ensemble<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Tharindu Bandaragoda. 2014. Efficient anomaly detection by isolation using nearest neighbour ensemble. In Proceedings of the 2014 IEEE International Conference on Data Mining Workshop. 698–705.
+<li>基于亚采样subsampling和集成ensemble<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Tharindu Bandaragoda. 2014. Efficient anomaly detection by isolation using nearest neighbour ensemble. In ICDM Workshops, 698–705.
 ">[6]</span></a></sup>。</li>
 <li>对于样本集 $S$ 中的样本实例 $c$，构建超球面 $B(c)$ (以 $c$ 为中心，半径 $r(c)$ 作为 $c$ 与其最近的距离 $S$ 以内的邻居)。</li>
 <li>Isolation score for a point $p$<br>$<br>I(P) = 1 - \frac{r(nn(minS(x)))}{r(minS(x))}<br>$<br>其中$minS(x)$是$x$所在的具有最小超球面的样本实例，$nn(c)$是$c$在$S$内的NN。</li>
@@ -329,7 +327,7 @@ LOF(p) = 1/|N_k(p)| \sum_{o \in N_k(p)} LRD(o)/LRD(p)</script><p>由于通常out
 <li>选择具有最小半径的样本实例作为 x 的代理。</li>
 </ul>
 <h4 id="1-2-6-LeSiNN"><a href="#1-2-6-LeSiNN" class="headerlink" title="1.2.6 LeSiNN"></a>1.2.6 LeSiNN</h4><ul>
-<li>和 iNNE 一样：也是基于 subsampling + (ensemble，其保证离群点检测器的稳定性)<sup id="fnref:7"><a href="#fn:7" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Guansong Pang, Kai Ming Ting, and David Albrecht. 2015. LeSiNN: Detecting anomalies by identifying least similar nearest neighbours. In Proceedings of the 2015 IEEE International Conference on Data Mining Workshop (ICDMW’15). IEEE, 623–630.
+<li>和 iNNE 一样：也是基于 subsampling + (ensemble，其保证离群点检测器的稳定性)<sup id="fnref:7"><a href="#fn:7" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Guansong Pang, Kai Ming Ting, and David Albrecht. 2015. LeSiNN: Detecting anomalies by identifying least similar nearest neighbours. In ICDM Workshops, 623–630.
 ">[7]</span></a></sup>。</li>
 <li>数据点$p$关于样本集$S$的异常值分数被简单地定义为$p$和$p$在$S$中的最近邻居之间的距离。</li>
 </ul>
@@ -370,22 +368,22 @@ CBLOF(p) =
 \begin{cases}
 |C_i| \cdot \min(dist(p, C_j)), \;\; C_i~\text{is small},\\
 |C_i| \cdot dist(p, C_i), \;\;\; C_i~\text{is large}.
-\end{cases}</script><p>这里的假定是更大的基数意味着更小的density——并不一定成立。因此unweighted-CBLOF被提出<sup id="fnref:10"><a href="#fn:10" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Mennatallah Amer and Markus Goldstein. 2012. Nearest-neighbor and clustering based anomaly detection algorithms for rapidminer. In Proceedings of the 3rd RapidMiner Community Meeting and Conference (RCOMM’12). 1–12.
+\end{cases}</script><p>这里的假定是更大的基数意味着更小的density——并不一定成立。因此unweighted-CBLOF被提出<sup id="fnref:10"><a href="#fn:10" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Mennatallah Amer and Markus Goldstein. 2012. Nearest-neighbor and clustering based anomaly detection algorithms for rapidminer. In RCOMM, 1–12.
 ">[10]</span></a></sup>：简单地，将基数$|C_i|$从CBLOF的计算中去除，能得到实践中更好的结果。这里相当于把local detector变成了global detector。</p>
-<h3 id="2-3-Local-Density-Cluster-Based-Outlier-Factor-LDCOF"><a href="#2-3-Local-Density-Cluster-Based-Outlier-Factor-LDCOF" class="headerlink" title="2.3 Local Density Cluster-Based Outlier Factor (LDCOF)"></a>2.3 Local Density Cluster-Based Outlier Factor (LDCOF)</h3><p>在unweighted-CBLOF之上，用了一个cluster内部的点的平均距离来正规化，从而恢复到local detector的特性<sup id="fnref:11"><a href="#fn:11" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Haizhou Du, Shengjie Zhao, Daqiang Zhang, and JinsongWu. 2016. Novel clustering-based approach for local outlier detection. In Proceedings of the 2016 IEEE Conference on Computer Communications Workshops. 802–811.
+<h3 id="2-3-Local-Density-Cluster-Based-Outlier-Factor-LDCOF"><a href="#2-3-Local-Density-Cluster-Based-Outlier-Factor-LDCOF" class="headerlink" title="2.3 Local Density Cluster-Based Outlier Factor (LDCOF)"></a>2.3 Local Density Cluster-Based Outlier Factor (LDCOF)</h3><p>在unweighted-CBLOF之上，用了一个cluster内部的点的平均距离来正规化，从而恢复到local detector的特性<sup id="fnref:11"><a href="#fn:11" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Haizhou Du, Shengjie Zhao, Daqiang Zhang, and Jinsong Wu. 2016. Novel clustering-based approach for local outlier detection. In INFOCOM Workshops. 802–811.
 ">[11]</span></a></sup>。</p>
 <script type="math/tex; mode=display">
 LDCOF(p) =
 \begin{cases}
 \min(dist(p, C_j))/avg-dist(C_j), \;\; C_i ~\text{is small},\\
 dist(p, C_i)/avg-dist(C_j), \;\;\; C_i ~\text{is large}.
-\end{cases}</script><h3 id="2-4-density-peak-clustering"><a href="#2-4-density-peak-clustering" class="headerlink" title="2.4 density peak clustering"></a>2.4 density peak clustering</h3><p>两个假设<sup id="fnref:11"><a href="#fn:11" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Haizhou Du, Shengjie Zhao, Daqiang Zhang, and JinsongWu. 2016. Novel clustering-based approach for local outlier detection. In Proceedings of the 2016 IEEE Conference on Computer Communications Workshops. 802–811.
+\end{cases}</script><h3 id="2-4-density-peak-clustering"><a href="#2-4-density-peak-clustering" class="headerlink" title="2.4 density peak clustering"></a>2.4 density peak clustering</h3><p>两个假设<sup id="fnref:11"><a href="#fn:11" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="Haizhou Du, Shengjie Zhao, Daqiang Zhang, and Jinsong Wu. 2016. Novel clustering-based approach for local outlier detection. In INFOCOM Workshops. 802–811.
 ">[11]</span></a></sup>：</p>
-<ul>
-<li>(1) cluster centers have higher local density than surrounding data points</li>
-<li>(2) cluster centers have a comparatively large distance to other data points with higher local density</li>
-</ul>
-<p>简单翻译一下：<strong>强者都有一堆小弟，强者都各自占山为王敬而远之</strong>。</p>
+<ol>
+<li>cluster centers have higher local density than surrounding data points</li>
+<li>cluster centers have a comparatively large distance to other data points with higher local density</li>
+</ol>
+<p>简单解读一下：<strong>强者都有一堆小弟，强者都各自占山为王敬而远之</strong>。</p>
 <ul>
 <li>数据点的局部密度$\rho$ 定义为截止半径内的相邻数据点的数量。</li>
 <li>一个数据点的$\delta$ 是它到另一个具有更高局部密度的数据点的最小距离。</li>
@@ -394,7 +392,7 @@ dist(p, C_i)/avg-dist(C_j), \;\;\; C_i ~\text{is large}.
 <li>切比雪夫定理用于确定异常值的偏差阈值。</li>
 </ul>
 <p><code>继续阅读</code><a href="../经典异常检测笔记3/">下一篇</a>。</p>
-<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, and Jörg Sander. 2000. LOF: Identifying density-based local outliers. In ACM Sigmod Record, Vol. 29. ACM, 93–104.<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Jian Tang, Zhixiang Chen, AdaWai-Chee Fu, and DavidW. Cheung. 2002. Enhancing effectiveness of outlier detections for low density patterns. In Proceedings of the Pacific-Asia Conference on Knowledge Discovery and Data Mining. Springer, 535–548.<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Spiros Papadimitriou, Hiroyuki Kitagawa, Phillip B. Gibbons, and Christos Faloutsos. 2003. Loci: Fast outlier detection using the local correlation integral. In Proceedings 19th International Conference on Data Engineering 2003. IEEE, 315–326.<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Wen Jin, Anthony K. H. Tung, Jiawei Han, and Wei Wang. 2006. Ranking outliers using symmetric neighborhood relationship. In Proceedings of the Pacific-Asia Conference on Knowledge Discovery and Data Mining. Springer, 577– 593.<a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Hans-Peter Kriegel, Peer Kröger, Erich Schubert, and Arthur Zimek. 2009. LoOP: Local outlier probabilities. In Proceedings of the 18th ACM Conference on Information and Knowledge Management. 1649–1652.<a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Tharindu Bandaragoda. 2014. Efficient anomaly detection by isolation using nearest neighbour ensemble. In Proceedings of the 2014 IEEE International Conference on Data Mining Workshop. 698–705.<a href="#fnref:6" rev="footnote"> ↩</a></span></li><li id="fn:7"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">7.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Guansong Pang, Kai Ming Ting, and David Albrecht. 2015. LeSiNN: Detecting anomalies by identifying least similar nearest neighbours. In Proceedings of the 2015 IEEE International Conference on Data Mining Workshop (ICDMW’15). IEEE, 623–630.<a href="#fnref:7" rev="footnote"> ↩</a></span></li><li id="fn:8"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">8.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Mon-Fong Jiang, Shian-Shyong Tseng, and Chih-Ming Su. 2001. Two-phase clustering process for outliers detection. Pattern Recogn. Lett. 22, 6–7 (2001), 691–700.<a href="#fnref:8" rev="footnote"> ↩</a></span></li><li id="fn:9"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">9.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Zengyou He, Xiaofei Xu, and Shengchun Deng. 2003. Discovering cluster-based local outliers. Pattern Recogn. Lett. 24, 9–10 (2003), 1641–1650.<a href="#fnref:9" rev="footnote"> ↩</a></span></li><li id="fn:10"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">10.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Mennatallah Amer and Markus Goldstein. 2012. Nearest-neighbor and clustering based anomaly detection algorithms for rapidminer. In Proceedings of the 3rd RapidMiner Community Meeting and Conference (RCOMM’12). 1–12.<a href="#fnref:10" rev="footnote"> ↩</a></span></li><li id="fn:11"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">11.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Haizhou Du, Shengjie Zhao, Daqiang Zhang, and JinsongWu. 2016. Novel clustering-based approach for local outlier detection. In Proceedings of the 2016 IEEE Conference on Computer Communications Workshops. 802–811.<a href="#fnref:11" rev="footnote"> ↩</a></span></li></ol></div></div>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, and Jörg Sander. 2000. LOF: Identifying density-based local outliers. In ACM Sigmod Record, Vol. 29., 93–104.<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Jian Tang, Zhixiang Chen, AdaWai-Chee Fu, and David W. Cheung. 2002. Enhancing effectiveness of outlier detections for low density patterns. In PAKDD, 535–548.<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Spiros Papadimitriou, Hiroyuki Kitagawa, Phillip B. Gibbons, and Christos Faloutsos. 2003. Loci: Fast outlier detection using the local correlation integral. In ICDE, 315–326.<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Wen Jin, Anthony K. H. Tung, Jiawei Han, and Wei Wang. 2006. Ranking outliers using symmetric neighborhood relationship. In PAKDD, 577– 593.<a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Hans-Peter Kriegel, Peer Kröger, Erich Schubert, and Arthur Zimek. 2009. LoOP: Local outlier probabilities. In CIKM, 1649–1652.<a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Tharindu Bandaragoda. 2014. Efficient anomaly detection by isolation using nearest neighbour ensemble. In ICDM Workshops, 698–705.<a href="#fnref:6" rev="footnote"> ↩</a></span></li><li id="fn:7"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">7.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Guansong Pang, Kai Ming Ting, and David Albrecht. 2015. LeSiNN: Detecting anomalies by identifying least similar nearest neighbours. In ICDM Workshops, 623–630.<a href="#fnref:7" rev="footnote"> ↩</a></span></li><li id="fn:8"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">8.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Mon-Fong Jiang, Shian-Shyong Tseng, and Chih-Ming Su. 2001. Two-phase clustering process for outliers detection. Pattern Recogn. Lett. 22, 6–7 (2001), 691–700.<a href="#fnref:8" rev="footnote"> ↩</a></span></li><li id="fn:9"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">9.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Zengyou He, Xiaofei Xu, and Shengchun Deng. 2003. Discovering cluster-based local outliers. Pattern Recogn. Lett. 24, 9–10 (2003), 1641–1650.<a href="#fnref:9" rev="footnote"> ↩</a></span></li><li id="fn:10"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">10.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Mennatallah Amer and Markus Goldstein. 2012. Nearest-neighbor and clustering based anomaly detection algorithms for rapidminer. In RCOMM, 1–12.<a href="#fnref:10" rev="footnote"> ↩</a></span></li><li id="fn:11"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">11.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Haizhou Du, Shengjie Zhao, Daqiang Zhang, and Jinsong Wu. 2016. Novel clustering-based approach for local outlier detection. In INFOCOM Workshops. 802–811.<a href="#fnref:11" rev="footnote"> ↩</a></span></li><li id="fn:12"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">12.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">E. Knorr and R. Ng. Algorithms for Mining Distance-Based Outliers in Large Datasets. 1998. In VLDB, 392–403.<a href="#fnref:12" rev="footnote"> ↩</a></span></li></ol></div></div>
           
           <hr>
           <ul class="pager no-print">
@@ -485,7 +483,7 @@ dist(p, C_i)/avg-dist(C_j), \;\;\; C_i ~\text{is large}.
             <p>
                 <span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv"></span> <b>PV</b></span> -
                 <span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv"></span> <b>UV</b></span> -
-                128.1k <b>Words</b>
+                134.8k <b>Words</b>
             <div class="copyright-container">
               <b>版权</b> 内容部分自摘抄，已尽量注明直/间接来源，如版权问题请告悉删除；内容可经注明来源后转载，限于非商业目的。
             </div>
